@@ -1,5 +1,5 @@
 ---
-title: "Create Your AWS Account"
+title: "Taxonomic Annotations - episode 1"
 teaching: 20
 exercises: 10
 questions: 
