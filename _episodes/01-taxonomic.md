@@ -107,7 +107,7 @@ is a regular file, automatic format detection is attempted.
 {: .output}
 
 In addition to our input files we also need a database with which to compare them. There are [several databases](http://ccb.jhu.edu/software/kraken2/downloads.shtml)
-compatible to be used with kraken2 in the taxonomical assignment process.
+compatible to be used with kraken2 in the taxonomical assignment process. Some of these are larger and much more comprehensive, and some are more specific. There are also instructions on how to [generate a database of your own](https://github.com/DerrickWood/kraken2/wiki/Manual#special-databases). 
 
 > ## Very important to know your database!
 > The database you use will determine the result you get for your data.
@@ -115,25 +115,14 @@ compatible to be used with kraken2 in the taxonomical assignment process.
 {: .callout}
 
 Minikraken is a popular database that attempts to conserve its sensitivity
-despite its small size (Needs 8GB of RAM for the assignment). Unfortunately although it is much smaller that most databases, it is not small enough to be run by the machines we are using, so we won't be able to run `kraken2`. We can check our available RAM with `free -h`to be sure of this.
-~~~
-$ free -h
-~~~
-{: .bash}
-
-~~~
-              total        used        free      shared  buff/cache   available
-Mem:           3.9G        272M        3.3G         48M        251M        3.3G
-Swap:            0B          0B          0B
-~~~
-{: .output}
-
-If we were to download the database we would use the following command:
+despite its small size (Needs 8GB of RAM for the assignment). If you are using a HPC you may not have the same memory constraints and may want to use a much fuller database. We will have this database already available on the instance, however if you were to download the database, you would use the following command:
 ~~~
 $ curl -O ftp://ftp.ccb.jhu.edu/pub/data/kraken2_dbs/old/minikraken2_v2_8GB_201904.tgz         
 $ tar -xvzf minikraken2_v2_8GB_201904.tgz
 ~~~
 {: .do not run this}
+
+
 
 > ## Exercise 1: Remembering commands
 >
