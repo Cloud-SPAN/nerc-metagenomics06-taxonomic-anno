@@ -376,10 +376,11 @@ We can look at a comparison of both our samples in the Comparison tab.
 </a>
 
 
-> ## Discussion: Taxonomic level of assignment
+> ## Exercise 1: Taxonomic level of assignment
 >
 > What do you think is harder to assign, a species (like _E. coli_) or a phylum (like Proteobacteria)?
-{: .discussion}
+>
+{: .challenge}
 
 
 {% include links.md %}
