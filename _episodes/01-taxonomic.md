@@ -107,7 +107,7 @@ is a regular file, automatic format detection is attempted.
 {: .output}
 
 In addition to our input files we also need a database with which to compare them. There are [several databases](http://ccb.jhu.edu/software/kraken2/downloads.shtml)
-compatible to be used with kraken2 in the taxonomical assignment process. Some of these are larger and much more comprehensive, and some are more specific. There are also instructions on how to [generate a database of your own](https://github.com/DerrickWood/kraken2/wiki/Manual#special-databases). 
+compatible to be used with kraken2 in the taxonomical assignment process. Some of these are larger and much more comprehensive, and some are more specific. There are also instructions on how to [generate a database of your own](https://github.com/DerrickWood/kraken2/wiki/Manual#special-databases).
 
 > ## Very important to know your database!
 > The database you use will determine the result you get for your data.
@@ -122,25 +122,6 @@ $ tar -xvzf minikraken2_v2_8GB_201904.tgz
 ~~~
 {: .do not run this}
 
-
-
-> ## Exercise 1: Remembering commands
->
-> Fill in the blanks to decompress the following file `minikraken2_v2_8GB_201904.tgz`.  
->
-> ~~~
-> $ ____ -xvzf  ____.tgz
-> ~~~
-> {: .language-bash}
-> > ## Solution
-> > ```
-> > $ tar -xvzf  minikraken2_v2_8GB_201904.tgz
-> > ```
-> > {: .language-bash}
-> > `tar` command is used in linux to decompress files, so in this case it would
-> > extract the content of the compressed file  `minikraken2_v2_8GB_201904.tgz`
-> {: .solution}
-{: .challenge}                             
 
 ## Taxonomic assignment of metagenomic reads
 
@@ -162,7 +143,7 @@ In the server we ran `kraken2` and obtained`JP4D-kraken.kraken` and `JP4D.report
 
 Let's look at the precomputed outputs of `kraken2` for our JP4D reads.  
 ~~~
-head ~/dc_workshop/taxonomy/JP4D.kraken  
+head ~/cs_workshop/taxonomy/JP4D.kraken  
 ~~~
 {: .bash}
 
@@ -193,7 +174,7 @@ As we can see, the kraken file is not very readable. So let's look at the report
 {: .callout}
 
 ~~~
-head ~/dc_workshop/taxonomy/JP4D.report
+head ~/cs_workshop/taxonomy/JP4D.report
 ~~~
 {: .bash}
 ~~~
@@ -222,9 +203,9 @@ $ kraken2 --db kraken-db --threads 12 -input JP4D.001.fasta --output TAXONOMY_MA
 ~~~
 {: .do not run this}
 
-The results of this are pre-computed in the `~/dc_workshop/taxonomy/mags_taxonomy/` directory
+The results of this are pre-computed in the `~/cs_workshop/taxonomy/mags_taxonomy/` directory
 ~~~
-$ cd ~/dc_workshop/taxonomy/mags_taxonomy
+$ cd ~/cs_workshop/taxonomy/mags_taxonomy
 $ ls
 ~~~
 {: .bash}
@@ -235,7 +216,7 @@ JP4D.001.report
 {: .output}
 
 ~~~
-more ~/dc_workshop/taxonomy/mags_taxonomy/JP4D.001.report
+more ~/cs_workshop/taxonomy/mags_taxonomy/JP4D.001.report
 ~~~
 {: .bash}
 ~~~
@@ -294,7 +275,7 @@ our taxonomy directory, which contains the pre-calculated Kraken outputs.
 ### Krona  
 With Krona we will explore the taxonomy of the JP4D.001 MAG.
 ~~~
-$ cd ~/dc_workshop/taxonomy/mags_taxonomy
+$ cd ~/cs_workshop/taxonomy/mags_taxonomy
 ~~~
 {: .bash}  
 
@@ -323,7 +304,7 @@ Importing JP4D.001.krona.input...
 And finally, open another terminal in your local computer,download the
 Krona output and open it on a browser.
 ~~~
-$ scp dcuser@ec2-3-235-238-92.compute-1.amazonaws.com:~/dc_workshop/taxonomy/JP4D.001.krona.out.html .
+$ scp csuser@ec2-3-235-238-92.compute-1.amazonaws.com:~/cs_workshop/taxonomy/JP4D.001.krona.out.html .
 ~~~
 {: .bash}  
 You will see a page like this:
@@ -359,7 +340,7 @@ his time we will visualize the assignation of the reads of both samples:
 This files corresponds to our Kraken reports. Again in our local
 machine lets use `scp` command.  
 ~~~
-$ scp dcuser@ec2-3-235-238-92.compute-1.amazonaws.com:~/dc_workshop/taxonomy/*report .
+$ scp csuser@ec2-3-235-238-92.compute-1.amazonaws.com:~/cs_workshop/taxonomy/*report .
 ~~~
 {: .language-bash}
 
