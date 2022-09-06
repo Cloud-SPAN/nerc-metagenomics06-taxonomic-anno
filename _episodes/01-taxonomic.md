@@ -127,20 +127,20 @@ $ tar -xvzf minikraken2_v2_8GB_201904.tgz
 
 As we have learned, taxonomic assignment can be attempted before the assembly process.
 In this case we would use FASTQ files as inputs, which would be
-`JP4D_R1.trim.fastq.gz` and `JP4D_R2.trim.fastq.gz`. And the outputs would be two files: the report
-`JP4D.report` and the kraken file `JP4D.kraken`.  
+`pilon_R1.trim.fastq.gz` and `pilon_R2.trim.fastq.gz`. And the outputs would be two files: the report
+`pilon.report` and the kraken file `pilon.kraken`.  
 
 To run kraken2 run this command:  
 
 ~~~
  mkdir taxonomy
- kraken2 --db kraken-db --threads 12 -input JP4D.001.fasta --output taxonomy/JP4D.001.kraken --report TAXONOMY/JP4D.001.report
+ kraken2 --db kraken-db --threads 12 -input pilon.fasta --output taxonomy/pilon.kraken --report TAXONOMY/pilon.report
 ~~~
 {: .bash}
 
 These commands generate two outputs, a .kraken and a .report file. Let's look at the these files with the following commands:
 ~~~
-head ~/cs_workshop/taxonomy/JP4D.kraken  
+head ~/cs_workshop/taxonomy/pilon.kraken  
 ~~~
 {: .bash}
 
@@ -162,11 +162,11 @@ As we can see, the kraken file is not very readable. So let's look at the report
 {: .callout}
 
 ~~~
-head ~/cs_workshop/taxonomy/JP4D.report
+head ~/cs_workshop/taxonomy/pilon.report
 ~~~
 {: .bash}
 ~~~
-more ~/cs_workshop/taxonomy/mags_taxonomy/JP4D.001.report
+more ~/cs_workshop/taxonomy/mags_taxonomy/pilon.001.report
 ~~~
 {: .bash}
 ~~~
@@ -231,21 +231,21 @@ $ cd ~/cs_workshop/taxonomy/mags_taxonomy
 {: .bash}  
 
 Krona is called with the `ktImportTaxonomy` command that needs an input and an output file.  
-In our case we will create the input file with the columns three and four from `JP4D.001.kraken` file.     
+In our case we will create the input file with the columns three and four from `pilon.001.kraken` file.     
 ~~~
-$ cut -f2,3 JP4D.001.kraken > JP4D.001.krona.input
+$ cut -f2,3 pilon.001.kraken > pilon.001.krona.input
 ~~~
 {: .language-bash}  
 
-Now we call Krona in our `JP4D.001.krona.input` file and save results in `JP4D.001.krona.out.html`.  
+Now we call Krona in our `pilon.001.krona.input` file and save results in `pilon.001.krona.out.html`.  
 ~~~
-$ ktImportTaxonomy JP4D.001.krona.input -o JP4D.001.krona.out.html
+$ ktImportTaxonomy pilon.001.krona.input -o pilon.001.krona.out.html
 ~~~
 {: .language-bash}  
 
 ~~~
 Loading taxonomy...
-Importing JP4D.001.krona.input...
+Importing pilon.001.krona.input...
    [ WARNING ]  The following taxonomy IDs were not found in the local database and were set to root
                 (if they were recently added to NCBI, use updateTaxonomy.sh to update the local
                 database): 1804984 2109625 2259134
@@ -255,7 +255,7 @@ Importing JP4D.001.krona.input...
 And finally, open another terminal in your local computer,download the
 Krona output and open it on a browser.
 ~~~
-$ scp csuser@ec2-3-235-238-92.compute-1.amazonaws.com:~/cs_workshop/taxonomy/JP4D.001.krona.out.html .
+$ scp csuser@ec2-3-235-238-92.compute-1.amazonaws.com:~/cs_workshop/taxonomy/pilon.001.krona.out.html .
 ~~~
 {: .bash}  
 You will see a page like this:
@@ -287,7 +287,7 @@ to visualize our results.
 
 First we need to download the files needed as inputs in Pavian, t
 his time we will visualize the assignation of the reads of both samples:
-`JC1A.report` and `JP4D.report`.  
+`JC1A.report` and `pilon.report`.  
 This files corresponds to our Kraken reports. Again in our local
 machine lets use `scp` command.  
 ~~~
