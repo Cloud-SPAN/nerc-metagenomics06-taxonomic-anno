@@ -142,23 +142,14 @@ There are different ways to plot and show the results of such analysis. Among ot
 
 ## Creating lineage and rank tables  
 
-In this lesson we will use RStudio to analize two microbiome samples from CCB, you don't have to install anything,
-you already have an instance on the cloud ready to be used.   
-
-For this purpose, we will use packages in R. A *package* is a family of code units (functions, classes, variables) that
-implement a set of related tasks. Importing a package is like getting a piece of lab equipment out of a storage locker
-and setting it up on the bench. Packages provide additional functionality to the basic R code, much like a new piece
-of equipment adds functionality to a lab space.
-
-Packages like Quiime2, MEGAN, Vegan or Phyloseq in R allows us to obtain these diversity indexes by
-manipulating taxonomic-assignation data.  In this lesson, we will use Phyloseq. In order to do so, we need to generate
+In this lesson we will use RStudio to analyses our metagenome assembly using the phyloseq package. Packages like Qiime2, MEGAN, Vegan or Phyloseq in R allows us to obtain these diversity indexes by manipulating taxonomic-assignation data.   In order to do so, we need to generate
 an abundance matrix from the Kraken output files. One program widely used for this purpose is `kraken-biom`.
 
-But before we face our first storm in this code sea, let's learn one useful tool in RStudio.
+
 
 ### The terminal in RStudio
 
-RStudio has an integrated terminal that uses the same language as the one we learnd in the Command-line lessons. As well, R's terminal
+RStudio has an integrated terminal that uses the same language as the one we learned in the Command-line lessons. As well, R's terminal
 is an interface that executes programs, and is better to deal with long data sets than in a visual interface.  
 
 You can also known in which directory you are standing in the terminal, by using `pwd`.
@@ -219,7 +210,7 @@ This information may be confused, let's take out our cheatsheet to understand so
 |-------------------+-----------------------------------------------------------------------------------------|  
 
 There are other set of files with `.report` suffix. This is an output with the same information as the one found
-in the `.kraken` files, but in a more human-readable sintax:
+in the `.kraken` files, but in a more human-readable syntax:
 ~~~
 $ head JP4D.report  
 ~~~
@@ -239,7 +230,7 @@ $ head JP4D.report
 {: .output}
 
 
-### Kraken-biom
+### Generating a phyloseq object
 
 Kraken-biom is a program that creates BIOM tables from the Kraken output
 [kraken-biom](https://github.com/smdabdoub/kraken-biom)
