@@ -5,15 +5,14 @@ exercises: 10
 questions:
 - "How can I obtain the abundance of the reads?"
 - "How can I use R to explore diversity?"
+- "What are α and β diversity? What are the metrics used to measure these?"
 objectives:
-- "Comprehend which libraries are required for metagenomes diversity analysis."  
-- "Grasp how a phyloseq object is made."
-- "Undestand the needed commands to create a phyloseq object for analysis."
+- "Comprehend the R libraries required for metagenome diversity analysis."  
+- "Understand how to generate a phyloseq object for performing diversiy analysis."
+- "Understand the terms α and β diversity."
 keypoints:
-- "The library `phyloseq` manages metagenomics objects and computes alpha diversity."  
-- "Transform your named matrixes into Phyloseq objects using `pyhloseq(TAX, OTU)`."
-- "Use `help()` to discover the capabilities of libraries."
-- "The library `ggplot2` allows publication-quality plotting in R."
+- "The library `phyloseq` can convert an abundance table into an object that can   compute alpha diversity."  
+- "We can then use the library ggplot to generate plots to visualise these differences in abundance "
 math: true
 ---
 
