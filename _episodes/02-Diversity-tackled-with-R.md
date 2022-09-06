@@ -17,10 +17,7 @@ keypoints:
 math: true
 ---
 
-## First plunge into diversity
-*Look at your fingers, controlled by the mind can do great things. But imagine if each one have a little brain of its own, with
-different ideas, desires, and fears ¡How wonderful things will be made out of an artist with such hands!*
-  -Ode to multidisciplinarity
+
 
 Species diversity, in it's must simple definition is the number of species in a particular area and their relative abundance (eveness).
 Once we know the taxonomic composition of our metagenomes, we can do diversity analyses.
