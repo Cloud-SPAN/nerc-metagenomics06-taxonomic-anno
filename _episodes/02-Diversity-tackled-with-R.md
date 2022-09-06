@@ -124,7 +124,7 @@ There are different ways to plot and show the results of such analysis. Among ot
 > ## Exercise 1:
 > In the next picture there are two lakes with different fish species:
 > <a href="{{ page.root }}/fig/03-07-01e.png">
->   <img src="{{ page.root }}/fig/03-07-01e.png" alt="In lake A, we have four different species, two of these species have 3 specimens each one. This lake also have two specimens of another species and only one specimen of the other specie. We got nine fishes total. On the other hand, lake B has only three different species, the most populated specie has five specimens and we have only one specimen of the other two species. We got seven species total in lake B " />
+>   <img src="{{ page.root }}/fig/03-07-01e.png" alt="In lake A, we have four different species, two of these species have 3 specimens each one. This lake also have two specimens of another species and only one specimen of the other specie. We got nine fishes total. On the other hand, lake B has only three different species, the most populated species has five specimens and we have only one specimen of the other two species. We got seven species total in lake B " />
 > </a>
 > Which of the options below is true for the alpha diversity in lake A, lake B, and beta diversity between lakes A and B, respectively.
 > 1. 4, 3, 1
@@ -132,7 +132,7 @@ There are different ways to plot and show the results of such analysis. Among ot
 > 3. 9, 7, 16
 >
 > Please, paste your result on the collaborative document provided by instructors.
-> *Hic Sunt Leones!* (*Here be Lions!*)  
+>   
 >
 >> ## Solution
 >> Answer: 4, 3, 5
