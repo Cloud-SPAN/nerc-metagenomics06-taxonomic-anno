@@ -17,13 +17,7 @@ keypoints:
 ---
 ## What is taxonomic assignment?
 
-Taxonomic assignment is the process of assigning an Operational Taxonomic
-Unit (OTUs, that is, groups of related individuals) to sequences, that can be
-reads or contigs. To assign an OTU to a sequence it is compared against a database,
-but this comparison can be done in different ways. The comparison database in
-this assignment process must be constructed using
-complete genomes. There are many programs for doing taxonomic mapping,
-almost all of them follows one of the next strategies:  
+Taxonomic assignment is the process of assigning a sequence, in this case a MAG, which is a bin containing contigs, to a specific taxon. The taxon can be at a high or low level, so you could generate annotations that are domain specific (bacteria, archaea, fungi), down to annotations that give a genus or even species identification. You may see these referred to as Operational Taxonomic Units (OTUs), particularly if you are dealing with amplicon sequences. We will not be using the term OTU and instead refer to annotations and their relation to MAGs within your metagenome assembly. We may also refer to these annotations as taxons. These assignments are done by comparing our sequence (a metagenome containing multiple MAGs in this case) to a database. These searches can be done in many different ways, and against a variety of databases. We will be using a piece of software called [kraken2](https://ccb.jhu.edu/software/kraken2/) to perform the searches. However there are many programs for doing taxonomic mapping, almost all of them follows one of the next strategies:  
 
 1. BLAST: Using BLAST or DIAMOND, these mappers search for the most likely hit
 for each sequence within a database of genomes (i.e. mapping). This strategy is slow.    
@@ -42,7 +36,7 @@ classification with the most probable position.
 3. Markers: They look for markers of a database made a priori in the sequences
 to be classified and assign the taxonomy depending on the hits obtained.    
 
-A key result when you do taxonomic assignment of metagenomes is the abundance of each taxa or OTU in your sample. The absolute abundance of a taxon is the number of sequences (reads or contigs, depending on what you did) assigned to it. And its relative abundance is the proportion of sequences assigned to it. It is important to be aware of the many biases that that can skew the abundances along the metagenomics workflow, shown in the figure, and that because of them we may not be obtaining the real abundance of the organisms in the sample.
+A key result when you do taxonomic assignment of metagenomes is the abundance of each taxa in your sample. The absolute abundance of a taxon is the number of sequences (reads or contigs within a MAG, depending on how you have performed the searches) assigned to it. We also often use relative abundance, which is the proportion of sequences assigned to it from the total number of sequences rather than absolute abundances. This is because the absolute abundance can be misleading and samples can be sequenced to different depths, and the relative abundance makes it easier to compare between samples accounting for sequencing depth differences. It is important to be aware of the many biases that that can skew the abundances along the metagenomics workflow, shown in the figure, and that because of them we may not be obtaining the real abundance of the organisms in the sample.
 
 <a href="{{ page.root }}/fig/03-06-02.png">
   <img src="{{ page.root }}/fig/03-06-02.png" alt="Flow diagram that shows how the initial composition of 33% for each of the three taxa in the sample ends up being 4%, 72% and 24% after the biases imposed by the extraction, PCR, sequencing and bioinformatics steps." />
@@ -189,7 +183,7 @@ more ~/cs_workshop/taxonomy/mags_taxonomy/pilon.001.report
 
 By looking at the report, we can see that half of the contigs
 are unclassified, and that a very little proportion of contigs
-have been assigned an OTU. This is weird because we expected
+have been assigned a taxon. This is weird because we expected
 to have only one genome in the bin.
 
 Just to exemplify how a report of a complete and not contaminated
@@ -210,7 +204,7 @@ another study:
 
 > ## Exercise 1:
 >
-> Why do you think we found so many OTUs in this bin?
+> Why do you think we found so many taxons in this bin?
 {: .challenge}
 
 ## Visualization of taxonomic assignment results  
