@@ -39,14 +39,13 @@ Measures of α diversity take in to account the number of species, or species **
 | Chao1           | Abundance based on species represented by a single individual (singletons) and two individuals (doubletons). | $$S_{chao1} = S_{Obs} + \frac{F_{1} \times (F_{1} - 1)}{2 \times (F_{2} + 1)}$$ |$$F_{1}, F_{2}$$ Count of singletons and doubletons respectively \n $$S_{chao1}=S_{Obs}$$ The number of observed species|
 
 
---------------------------
-
 <a href="{{ page.root }}/fig/03-07-01.png">
   <img src="{{ page.root }}/fig/03-07-01.png" alt="Alpha diversity diagram: In lake A, we have three fishes, each one of a different species. On lake B, we have two fishes each one of a different species.And in lake C we have four fishes, each one of different species." />
 </a>
 <em> Figure 1. Alpha diversity represented by fishes in a pond. Here, alpha diversity is represented at its simplest way: Richness. <em/>
 
-- β Diversity: It is the difference (measured as distance) between two or more environments.
+###  beta (β) diversity
+β Diversity: It is the difference (measured as distance) between two or more environments.
 It can be measured with metrics like Bray-Curtis dissimilarity, Jaccard distance or UniFrac distance, to name a few. Each one
 of this distance metrics are focused in a characteristic of the community (*e.g.* Unifrac distance measures the phylogenetic relationship
 between the species of the community).
