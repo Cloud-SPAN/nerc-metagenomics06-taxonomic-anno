@@ -13,6 +13,7 @@ objectives:
 keypoints:
 - "The `phyloseq` package be used to compute alpha diversity  from an abundance table."  
 - "The `ggplot` package can be used visualise abundance "
+math: yes
 ---
 
 
