@@ -89,5 +89,6 @@ exclude:
 
 # Turn off built-in syntax highlighting.
 highlighter: rouge
+math: yes
 
 remote_theme: Cloud-SPAN/metagenomics-theme
