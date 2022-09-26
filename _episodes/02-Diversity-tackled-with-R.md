@@ -13,7 +13,6 @@ objectives:
 keypoints:
 - "The `phyloseq` package be used to compute alpha diversity  from an abundance table."  
 - "The `ggplot` package can be used visualise abundance "
-math: true
 ---
 
 
@@ -28,59 +27,16 @@ Species diversity is the number of species in a system and the relative abundanc
 
 In this episode we will calculate α diversity (that within a metagenome) and β diversity (that between metagenomes).   
 
-## alpha (α) diversity
+### alpha (α) diversity
 Measures of α diversity take in to account the number of species, or species **richness**, and their relative abundance, or species **evenness**. Different diversity indices weight these components differently
 
-|-------------------+-----------------------------------------------------------------------------------------------------------------|   
-| Diversity Indices |                             Description                                                                         |   
-|-------------------+-----------------------------------------------------------------------------------------------------------------|   
-|      Shannon (H)  | Estimation of species richness and species evenness. More weigth on richness.                                   |   
-|-------------------+-----------------------------------------------------------------------------------------------------------------|   
-|    Simpson's (D)  |Estimation of species richness and species evenness. More weigth on evenness.                                    |                              
-|-------------------+-----------------------------------------------------------------------------------------------------------------|   
-|     Chao1         | Abundance based on species represented by a single individual (singletons) and two individuals (doubletons).    |            
-|-------------------+-----------------------------------------------------------------------------------------------------------------|   
 
+| Diversity Index |  Description | Calculation | Where |
+|-----------------|--------------|-------------|-------|
+| Shannon (H)     | Estimation of species richness and species evenness. More weigth on richness.  | $$H = - \sum_{i=1}^{S} p_{i} \ln{p_{i}}$$ | $$S$$ Number of OTUs \n $$p_{i}$$ proportion of the community represented by OTU|
+| Simpson's (D)   |Estimation of species richness and species evenness. More weigth on evenness.  | $$D = \frac{1}{\sum_{i=1}^{S} p_{i}^{2}}$$| $$S$$ Total number of the species in the community \n $$p_{i}$$ Proportion of community represented by OTU i |  
+| Chao1           | Abundance based on species represented by a single individual (singletons) and two individuals (doubletons). | $$S_{chao1} = S_{Obs} + \frac{F_{1} \times (F_{1} - 1)}{2 \times (F_{2} + 1)}$$ |$$F_{1}, F_{2}$$ Count of singletons and doubletons respectively \n $$S_{chao1}=S_{Obs}$$ The number of observed species|
 
-- Shannon (H):
-
-| Variable             |  Definition   |     
-:-------------------------:|:-------------------------:  
-$ H = - \sum_{i=1}^{S} p_{i} \ln{p_{i}} $ | Definition
-$ S $ | Number of OTUs
-$ p_{i} $ | The proportion of the community represented by OTU i
-
-<!-- <img src="https://render.githubusercontent.com/render/math?math=H=-\sum_{i=1}^{S}p_i\:ln{p_i}"> | Definition
-<img src="https://render.githubusercontent.com/render/math?math=S"> | Number of OTUs  
-<img src="https://render.githubusercontent.com/render/math?math=p_i">|  The proportion of the community represented by OTU i    -->
-
-- Simpson's (D)
-
-| Variable             |  Definition |   
-:-------------------------:|:-------------------------:  
-$ D = \frac{1}{\sum_{i=1}^{S} p_{i}^{2}} $ | Definition
-$ S $ | Total number of the species in the community
-$ p_{i} $ | Proportion of community represented by OTU i
-
-
-<!-- <img src="https://render.githubusercontent.com/render/math?math=D=\frac{1}{\sum_{i=1}^{S}p_i^2}">| Definition   
-<img src="https://render.githubusercontent.com/render/math?math=S"> | Total number of the species in the community   
-<img src="https://render.githubusercontent.com/render/math?math=p_i" align="middle"> | Proportion of community represented by OTU i     -->
-
-- Chao1  
-
-| Variable             |  Definition |   
-:-------------------------:|:-------------------------:  
-$ S_{chao1} = S_{Obs} + \frac{F_{1} \times (F_{1} - 1)}{2 \times (F_{2} + 1)} $ | Count of singletons and doubletons respectively
-$ F_{1}, F_{2} $ | Count of singletons and doubletons respectively
-$ S_{chao1}=S_{Obs} $ | The number of observed species
-
-
-<!-- <img src="../fig/equation.svg">| Definition  
-<img src="https://render.githubusercontent.com/render/math?math=F_1,F_2">|Count of singletons and doubletons respectively    
-<img src="https://render.githubusercontent.com/render/math?math=S_{chao1}=S_{Obs}">| The number of observed species   -->
-
- <!-- coment we use https://viereck.ch/latex-to-svg/ to convert from latex to svg because Chao equation didnot render correctly with github math!-->
 
 --------------------------
 
