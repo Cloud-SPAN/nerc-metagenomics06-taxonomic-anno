@@ -7,56 +7,29 @@ questions:
 - "How can I use R to explore diversity?"
 - "What are α and β diversity? What are the metrics used to measure these?"
 objectives:
-- "Comprehend the R libraries required for metagenome diversity analysis."  
-- "Understand how to generate a phyloseq object for performing diversiy analysis."
-- "Understand the terms α and β diversity."
+- "Use R packages for analysing metagenome diversity."  
+- "Generate a `phyloseq` object for performing diversiy analysis."
+- "Explain α and β diversity."
 keypoints:
-- "The library `phyloseq` can convert an abundance table into an object that can   compute alpha diversity."  
-- "We can then use the library ggplot to generate plots to visualise these differences in abundance "
+- "The `phyloseq` package be used to compute alpha diversity  from an abundance table."  
+- "The `ggplot` package can be used visualise abundance "
 math: true
 ---
 
 
 
-Species diversity, in it's must simple definition is the number of species in a particular area and their relative abundance (eveness).
-Once we know the taxonomic composition of our metagenomes, we can do diversity analyses.
-Here we will talk about the two most used diversity metrics, α diversity (within one metagenome) and β (across metagenomes).   
+Once we know the taxonomic composition of our metagenomes we can characterise them by their diversity.
 
-- α Diversity: Can be represented as the richness (*i.e.* number of different species in an environment) and abundance of hte species in the area(*i.e.* the number of individuals of
-each species inside the environment). It can be measured by calculating a diversity index such as Shannon's, Simpson's, Chao1, etc.
+Species diversity is the number of species in a system and the relative abundance of each of those species. It can be defined on three different scales (Whittaker, 1960).
 
-<a href="{{ page.root }}/fig/03-07-01.png">
-  <img src="{{ page.root }}/fig/03-07-01.png" alt="Alpha diversity diagram: In lake A, we have three fishes, each one of a different species. On lake B, we have two fishes each one of a different species.And in lake C we have four fishes, each one of different species." />
-</a>
-<em> Figure 1. Alpha diversity represented by fishes in a pond. Here, alpha diversity is represented at its simplest way: Richness. <em/>
+1. the total species diversity in an ecosystem known as **gamma (γ) diversity**
+2. average diversity at a local site, known as **alpha (α) diversity**
+3. the difference in diversity between local sites, known as **beta (β) diversity**
 
-- β Diversity: It is the difference (measured as distance) between two or more environments.
-It can be measured with metrics like Bray-Curtis dissimilarity, Jaccard distance or UniFrac distance, to name a few. Each one
-of this distance metrics are focused in a characteristic of the community (*e.g.* Unifrac distance measures the phylogenetic relationship
-between the species of the community).
+In this episode we will calculate α diversity (that within a metagenome) and β diversity (that between metagenomes).   
 
-In the next example, we will look at the α and the β components of diversity of a
-dataset of fishes in three lakes. The most simple way to calculate the β-diversity
-is to calculate the species that are distinc between two lakes (sites). Let's take
-Lake A and Lake B to do an example. The number of species en Lake A is 3, to this
-quantity we will supress the number of these species that are shared with the Lake
-B: 2. So the number of unique species in Lake A compared to Lake B is (3-2):1. To
-this number we will sum the result of the same operations but now taken Lake B as
-our site of reference. In the end, the β diversity between Lake A and Lake B is
-(3-2) + (3-2) = 2. This process can be repeated taking each pair of lakes as the
-focused sites.
-
-<a href="{{ page.root }}/fig/03-07-02.png">
-  <img src="{{ page.root }}/fig/03-07-02.png" alt="Alpha and Beta diversity diagram: Each lake has a different number of species and each species has a different number of fish individuals. Both metrics are taken into account to measure alfa and beta diversity." />
-</a>
-<em> Figure 2. Alpha and Beta diversity represented by fishes in a pond.<em/>
-
-If you want to read more about diversity, we recommend to you this [paper](https://link.springer.com/article/10.1007/s00442-010-1812-0) on
-the concept of diversity.
-
-For this lesson we will use Phyloseq, an R package specialized in metagenomic analysis. We will use it along with Rstudio to analyze our data.
-
-## α diversity  
+## alpha (α) diversity
+Measures of α diversity take in to account the number of species, or species **richness**, and their relative abundance, or species **evenness**. Different diversity indices weight these components differently
 
 |-------------------+-----------------------------------------------------------------------------------------------------------------|   
 | Diversity Indices |                             Description                                                                         |   
@@ -108,6 +81,43 @@ $ S_{chao1}=S_{Obs} $ | The number of observed species
 <img src="https://render.githubusercontent.com/render/math?math=S_{chao1}=S_{Obs}">| The number of observed species   -->
 
  <!-- coment we use https://viereck.ch/latex-to-svg/ to convert from latex to svg because Chao equation didnot render correctly with github math!-->
+
+--------------------------
+
+<a href="{{ page.root }}/fig/03-07-01.png">
+  <img src="{{ page.root }}/fig/03-07-01.png" alt="Alpha diversity diagram: In lake A, we have three fishes, each one of a different species. On lake B, we have two fishes each one of a different species.And in lake C we have four fishes, each one of different species." />
+</a>
+<em> Figure 1. Alpha diversity represented by fishes in a pond. Here, alpha diversity is represented at its simplest way: Richness. <em/>
+
+- β Diversity: It is the difference (measured as distance) between two or more environments.
+It can be measured with metrics like Bray-Curtis dissimilarity, Jaccard distance or UniFrac distance, to name a few. Each one
+of this distance metrics are focused in a characteristic of the community (*e.g.* Unifrac distance measures the phylogenetic relationship
+between the species of the community).
+
+In the next example, we will look at the α and the β components of diversity of a
+dataset of fishes in three lakes. The most simple way to calculate the β-diversity
+is to calculate the species that are distinc between two lakes (sites). Let's take
+Lake A and Lake B to do an example. The number of species en Lake A is 3, to this
+quantity we will supress the number of these species that are shared with the Lake
+B: 2. So the number of unique species in Lake A compared to Lake B is (3-2):1. To
+this number we will sum the result of the same operations but now taken Lake B as
+our site of reference. In the end, the β diversity between Lake A and Lake B is
+(3-2) + (3-2) = 2. This process can be repeated taking each pair of lakes as the
+focused sites.
+
+<a href="{{ page.root }}/fig/03-07-02.png">
+  <img src="{{ page.root }}/fig/03-07-02.png" alt="Alpha and Beta diversity diagram: Each lake has a different number of species and each species has a different number of fish individuals. Both metrics are taken into account to measure alfa and beta diversity." />
+</a>
+<em> Figure 2. Alpha and Beta diversity represented by fishes in a pond.<em/>
+
+If you want to read more about diversity, we recommend to you this [paper](https://link.springer.com/article/10.1007/s00442-010-1812-0) on
+the concept of diversity.
+
+For this lesson we will use Phyloseq, an R package specialized in metagenomic analysis. We will use it along with Rstudio to analyze our data.
+
+## α diversity  
+
+
 
 ### β diversity  
 Diversity β measures how different two or more communities are, either in their composition (richness)
@@ -571,6 +581,7 @@ and that these two will belong to the same OTU.
 > and doubletons?
 {: .discussion}
 
-
+## Reading
+Whittaker, R. H. (1960) Vegetation of the Siskiyou Mountains, Oregon and California. Ecological Monographs, 30, 279–338
 
 {% include links.md %}
