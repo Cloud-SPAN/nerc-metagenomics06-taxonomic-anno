@@ -34,12 +34,9 @@ Measures of α diversity take in to account the number of species, or species **
 
 | Diversity Index |  Description | Calculation | Where |
 |-----------------|--------------|-------------|-------|
-| Shannon (H)     | Estimation of species richness and species evenness. More weigth on richness.  | $$H = - \sum_{i=1}^{S} p_{i} \ln{p_{i}}$$ | $$S$$ Number of OTUs 
-$$p_{i}$$ proportion of the community represented by OTU|
-| Simpson's (D)   |Estimation of species richness and species evenness. More weigth on evenness.  | $$D = \frac{1}{\sum_{i=1}^{S} p_{i}^{2}}$$| $$S$$ Total number of the species in the community 
-$$p_{i}$$ Proportion of community represented by OTU i |  
-| Chao1           | Abundance based on species represented by a single individual (singletons) and two individuals (doubletons). | $$S_{chao1} = S_{Obs} + \frac{F_{1} \times (F_{1} - 1)}{2 \times (F_{2} + 1)}$$ |$$F_{1}, F_{2}$$ Count of singletons and doubletons respectively 
-$$S_{chao1}=S_{Obs}$$ The number of observed species|
+| Shannon (H)     | Estimation of species richness and species evenness. More weigth on richness.  | $$H = - \sum_{i=1}^{S} p_{i} \ln{p_{i}}$$ | $$S$$ is the number of OTUs and $$p_{i}$$ is the proportion of the community represented by OTU|
+| Simpson's (D)   |Estimation of species richness and species evenness. More weigth on evenness.  | $$D = \frac{1}{\sum_{i=1}^{S} p_{i}^{2}}$$| $$S$$ is Total number of the species in the community and $$p_{i}$$ is the proportion of community represented by OTU i |  
+| Chao1           | Abundance based on species represented by a single individual (singletons) and two individuals (doubletons). | $$S_{chao1} = S_{Obs} + \frac{F_{1} \times (F_{1} - 1)}{2 \times (F_{2} + 1)}$$ |$$F_{1}$$ and $$F_{2}$$ are the counts of singletons and doubletons respectively and $$S_{chao1}=S_{Obs}$$ is the number of observed species|
 
 
 <a href="{{ page.root }}/fig/03-07-01.png">
