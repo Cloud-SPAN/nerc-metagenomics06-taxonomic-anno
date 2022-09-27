@@ -16,8 +16,6 @@ keypoints:
 math: yes
 ---
 
-
-
 Once we know the taxonomic composition of our metagenomes we can characterise them by their diversity.
 
 Species diversity is the number of species in a system and the relative abundance of each of those species. It can be defined on three different scales (Whittaker, 1960).
@@ -26,86 +24,64 @@ Species diversity is the number of species in a system and the relative abundanc
 2. average diversity at a local site, known as **alpha (α) diversity**
 3. the difference in diversity between local sites, known as **beta (β) diversity**
 
-In this episode we will calculate α diversity (that within a metagenome) and β diversity (that between metagenomes).   
+A metagenome can be considered a local site. In this episode we will calculate α diversity (that within a metagenome) and β diversity (that between metagenomes).   
 
-### alpha (α) diversity
-Measures of α diversity take in to account the number of species, or species **richness**, and their relative abundance, or species **evenness**. Different diversity indices weight these components differently
+### Alpha (α) diversity
+The simplest measure of α diversity is the number of species, or species **richness**. However, most indices of α diversity take into account both the number of species and their relative abundances, or species **evenness**. Different diversity indices weight these two components differently.
 
 
-| Diversity Index |  Description | Calculation | Where |
-|-----------------|--------------|-------------|-------|
-| Shannon (H)     | Estimation of species richness and species evenness. More weigth on richness.  | $$H = - \sum_{i=1}^{S} p_{i} \ln{p_{i}}$$ | $$S$$ is the number of OTUs and $$p_{i}$$ is the proportion of the community represented by OTU|
-| Simpson's (D)   |Estimation of species richness and species evenness. More weigth on evenness.  | $$D = \frac{1}{\sum_{i=1}^{S} p_{i}^{2}}$$| $$S$$ is Total number of the species in the community and $$p_{i}$$ is the proportion of community represented by OTU i |  
+| α Diversity Index |  Description | Calculation | Where |
+|-------------------|--------------|-------------|-------|
+| Shannon (H)       | Estimation of species richness and species evenness. More weigth on richness.  | $$H = - \sum_{i=1}^{S} p_{i} \ln{p_{i}}$$ | $$S$$ is the number of OTUs and $$p_{i}$$ is the proportion of the community represented by OTU|
+| Simpson's (D)     |Estimation of species richness and species evenness. More weigth on evenness.  | $$D = \frac{1}{\sum_{i=1}^{S} p_{i}^{2}}$$| $$S$$ is Total number of the species in the community and $$p_{i}$$ is the proportion of community represented by OTU i |  
 | Chao1           | Abundance based on species represented by a single individual (singletons) and two individuals (doubletons). | $$S_{chao1} = S_{Obs} + \frac{F_{1} \times (F_{1} - 1)}{2 \times (F_{2} + 1)}$$ |$$F_{1}$$ and $$F_{2}$$ are the counts of singletons and doubletons respectively and $$S_{chao1}=S_{Obs}$$ is the number of observed species|
 
 
 <a href="{{ page.root }}/fig/03-07-01.png">
-  <img src="{{ page.root }}/fig/03-07-01.png" alt="Alpha diversity diagram: In lake A, we have three fishes, each one of a different species. On lake B, we have two fishes each one of a different species.And in lake C we have four fishes, each one of different species." />
+  <img src="{{ page.root }}/fig/03-07-01.png" alt="Diagram to demonstratealpha diversity. Three lakes are shown, A, B and C. In lake A, we have three fishes, each one of a different species. In lake B, we have two fishes each one of a different species.And in lake C we have four fishes, each one of different species." />
 </a>
-<em> Figure 1. Alpha diversity represented by fishes in a pond. Here, alpha diversity is represented at its simplest way: Richness. </em>
+<em> Figure 1. Alpha diversity represented by fish in a pond. Here, alpha diversity is measured in the simplest way using species richness. </em>
 
-###  beta (β) diversity
-β Diversity: It is the difference (measured as distance) between two or more environments.
-It can be measured with metrics like Bray-Curtis dissimilarity, Jaccard distance or UniFrac distance, to name a few. Each one
-of this distance metrics are focused in a characteristic of the community (*e.g.* Unifrac distance measures the phylogenetic relationship
-between the species of the community).
+###  Beta (β) diversity
+β diversity measures how different two or more communities are in their richness, evenness or both.
 
-In the next example, we will look at the α and the β components of diversity of a
-dataset of fishes in three lakes. The most simple way to calculate the β-diversity
-is to calculate the species that are distinc between two lakes (sites). Let's take
-Lake A and Lake B to do an example. The number of species en Lake A is 3, to this
-quantity we will supress the number of these species that are shared with the Lake
-B: 2. So the number of unique species in Lake A compared to Lake B is (3-2):1. To
-this number we will sum the result of the same operations but now taken Lake B as
-our site of reference. In the end, the β diversity between Lake A and Lake B is
-(3-2) + (3-2) = 2. This process can be repeated taking each pair of lakes as the
-focused sites.
+| β Diversity Index |  Description | 
+|-------------------|--------------|
+| Bray–Curtis dissimilarity  | The compositional _dissimilarity_ between two metagenomes, based on counts in each metagenome. Ranges from 0 (the two metagenomes have the same species composition) to 1 (the two metagenomes do not share any species). Bray–Curtis dissimilarity emphasises abundance.| 
+| Jaccard distance   | Also ranges from 0 (the two metagenomes have the same species) to 1 (the two metagenomes do not share any species) but is based on the presence or absence of species only. This means it emphasises richness.  | 
+| UniFrac           | Differs from the Bray-Curtis dissimilarity and Jaccard distance by including the relatedness between tax in a metagenome. Measures the phylogentic distance between metagenomes as the proportion of unshared phylogentic tree branches. Weighted-Unifrac takes into account the relative abundance of taxa shared between samples; unweighted-Unifrac only considers presence or absence.| 
+
+Figure 2 shows α and the β diversity for three lakes. The most simple way to calculate the β diversity is to calculate the number of species that are unique in two lakes. For example, the number of species in Lake A (the α diversity) is 3 and 1 of these is also found in Lake C; the number of species in Lake C is 2 and 1 of these is also in Lake A. The β diversity between A and C is calculated as (3 - 1) + (2 - 1) = 3
+
 
 <a href="{{ page.root }}/fig/03-07-02.png">
-  <img src="{{ page.root }}/fig/03-07-02.png" alt="Alpha and Beta diversity diagram: Each lake has a different number of species and each species has a different number of fish individuals. Both metrics are taken into account to measure alfa and beta diversity." />
+  <img src="{{ page.root }}/fig/03-07-02.png" alt="Alpha and Beta diversity diagram: Each lake has a different number of species. The number of species in Lake A (the α diversity) is 3 and 1 of these is also found in Lake C; the number of species in Lake C is 2 and 1 of these is also in Lake A. The β diversity between A and C is calculated as (3 - 1) + (2 - 1) = 3. The number of species in Lake B (the α diversity) is 3 and 2 of these is also found in Lake A; the number of species in Lake A is 3 and 2 of these is also in Lake B. The β diversity between A and B is calculated as (3 - 2) + (3 - 2) = 2" />
 </a>
 <em> Figure 2. Alpha and Beta diversity represented by fishes in a pond.<em/>
 
-If you want to read more about diversity, we recommend to you this [paper](https://link.springer.com/article/10.1007/s00442-010-1812-0) on
-the concept of diversity.
-
-For this lesson we will use Phyloseq, an R package specialized in metagenomic analysis. We will use it along with Rstudio to analyze our data.
-
-## α diversity  
-
-
-
-### β diversity  
-Diversity β measures how different two or more communities are, either in their composition (richness)
-or in the abundance of the organisms that compose it (abundance).
-- Bray-Curtis dissimilarity: The difference on richness and abundance across environments (samples). Weight on abundance. Measures the differences
-from 0 (equal communities) to 1 (different communities)
-- Jaccard distance: Based on presence / absence of species (diversity).
-It goes from 0 (same species in the community) to 1 (no species in common)
-- UniFrac: Measures the phylogenetic distance; how alike the trees in each community are.
-There are two types, without weights (diversity) and with weights (diversity and abundance)  
-
-There are different ways to plot and show the results of such analysis. Among others,  PCA, PCoA or NMDS analysis are widely used.
 
 > ## Exercise 1:
 > In the next picture there are two lakes with different fish species:
 > <a href="{{ page.root }}/fig/03-07-01e.png">
 >   <img src="{{ page.root }}/fig/03-07-01e.png" alt="In lake A, we have four different species, two of these species have 3 specimens each one. This lake also have two specimens of another species and only one specimen of the other specie. We got nine fishes total. On the other hand, lake B has only three different species, the most populated species has five specimens and we have only one specimen of the other two species. We got seven species total in lake B " />
 > </a>
-> Which of the options below is true for the alpha diversity in lake A, lake B, and beta diversity between lakes A and B, respectively.
-> 1. 4, 3, 1
-> 2. 4, 3, 5
-> 3. 9, 7, 16
+> Which of the options below is true: 
+> 1. α diversity of A = 4, α diversity of B = 3, β diversity between A and B = 1
+> 2. α diversity of A = 4, α diversity of B = 3, β diversity between A and B = 5
+> 3. α diversity of A = 9, α diversity of B = 7, β diversity between A and B= 16
 >
 > Please, paste your result on the collaborative document provided by instructors.
 >   
 >
 >> ## Solution
->> Answer: 4, 3, 5
+>> Answer: 2. α diversity of A = 4, α diversity of B = 3, β diversity between A and B = 5
+>> The number of species in Lake A (the α diversity) is 4 and 1 of these is also found in Lake B; the number of species in Lake B is 3 and 1 of these is also in Lake A. The β diversity between A and C is calculated as (4 - 1) + (3 - 1) = 5.
 > {: .solution}
 {: .challenge}
 
-
+In the rest of this episode, we will use the R package [`phyloseq`](https://joey711.github.io/phyloseq/) to analyse our metagenome.
+  
+  
 ## Creating lineage and rank tables  
 
 In this lesson we will use RStudio to analyses our metagenome assembly using the phyloseq package. Packages like Qiime2, MEGAN, Vegan or Phyloseq in R allows us to obtain these diversity indexes by manipulating taxonomic-assignation data.   In order to do so, we need to generate
@@ -538,6 +514,7 @@ and that these two will belong to the same OTU.
 {: .discussion}
 
 ## Reading
+Tuomisto, H. A consistent terminology for quantifying species diversity? Yes, it does exist. Oecologia 164, 853–860 (2010). [https://doi.org/10.1007/s00442-010-1812-0](https://doi.org/10.1007/s00442-010-1812-0)
 Whittaker, R. H. (1960) Vegetation of the Siskiyou Mountains, Oregon and California. Ecological Monographs, 30, 279–338
 
 {% include links.md %}
