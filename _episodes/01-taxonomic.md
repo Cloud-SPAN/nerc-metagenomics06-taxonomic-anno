@@ -49,8 +49,9 @@ We will be using the command line program Kraken2 to do our taxonomic assignment
 ~~~
 {: .bash}
 
+
 > ## Kraken2 help documentation
->~~~
+> ~~~
 > Usage: kraken2 [options] <filename(s)>
 >
 > Options:
