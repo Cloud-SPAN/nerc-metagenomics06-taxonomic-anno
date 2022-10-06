@@ -116,24 +116,51 @@ First, we need to make a directory for the kraken output and then we can run our
  cd ~/cs_course/analysis/
  mkdir taxonomy
 
- kraken2 --db ../../databases/kraken_20220926/ -input ../assembly/pilon/pilon.fasta --output taxonomy/pilon.kraken --report taxonomy/pilon.report --threads 8
+ kraken2 --db ../databases/kraken_20220926/ --output taxonomy/pilon.kraken --report taxonomy/pilon.report --threads 8 pilon/pilon.fasta
 ~~~
 {: .bash}
 
+This should take around an minute to run so we will run it in the foreground.
 
-
-These commands generate two outputs, a .kraken and a .report file. Let's look at the these files with the following commands:
+You should see an output similar to below:
 ~~~
-head ~/cs_workshop/taxonomy/pilon.kraken  
-~~~
-{: .bash}
-
-~~~
-- update to be for contig output for kraken
+Loading database information... done.
+148 sequences (14.97 Mbp) processed in 0.814s (10.9 Kseq/m, 1103.42 Mbp/m).
+  88 sequences classified (59.46%)
+  60 sequences unclassified (40.54%)
 ~~~
 {: .output}
 
-As we can see, the kraken file is not very readable. So let's look at the report file:
+This command generates two outputs, a .kraken and a .report file. Let's look at the top of these files with the following commands:
+~~~
+head taxonomy/pilon.kraken  
+~~~
+{: .bash}
+
+~~~
+U	contig_47_pilon	0	12293	0:12259
+U	contig_75_pilon	0	6016	0:5982
+C	contig_162_pilon	1386	10762	0:9 1386:8 0:6 1386:1 0:5 1386:1 0:4 1386:5 0:91 1386:1 0:38 1386:5 0:2 1386:7 0:15 1386:5 0:26 1386:3 0:5 1386:5 0:9 1386:2 0:46 1386:2 0:33 1386:5 0:21 1386:1 0:12 1386:2 0:77 1386:4 0:5 1386:1 0:7 1386:7 0:5 1386:5 0:16 1386:8 0:24 1386:1 0:43 1386:1 0:91 1386:2 0:17 1386:5 0:58 1386:7 0:96 1386:6 0:6 1386:3 0:14 1386:5 0:3 1386:2 0:17 1386:5 0:29 1386:1 0:1 1386:3 0:28 1386:2 0:13 1386:5 0:28 1386:1 0:5 1386:1 0:1 1386:4 0:4 1386:5 0:64 1386:5 0:9 1386:1 0:3 1386:5 0:24 1386:3 0:6 1386:5 0:13 1386:5 0:31 1386:5 0:11
+...
+~~~
+{: .output}
+
+As we can see, the kraken file is not very readable. So let's look at the report file instead:
+
+~~~
+ 40.54  60      60      U       0       unclassified
+ 59.46  88      1       R       1       root
+ 56.76  84      1       R1      131567    cellular organisms
+ 45.27  67      1       D       2           Bacteria
+ 36.49  54      0       D1      1783272       Terrabacteria group
+ 35.14  52      0       P       1239            Firmicutes
+ 35.14  52      0       C       91061             Bacilli
+ 34.46  51      0       O       1385                Bacillales
+ 32.43  48      0       F       186817                Bacillaceae
+ 31.76  47      4       G       1386                    Bacillus
+...
+~~~
+{: .bash}
 
 > ## Reading a Kraken report
 >
@@ -145,56 +172,18 @@ As we can see, the kraken file is not very readable. So let's look at the report
 > 6. Indented scientific name
 {: .callout}
 
-~~~
-head ~/cs_workshop/taxonomy/pilon.report
-~~~
-{: .bash}
-~~~
-more ~/cs_workshop/taxonomy/mags_taxonomy/pilon.001.report
-~~~
-{: .bash}
-~~~
- 50.96	955	955	U	0	unclassified
- 49.04	919	1	R	1	root
- 48.83	915	0	R1	131567	  cellular organisms
- 48.83	915	16	D	2	    Bacteria
- 44.40	832	52	P	1224	      Proteobacteria
- 19.37	363	16	C	28216	        Betaproteobacteria
- 16.22	304	17	O	80840	          Burkholderiales
-  5.66	106	12	F	506	            Alcaligenaceae
-  2.72	51	3	G	517	              Bordetella
-  1.12	21	21	S	2163011	                Bordetella sp. HZ20
-  .
-  .
-  .
-~~~
-{: .output}   
+By looking at the report, we can see that around 40% of the contigs
+are unclassified.
 
-
-By looking at the report, we can see that half of the contigs
-are unclassified, and that a very little proportion of contigs
-have been assigned a taxon. This is weird because we expected
-to have only one genome in the bin.
-
-Just to exemplify how a report of a complete and not contaminated
-MAG should look like, let's look at the report of this MAG from
-another study:
-~~~
-100.00	108	0	R	1	root
-100.00	108	0	R1	131567	  cellular organisms
-100.00	108	0	D	2	    Bacteria
-100.00	108	0	P	1224	      Proteobacteria
-100.00	108	0	C	28211	        Alphaproteobacteria
-100.00	108	0	O	356	          Rhizobiales
-100.00	108	0	F	41294	            Bradyrhizobiaceae
-100.00	108	0	G	374	              Bradyrhizobium
-100.00	108	108	S	2057741	                Bradyrhizobium sp. SK17
-~~~
-{: .output}
 
 > ## Exercise 1:
->
-> Why do you think we found so many taxons in this bin?
+> Looking back at the [information]{https://cloud-span.github.io/metagenomics01-qc-assembly/00-introduction-meta/index.html} we have about our dataset are we seeing the species that we expect? Are there any that we don't expect, and if so why do you think we might be seeing them? Remember we have run this taxonomic assignment on a Nanopore assembly using the Standard 8GB database.
+> > ## Solution
+> > We are seeing _Listeria monocytogenes_, _Pseudomonas aeruginosa_, _Bacillus subtilis_, _Escherichia coli_ and _Salmonella enterica_ in the Kraken output.
+> > We do not see _Saccharomyces cerevisiae_ in the output and this is likely because of database choice the Standard 8GB does not contain Fungi. This is also likely why we are seeing such a high percentage of Homo sapiens in our results - this is likely the closest approximation to this organism that Kraken can find in the database used. This is why database choice is important! You should aim to use the most comprehensive database for the compute power available to you.  
+> > The order Lactobacillales is present but kraken does not manage to identify any lower than that. This is likely because _Lactobacillus fermentum_ only makes up a small fraction of the raw sequences so was not abundant enough to be successfully assembled. The low overall abundance of _Enterococcus faecalis_, _Cryptococcus neoformans_ and _Staphylococcus aureus_ is likely why we don't see them in this output either.
+> > Finally, you may have noticed the proportion of each species does not match the proportions in the sequencing data. This is because this we are now looking at the proportion of the _contigs_ each species makes up. It is likely that the more abundant species have been assembled relatively completely (i.e. in a few of long contigs) so they will make up only a small proportion of the overall assembly (as length isn't taken into account here). If you wanted to look at the abundance of each species in the sequencing it would be more appropriate to run Kraken on the raw short reads. 
+> {: .solution}
 {: .challenge}
 
 ## Visualization of taxonomic assignment results  
