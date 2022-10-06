@@ -41,8 +41,9 @@ It is important to be aware of the many biases that that can skew the abundances
 <em>Figure 2. Abundance biases during a metagenomics protocol. <em/>
 
 ## Using Kraken 2
-We will be using the command line program Kraken2 to do our taxonomic assignment. [Kraken 2](https://ccb.jhu.edu/software/kraken2/) is the newest version of Kraken, a taxonomic classification system using exact k-mer matches to achieve high accuracy and fast classification speeds. Taxonomic assignment can be attempted on raw reads (aka before the assembly process) however we will be using our polished assembly (`pilon.fasta`) here.
+We will be using the command line program Kraken2 to do our taxonomic assignment. [Kraken 2](https://ccb.jhu.edu/software/kraken2/) is the newest version of Kraken, a taxonomic classification system using exact k-mer matches to achieve high accuracy and fast classification speeds.
 
+**Taxonomic assignment can be done on MAGs however we will be going back to use our raw short reads here.**
 
 `kraken2` is already installed on our instance so we can look at the `kraken2` help.
 ~~~  
@@ -92,15 +93,15 @@ We will be using the command line program Kraken2 to do our taxonomic assignment
 >
 > If none of the *-compressed flags are specified, and the filename provided
 > is a regular file, automatic format detection is attempted.
-> ~~~  
+> ~~~
 > {: .output}
 
-We will be using the flags `-input` to specify our input assembly, `--output` and `--report` to specify the location of the output files Kraken will generate. And also `--threads` to speed up Kraken on our instance.
+We will be using the flags `-input` to specify our input assembly, `--output` and `--report` to specify the location of the output files Kraken will generate. And also `--threads` to speed up Kraken on our instance. We will also use `--minimum-base-quality` with a value of 30 as we are using unfiltered short reads.
 
 In addition to our input files we also need a database (`-db`) with which to compare them. There are [several different databases](http://ccb.jhu.edu/software/kraken2/downloads.shtml)
 available for `kraken2`. Some of these are larger and much more comprehensive, and some are more specific. There are also instructions on how to [generate a database of your own](https://github.com/DerrickWood/kraken2/wiki/Manual#special-databases).
 
-> ## Very important to know your database!
+> ## It's very important to know your database!
 > The database you use will determine the result you get for your data.
 > Imagine you are searching for a lineage that was recently discovered and it is not part of the available databases. Would you find it?
 > Make sure you keep a note of what database you have used and when you downloaded it or when it was last updated.
@@ -116,170 +117,98 @@ First, we need to make a directory for the kraken output and then we can run our
  cd ~/cs_course/analysis/
  mkdir taxonomy
 
- kraken2 --db ../databases/kraken_20220926/ --output taxonomy/pilon.kraken --report taxonomy/pilon.report --threads 8 pilon/pilon.fasta
+kraken2 --db ../databases/kraken_standard8_20220926/ --output taxonomy/ERR2935805.kraken --report taxonomy/ERR2935805.report --minimum-base-quality 30 --threads 8 ../data/illumina_fastq/ERR2935805.fastq
 ~~~
 {: .bash}
 
-This should take around an minute to run so we will run it in the foreground.
+This should take around a minute to run so we will run it in the foreground.
 
 You should see an output similar to below:
 ~~~
 Loading database information... done.
-148 sequences (14.97 Mbp) processed in 0.814s (10.9 Kseq/m, 1103.42 Mbp/m).
-  88 sequences classified (59.46%)
-  60 sequences unclassified (40.54%)
+47832553 sequences (9662.18 Mbp) processed in 70.281s (40835.4 Kseq/m, 8248.76 Mbp/m).
+  38990565 sequences classified (81.51%)
+  8841988 sequences unclassified (18.49%)
 ~~~
 {: .output}
 
 This command generates two outputs, a .kraken and a .report file. Let's look at the top of these files with the following commands:
 ~~~
-head taxonomy/pilon.kraken  
+head taxonomy/ERR2935805.kraken  
 ~~~
 {: .bash}
 
 ~~~
-U	contig_47_pilon	0	12293	0:12259
-U	contig_75_pilon	0	6016	0:5982
-C	contig_162_pilon	1386	10762	0:9 1386:8 0:6 1386:1 0:5 1386:1 0:4 1386:5 0:91 1386:1 0:38 1386:5 0:2 1386:7 0:15 1386:5 0:26 1386:3 0:5 1386:5 0:9 1386:2 0:46 1386:2 0:33 1386:5 0:21 1386:1 0:12 1386:2 0:77 1386:4 0:5 1386:1 0:7 1386:7 0:5 1386:5 0:16 1386:8 0:24 1386:1 0:43 1386:1 0:91 1386:2 0:17 1386:5 0:58 1386:7 0:96 1386:6 0:6 1386:3 0:14 1386:5 0:3 1386:2 0:17 1386:5 0:29 1386:1 0:1 1386:3 0:28 1386:2 0:13 1386:5 0:28 1386:1 0:5 1386:1 0:1 1386:4 0:4 1386:5 0:64 1386:5 0:9 1386:1 0:3 1386:5 0:24 1386:3 0:6 1386:5 0:13 1386:5 0:31 1386:5 0:11
-...
+C	ERR2935805.1	1639	202	1637:2 0:9 1639:3 0:19 1637:8 0:17 1637:5 0:4 A:70 0:6 1637:5 0:18 1637:1 A:1
+U	ERR2935805.2	0	202	A:13 286:2 A:153
+U	ERR2935805.3	0	202	0:67 A:45 0:25 1637:2 A:29
+U	ERR2935805.4	0	202	0:53 A:50 0:65
+C	ERR2935805.5	1639	202	0:50 1639:1 0:16 A:73 0:24 1637:1 0:3
+C	ERR2935805.6	1639	202	0:1 1639:5 0:3 1637:5 0:5 1637:4 0:18 1637:2 0:6 1637:5 0:13 A:35 0:17 1639:1 0:24 1637:1 0:8 1637:1 0:14
+U	ERR2935805.7	0	202	A:42 0:7 A:119
+C	ERR2935805.8	1639	202	0:9 1639:1 0:12 1639:1 0:23 1639:6 0:15 A:36 0:7 1639:5 0:7 1639:5 0:41
+C	ERR2935805.9	1639	202	0:22 91061:5 0:9 1637:2 0:9 1637:7 0:13 A:35 0:7 1637:1 0:21 1637:3 0:8 1639:5 0:20 A:1
+C	ERR2935805.10	1639	202	1639:5 0:8 1639:5 0:1 1637:2 0:36 1639:5 0:1 1639:5 0:58 1639:2 0:5 1639:1 0:13 1639:3 0:18
 ~~~
 {: .output}
 
-As we can see, the kraken file is not very readable. So let's look at the report file instead:
+This gives us information about every read in the raw reads. As we can see, the kraken file is not very readable. So let's look at the report file instead:
 
 ~~~
- 40.54  60      60      U       0       unclassified
- 59.46  88      1       R       1       root
- 56.76  84      1       R1      131567    cellular organisms
- 45.27  67      1       D       2           Bacteria
- 36.49  54      0       D1      1783272       Terrabacteria group
- 35.14  52      0       P       1239            Firmicutes
- 35.14  52      0       C       91061             Bacilli
- 34.46  51      0       O       1385                Bacillales
- 32.43  48      0       F       186817                Bacillaceae
- 31.76  47      4       G       1386                    Bacillus
+less taxonomy/ERR2935805.report
+~~~
+{: .bash}
+
+~~~
+18.49  8841988 8841988 U       0       unclassified
+ 81.51  38990565        215309  R       1       root
+ 80.98  38733479        2279    R1      131567    cellular organisms
+ 80.97  38730266        124149  D       2           Bacteria
+ 72.67  34761467        5082    D1      1783272       Terrabacteria group
+ 72.64  34747831        4388    P       1239            Firmicutes
+ 72.63  34742819        460563  C       91061             Bacilli
+ 71.65  34273479        39112   O       1385                Bacillales
+ 70.90  33912328        1014    F       186820                Listeriaceae
+ 70.90  33911307        4877507 G       1637                    Listeria
+ 60.47  28925791        28824549        S       1639                      Listeria monocytogenes
 ...
 ~~~
 {: .bash}
 
 > ## Reading a Kraken report
 >
-> 1. Percentage of MAGs covered by the clade rooted at this taxon
-> 2. Number of MAGs covered by the clade rooted at this taxon
-> 3. Number of MAGs assigned directly to this taxon
+> 1. Percentage of reads covered by the clade rooted at this taxon
+> 2. Number of reads covered by the clade rooted at this taxon
+> 3. Number of reads assigned directly to this taxon
 > 4. A rank code, indicating (U)nclassified, (D)omain, (K)ingdom, (P)hylum, (C)lass, (O)rder, (F)amily, (G)enus, or (S)pecies. All other ranks are simply '-'.
 > 5. NCBI taxonomy ID
 > 6. Indented scientific name
 {: .callout}
 
-By looking at the report, we can see that around 40% of the contigs
-are unclassified.
+By looking at the report, we can see that around 18% of the reads are unclassified. This is either because they didn't make the cut-off quality threshold or it was not able to identify them in the database.
 
+While we could go through this report by hand it is ~7000 lines so we will instead use a piece of software to visualise and explore it interactively.
 
-> ## Exercise 1:
-> Looking back at the [information]{https://cloud-span.github.io/metagenomics01-qc-assembly/00-introduction-meta/index.html} we have about our dataset are we seeing the species that we expect? Are there any that we don't expect, and if so why do you think we might be seeing them? Remember we have run this taxonomic assignment on a Nanopore assembly using the Standard 8GB database.
-> > ## Solution
-> > We are seeing _Listeria monocytogenes_, _Pseudomonas aeruginosa_, _Bacillus subtilis_, _Escherichia coli_ and _Salmonella enterica_ in the Kraken output.
-> > We do not see _Saccharomyces cerevisiae_ in the output and this is likely because of database choice the Standard 8GB does not contain Fungi. This is also likely why we are seeing such a high percentage of Homo sapiens in our results - this is likely the closest approximation to this organism that Kraken can find in the database used. This is why database choice is important! You should aim to use the most comprehensive database for the compute power available to you.  
-> > The order Lactobacillales is present but kraken does not manage to identify any lower than that. This is likely because _Lactobacillus fermentum_ only makes up a small fraction of the raw sequences so was not abundant enough to be successfully assembled. The low overall abundance of _Enterococcus faecalis_, _Cryptococcus neoformans_ and _Staphylococcus aureus_ is likely why we don't see them in this output either.
-> > Finally, you may have noticed the proportion of each species does not match the proportions in the sequencing data. This is because this we are now looking at the proportion of the _contigs_ each species makes up. It is likely that the more abundant species have been assembled relatively completely (i.e. in a few of long contigs) so they will make up only a small proportion of the overall assembly (as length isn't taken into account here). If you wanted to look at the abundance of each species in the sequencing it would be more appropriate to run Kraken on the raw short reads. 
-> {: .solution}
-{: .challenge}
-
-## Visualization of taxonomic assignment results  
-
-After we have the taxonomy assignation what follows is some
-visualization of our results.
-[Krona](https://github.com/marbl/Krona/wiki) is a hierarchical
-data visualization software. Krona allows data to be explored with zooming,
-multi-layered pie charts and includes support for several bioinformatics
-tools and raw data formats. To use Krona in our results, let's go first into
-our taxonomy directory, which contains the pre-calculated Kraken outputs.  
-
-### Krona  
-With Krona we will explore the taxonomy of the JP4D.001 MAG.
-~~~
-$ cd ~/cs_workshop/taxonomy/mags_taxonomy
-~~~
-{: .bash}  
-
-Krona is called with the `ktImportTaxonomy` command that needs an input and an output file.  
-In our case we will create the input file with the columns three and four from `pilon.001.kraken` file.     
-~~~
-$ cut -f2,3 pilon.001.kraken > pilon.001.krona.input
-~~~
-{: .language-bash}  
-
-Now we call Krona in our `pilon.001.krona.input` file and save results in `pilon.001.krona.out.html`.  
-~~~
-$ ktImportTaxonomy pilon.001.krona.input -o pilon.001.krona.out.html
-~~~
-{: .language-bash}  
-
-~~~
-Loading taxonomy...
-Importing pilon.001.krona.input...
-   [ WARNING ]  The following taxonomy IDs were not found in the local database and were set to root
-                (if they were recently added to NCBI, use updateTaxonomy.sh to update the local
-                database): 1804984 2109625 2259134
-~~~
-{: .output}  
-
-And finally, open another terminal in your local computer,download the
-Krona output and open it on a browser.
-~~~
-$ scp csuser@ec2-3-235-238-92.compute-1.amazonaws.com:~/cs_workshop/taxonomy/pilon.001.krona.out.html .
-~~~
-{: .bash}  
-You will see a page like this:
-
-<a href="{{ page.root }}/fig/03-06-03.png">
-  <img src="{{ page.root }}/fig/03-06-03.png" alt="Krona displays a circled-shape bacterial taxonomy plot with abundance percentages of each taxa " />
-</a>
-
-> ## Exercise 2: Exploring Krona visualization
-> Try double clicking on the segment of the pie chart that represents Bacteria and see what happens.
-> What percentage of bacteria is represented by the genus Paracoccus?
->
-> Hint: There is a search box in the top left corner of the window.
->
->> ## Solution
->> 2% of Bacteria corresponds to the genus Paracoccus in this sample.
->> In the top right of the window we see little pie charts that change whenever we change the visualization
->> to expand certain taxa.   
->>
-> {: .solution}
-{: .challenge}
+## Visualisation of taxonomic assignment results  
 
 ### Pavian
-Pavian is another visualization tool that allows comparison
-between multiple samples. Pavian should be locally installed
-and needs R and Shiny, but we can try the
-[Pavian demo WebSite](https://fbreitwieser.shinyapps.io/pavian/)
-to visualize our results.  
+[Pavian](https://github.com/fbreitwieser/pavian) is a visualisation tool that allows the interactivate analysis of metagenomics data and also the comparison between multiple samples. Pavian can be installed locally but needs R and Shiny, so we will use the browser version of [Pavian](https://fbreitwieser.shinyapps.io/pavian/) to visualise our results.  
 
-First we need to download the files needed as inputs in Pavian, t
-his time we will visualize the assignation of the reads of both samples:
-`JC1A.report` and `pilon.report`.  
-This files corresponds to our Kraken reports. Again in our local
-machine lets use `scp` command.  
+First we need to download the file needed as input to Pavian. We will be using the report file generated by Kraken.
+
+We need to download the file onto our local computer using the SCP command.
 ~~~
-$ scp csuser@ec2-3-235-238-92.compute-1.amazonaws.com:~/cs_workshop/taxonomy/*report .
+scp csuser@instanceNNN.cloud-span.aws.york.ac.uk.:~/cs_course/analysis/taxonomy/ERR2935805.report .
 ~~~
 {: .language-bash}
 
-We go to the [Pavian demo WebSite](https://fbreitwieser.shinyapps.io/pavian/),
-click on Browse and choose our reports. You need to select both reports at the same time.
+On the [Pavian site](https://fbreitwieser.shinyapps.io/pavian/), click on Browse and upload the report file you have just downloaded.
 
-<a href="{{ page.root }}/fig/03-06-04.png">
-  <img src="{{ page.root }}/fig/03-06-04.png" alt="Pavian website showing the opload of two reports" />
-</a>
+<img src="{{ page.root }}/fig/03_01_pavian_upload.png" alt="Pavian website showing the upload point" />
+
+<img src="{{ page.root }}/fig/03_01_pavian_upload2.png" alt="Pavian website once the sample has uploadded" />
 
 We click on the Results Overview tab.
-
-<a href="{{ page.root }}/fig/03-06-05.png">
-  <img src="{{ page.root }}/fig/03-06-05.png" alt="Results Overview tab of the Pavian website where it shows the number of reads classified to several categories for the two samples" />
-</a>
 
 We click on the Sample tab.
 
@@ -306,5 +235,10 @@ We can look at a comparison of both our samples in the Comparison tab.
 >
 {: .challenge}
 
+
+> ## Other software
+> [Krona](https://github.com/marbl/Krona/wiki) is a hierarchical data visualization software. Krona allows data to be explored with zooming, multi-layered pie charts and includes support for several bioinformatics tools and raw data formats.
+> Krona is used in the [MG-RAST](https://www.mg-rast.org/) analysis pipeline which you can read more about at the end of this course.
+{: .callout}
 
 {% include links.md %}
