@@ -17,26 +17,23 @@ keypoints:
 ---
 ## What is taxonomic assignment?
 
-Taxonomic assignment is the process of assigning a sequence, in this case a MAG, which is a bin containing contigs, to a specific taxon. The taxon can be at a high or low level, so you could generate annotations that are domain specific (bacteria, archaea, fungi), down to annotations that give a genus or even species identification. You may see these referred to as Operational Taxonomic Units (OTUs), particularly if you are dealing with amplicon sequences. We will not be using the term OTU and instead refer to annotations and their relation to MAGs within your metagenome assembly. We may also refer to these annotations as taxons. These assignments are done by comparing our sequence (a metagenome containing multiple MAGs in this case) to a database. These searches can be done in many different ways, and against a variety of databases. We will be using a piece of software called [kraken2](https://ccb.jhu.edu/software/kraken2/) to perform the searches. However there are many programs for doing taxonomic mapping, almost all of them follows one of the next strategies:  
+Taxonomic assignment is the process of assigning a sequence, in this case a MAG, which is a bin containing contigs, to a specific taxon.
+You may see these referred to as Operational Taxonomic Units (OTUs), particularly if you are dealing with amplicon sequences.
 
-1. BLAST: Using BLAST or DIAMOND, these mappers search for the most likely hit
-for each sequence within a database of genomes (i.e. mapping). This strategy is slow.    
+These assignments are done by comparing our sequence to a database. These searches can be done in many different ways, and against a variety of databases. There are many programs for doing taxonomic mapping, almost all of them follows one of the next strategies:  
 
-2. K-mers: A genome database is broken into pieces of length k, so as to be able to
-search for unique pieces by taxonomic group, from lowest common ancestor (LCA),
-passing through phylum to species. Then, the algorithm
-breaks the query sequence (reads, contigs) into pieces of length k,
-look for where these are placed within the tree and make the
-classification with the most probable position.  
-<a href="{{ page.root }}/fig/03-06-01.png">
-  <img src="{{ page.root }}/fig/03-06-01.png" alt="Diagram of taxonomic tree" />
-</a>
+1. BLAST: Using BLAST or DIAMOND, these mappers search for the most likely hit for each sequence within a database of genomes (i.e. mapping). This strategy is slow.    
+
+2. K-mers: A genome database is broken into pieces of length k, so as to be able to search for unique pieces by taxonomic group, from lowest common ancestor (LCA), passing through phylum to species. Then, the algorithm breaks the query sequence (reads, contigs) into pieces of length k, looks for where these are placed within the tree and make the classification with the most probable position.  
+<img align="centre" width="682" height="377" <img src="{{ page.root }}/fig/01-03_LCA.png" alt="Diagram of taxonomic tree" />
+<br clear="centre"/>
 <em> Figure 1. Lowest common ancestor assignment example.<em/>
 
-3. Markers: They look for markers of a database made a priori in the sequences
-to be classified and assign the taxonomy depending on the hits obtained.    
+3. Markers: They look for markers of a database made _a priori_ in the sequences to be classified and assign the taxonomy depending on the hits obtained.    
 
-A key result when you do taxonomic assignment of metagenomes is the abundance of each taxa in your sample. The absolute abundance of a taxon is the number of sequences (reads or contigs within a MAG, depending on how you have performed the searches) assigned to it. We also often use relative abundance, which is the proportion of sequences assigned to it from the total number of sequences rather than absolute abundances. This is because the absolute abundance can be misleading and samples can be sequenced to different depths, and the relative abundance makes it easier to compare between samples accounting for sequencing depth differences. It is important to be aware of the many biases that that can skew the abundances along the metagenomics workflow, shown in the figure, and that because of them we may not be obtaining the real abundance of the organisms in the sample.
+A key result when you do taxonomic assignment of metagenomes is the abundance of each taxa in your sample. The absolute abundance of a taxon is the number of sequences (reads or contigs within a MAG, depending on how you have performed the searches) assigned to it.  
+We also often use relative abundance, which is the proportion of sequences assigned to it from the total number of sequences rather than absolute abundances. This is because the absolute abundance can be misleading and samples can be sequenced to different depths, and the relative abundance makes it easier to compare between samples accounting for sequencing depth differences.  
+It is important to be aware of the many biases that that can skew the abundances along the metagenomics workflow, shown in the figure, and that because of them we may not be obtaining the real abundance of the organisms in the sample.
 
 <a href="{{ page.root }}/fig/03-06-02.png">
   <img src="{{ page.root }}/fig/03-06-02.png" alt="Flow diagram that shows how the initial composition of 33% for each of the three taxa in the sample ends up being 4%, 72% and 24% after the biases imposed by the extraction, PCR, sequencing and bioinformatics steps." />
@@ -44,61 +41,57 @@ A key result when you do taxonomic assignment of metagenomes is the abundance of
 <em>Figure 2. Abundance biases during a metagenomics protocol. <em/>
 
 ## Using Kraken 2
+We will be using the command line program Kraken2 to do our taxonomic assignment. [Kraken 2](https://ccb.jhu.edu/software/kraken2/) is the newest version of Kraken, a taxonomic classification system using exact k-mer matches to achieve high accuracy and fast classification speeds.
 
-[Kraken 2](https://ccb.jhu.edu/software/kraken2/) is the newest version of Kraken,
-a taxonomic classification system using exact k-mer matches to achieve
-high accuracy and fast classification speeds. `kraken2` is already installed in the metagenome
-environment, lets have a look at `kraken2` help.  
-
+`kraken2` is already installed on our instance so we can look at the `kraken2` help.
 ~~~  
-$ kraken2  
+ kraken2  
 ~~~
 {: .bash}
 
-~~~
-Need to specify input filenames!
-Usage: kraken2 [options] <filename(s)>
-
-Options:
-  --db NAME               Name for Kraken 2 DB
-                          (default: none)
-  --threads NUM           Number of threads (default: 1)
-  --quick                 Quick operation (use first hit or hits)
-  --unclassified-out FILENAME
-                          Print unclassified sequences to filename
-  --classified-out FILENAME
-                          Print classified sequences to filename
-  --output FILENAME       Print output to filename (default: stdout); "-" will
-                          suppress normal output
-  --confidence FLOAT      Confidence score threshold (default: 0.0); must be
-                          in [0, 1].
-  --minimum-base-quality NUM
-                          Minimum base quality used in classification (def: 0,
-                          only effective with FASTQ input).
-  --report FILENAME       Print a report with aggregrate counts/clade to file
-  --use-mpa-style         With --report, format report output like Kraken 1's
-                          kraken-mpa-report
-  --report-zero-counts    With --report, report counts for ALL taxa, even if
-                          counts are zero
-  --report-minimizer-data With --report, report minimizer and distinct minimizer
-                          count information in addition to normal Kraken report
-  --memory-mapping        Avoids loading database into RAM
-  --paired                The filenames provided have paired-end reads
-  --use-names             Print scientific names instead of just taxids
-  --gzip-compressed       Input files are compressed with gzip
-  --bzip2-compressed      Input files are compressed with bzip2
-  --minimum-hit-groups NUM
-                          Minimum number of hit groups (overlapping k-mers
-                          sharing the same minimizer) needed to make a call
-                          (default: 2)
-  --help                  Print this message
-  --version               Print version information
-
-If none of the *-compressed flags are specified, and the filename provided
-is a regular file, automatic format detection is attempted.
-
-~~~  
-{: .output}
+> ## Kraken2 help documentation
+>~~~
+> Usage: kraken2 [options] <filename(s)>
+>
+> Options:
+>   --db NAME               Name for Kraken 2 DB
+>                           (default: none)
+>   --threads NUM           Number of threads (default: 1)
+>   --quick                 Quick operation (use first hit or hits)
+>   --unclassified-out FILENAME
+>                           Print unclassified sequences to filename
+>   --classified-out FILENAME
+>                           Print classified sequences to filename
+>   --output FILENAME       Print output to filename (default: stdout); "-" will
+>                           suppress normal output
+>   --confidence FLOAT      Confidence score threshold (default: 0.0); must be
+>                           in [0, 1].
+>   --minimum-base-quality NUM
+>                           Minimum base quality used in classification (def: 0,
+>                           only effective with FASTQ input).
+>   --report FILENAME       Print a report with aggregrate counts/clade to file
+>   --use-mpa-style         With --report, format report output like Kraken 1's
+>                           kraken-mpa-report
+>   --report-zero-counts    With --report, report counts for ALL taxa, even if
+>                           counts are zero
+>   --report-minimizer-data With --report, report minimizer and distinct minimizer
+>                           count information in addition to normal Kraken report
+>   --memory-mapping        Avoids loading database into RAM
+>   --paired                The filenames provided have paired-end reads
+>   --use-names             Print scientific names instead of just taxids
+>   --gzip-compressed       Input files are compressed with gzip
+>   --bzip2-compressed      Input files are compressed with bzip2
+>   --minimum-hit-groups NUM
+>                           Minimum number of hit groups (overlapping k-mers
+>                           sharing the same minimizer) needed to make a call
+>                           (default: 2)
+>   --help                  Print this message
+>   --version               Print version information
+>
+> If none of the *-compressed flags are specified, and the filename provided
+> is a regular file, automatic format detection is attempted.
+> ~~~  
+> {: .output}
 
 In addition to our input files we also need a database with which to compare them. There are [several databases](http://ccb.jhu.edu/software/kraken2/downloads.shtml)
 compatible to be used with kraken2 in the taxonomical assignment process. Some of these are larger and much more comprehensive, and some are more specific. There are also instructions on how to [generate a database of your own](https://github.com/DerrickWood/kraken2/wiki/Manual#special-databases).
