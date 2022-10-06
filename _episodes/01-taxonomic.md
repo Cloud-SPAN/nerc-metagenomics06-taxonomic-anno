@@ -41,7 +41,8 @@ It is important to be aware of the many biases that that can skew the abundances
 <em>Figure 2. Abundance biases during a metagenomics protocol. <em/>
 
 ## Using Kraken 2
-We will be using the command line program Kraken2 to do our taxonomic assignment. [Kraken 2](https://ccb.jhu.edu/software/kraken2/) is the newest version of Kraken, a taxonomic classification system using exact k-mer matches to achieve high accuracy and fast classification speeds.
+We will be using the command line program Kraken2 to do our taxonomic assignment. [Kraken 2](https://ccb.jhu.edu/software/kraken2/) is the newest version of Kraken, a taxonomic classification system using exact k-mer matches to achieve high accuracy and fast classification speeds. Taxonomic assignment can be attempted on raw reads (aka before the assembly process) however we will be using our polished assembly (`pilon.fasta`) here.
+
 
 `kraken2` is already installed on our instance so we can look at the `kraken2` help.
 ~~~  
@@ -94,37 +95,32 @@ We will be using the command line program Kraken2 to do our taxonomic assignment
 > ~~~  
 > {: .output}
 
-In addition to our input files we also need a database with which to compare them. There are [several databases](http://ccb.jhu.edu/software/kraken2/downloads.shtml)
-compatible to be used with kraken2 in the taxonomical assignment process. Some of these are larger and much more comprehensive, and some are more specific. There are also instructions on how to [generate a database of your own](https://github.com/DerrickWood/kraken2/wiki/Manual#special-databases).
+We will be using the flags `-input` to specify our input assembly, `--output` and `--report` to specify the location of the output files Kraken will generate. And also `--threads` to speed up Kraken on our instance.
+
+In addition to our input files we also need a database (`-db`) with which to compare them. There are [several different databases](http://ccb.jhu.edu/software/kraken2/downloads.shtml)
+available for `kraken2`. Some of these are larger and much more comprehensive, and some are more specific. There are also instructions on how to [generate a database of your own](https://github.com/DerrickWood/kraken2/wiki/Manual#special-databases).
 
 > ## Very important to know your database!
 > The database you use will determine the result you get for your data.
 > Imagine you are searching for a lineage that was recently discovered and it is not part of the available databases. Would you find it?
+> Make sure you keep a note of what database you have used and when you downloaded it or when it was last updated.
 {: .callout}
 
-Minikraken is a popular database that attempts to conserve its sensitivity
-despite its small size (Needs 8GB of RAM for the assignment). If you are using a HPC you may not have the same memory constraints and may want to use a much fuller database. We will have this database already available on the instance, however if you were to download the database, you would use the following command:
-~~~
-$ curl -O ftp://ftp.ccb.jhu.edu/pub/data/kraken2_dbs/old/minikraken2_v2_8GB_201904.tgz         
-$ tar -xvzf minikraken2_v2_8GB_201904.tgz
-~~~
-{: .do not run this}
+You can view and download many of the common Kraken2 databases [on this site](https://benlangmead.github.io/aws-indexes/k2). We will be using `Standard-8` which is already pre installed on the instance.
 
+## Taxonomic assignment of an assembly
 
-## Taxonomic assignment of MAGs
-
-As we have learned, taxonomic assignment can be attempted before the assembly process.
-In this case we would use FASTQ files as inputs, which would be
-`pilon_R1.trim.fastq.gz` and `pilon_R2.trim.fastq.gz`. And the outputs would be two files: the report
-`pilon.report` and the kraken file `pilon.kraken`.  
-
-To run kraken2 run this command:  
+First, we need to make a directory for the kraken output and then we can run our kraken command.
 
 ~~~
+ cd ~/cs_course/analysis/
  mkdir taxonomy
- kraken2 --db kraken-db --threads 12 -input pilon.fasta --output taxonomy/pilon.kraken --report TAXONOMY/pilon.report
+
+ kraken2 --db ../../databases/kraken_20220926/ -input ../assembly/pilon/pilon.fasta --output taxonomy/pilon.kraken --report taxonomy/pilon.report --threads 8
 ~~~
 {: .bash}
+
+
 
 These commands generate two outputs, a .kraken and a .report file. Let's look at the these files with the following commands:
 ~~~
