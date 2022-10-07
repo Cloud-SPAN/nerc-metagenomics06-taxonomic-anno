@@ -199,7 +199,7 @@ First we need to download the file needed as input to Pavian. We will be using t
 
 We need to download the file onto our local computer using the SCP command.
 ~~~
-scp csuser@instanceNNN.cloud-span.aws.york.ac.uk.:~/cs_course/analysis/taxonomy/ERR2935805.report .
+scp -i login-key-instanceNNN.pem csuser@instanceNNN.cloud-span.aws.york.ac.uk.:~/cs_course/analysis/taxonomy/ERR2935805.report .
 ~~~
 {: .language-bash}
 
