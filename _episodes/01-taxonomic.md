@@ -117,7 +117,7 @@ First, we need to make a directory for the kraken output and then we can run our
  cd ~/cs_course/analysis/
  mkdir taxonomy
 
-kraken2 --db ../databases/kraken_standard8_20220926/ --output taxonomy/ERR2935805.kraken --report taxonomy/ERR2935805.report --minimum-base-quality 30 --threads 8 ../data/illumina_fastq/ERR2935805.fastq
+kraken2 --db ../databases/kraken_20220926/ --output taxonomy/ERR2935805.kraken --report taxonomy/ERR2935805.report --minimum-base-quality 30 --threads 8 ../data/illumina_fastq/ERR2935805.fastq
 ~~~
 {: .bash}
 
