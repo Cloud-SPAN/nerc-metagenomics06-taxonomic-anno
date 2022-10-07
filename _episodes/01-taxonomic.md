@@ -121,14 +121,15 @@ kraken2 --db ../databases/kraken_20220926/ --output taxonomy/ERR2935805.kraken -
 ~~~
 {: .bash}
 
-This should take around a minute to run so we will run it in the foreground.
+This should take around 3 - 5 minutes to run so we will run it in the foreground.
 
 You should see an output similar to below:
 ~~~
 Loading database information... done.
-47832553 sequences (9662.18 Mbp) processed in 70.281s (40835.4 Kseq/m, 8248.76 Mbp/m).
+47832553 sequences (9662.18 Mbp) processed in 225.420s (12731.6 Kseq/m, 2571.78 Mbp/m).
   38990565 sequences classified (81.51%)
   8841988 sequences unclassified (18.49%)
+
 ~~~
 {: .output}
 
