@@ -184,7 +184,7 @@ We will use a `R` package called [`phyloseq`](https://joey711.github.io/phyloseq
   
   
 ---------------------here--------------
-
+copy the .biom file to local??
 ~~~
 nnnnnnnn
 ~~~
