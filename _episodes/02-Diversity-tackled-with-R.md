@@ -18,6 +18,7 @@ math: yes
 
 Once we know the taxonomic composition of our metagenomes we can characterise them by their diversity.
 
+## What is diversity?
 Species diversity is the number of species in a system and the relative abundance of each of those species. It can be defined on three different scales (Whittaker, 1960).
 
 1. the total species diversity in an ecosystem known as **gamma (γ) diversity**
@@ -79,156 +80,113 @@ Figure 2 shows α and the β diversity for three lakes. The most simple way to c
 > {: .solution}
 {: .challenge}
 
-In the rest of this episode, we will use the R package [`phyloseq`](https://joey711.github.io/phyloseq/) to analyse our metagenome.
+## How do we calculate diversity from metagenomic samples?
   
+There are 2 steps to need to calculaue the diversity of our samples.
+
+1. Create a Biological Observation Matrix, BIOM table, from the Kraken output. A BIOM table is an matrix of counts with samples in the columns and taxa in the rows. The values in the matrix are the counts of that taxa in that sample.
+2. Analyse the BIOM table to generate diversity indices and relative abundance plots to compare samples.
   
-## Creating lineage and rank tables  
+### Create a BIOM table
+We will use a program called [`kraken-biom`](https://github.com/smdabdoub/kraken-biom) to convert our Kraken output into a BIOM table. `kraken-biom` takes the `.report` output of Kraken and creates a BIOM table in [`.biom`](https://biom-format.org/) format.
 
-In this lesson we will use RStudio to analyses our metagenome assembly using the phyloseq package. Packages like Qiime2, MEGAN, Vegan or Phyloseq in R allows us to obtain these diversity indexes by manipulating taxonomic-assignation data.   In order to do so, we need to generate
-an abundance matrix from the Kraken output files. One program widely used for this purpose is `kraken-biom`.
-
-
-
-### The terminal in RStudio
-
-RStudio has an integrated terminal that uses the same language as the one we learned in the Command-line lessons. As well, R's terminal
-is an interface that executes programs, and is better to deal with long data sets than in a visual interface.  
-
-You can also known in which directory you are standing in the terminal, by using `pwd`.
-
-Let's explore the content of some of our data files. In order to do it, we have to move to
-the  folder where our taxonomic-data files are:
+Move in to your `taxonomy` folder
 ~~~
-$ cd /home/dcuser/dc_workshop/taxonomy
-~~~~
+$ cd ~/cs_course/analysis/taxonomy
+~~~~ 
+{: .bash}
+  
+List the files
+~~~
+$ ls -l
+~~~~ 
 {: .bash}
 
-First, we will visualize the content of our directory by the `ls` command.  
 ~~~
-$ ls
-~~~
-{: .bash}
-~~~
-JC1A.kraken  JC1A.report  JP41.report  JP4D.kraken  JP4D.report  mags_taxonomy
+-rw-rw-r-- 1 csuser csuser 3935007137 Oct  9 09:16 ERR2935805.kraken
+-rw-rw-r-- 1 csuser csuser     424101 Oct  9 09:16 ERR2935805.report
 ~~~
 {: .output}
 
-Files `.kraken` and `.report`are the output of the Kraken program, we can see a few lines of the file `.kraken`
-using the command `head`.   
+Files `.kraken` and `.report`are the output of the Kraken program. We can see a few lines of the `.kraken` using the command `head`.   
 ~~~
-$ head JP4D.kraken  
+$ head  ERR2935805.kraken  
 ~~~
 {: .bash}
-~~~
-U MISEQ-LAB244-W7:156:000000000-A80CV:1:1101:19691:2037 0 250|251 0:216 |:| 0:217
-U MISEQ-LAB244-W7:156:000000000-A80CV:1:1101:14127:2052 0 250|238 0:216 |:| 0:204
-U MISEQ-LAB244-W7:156:000000000-A80CV:1:1101:14766:2063 0 251|251 0:217 |:| 0:217
-C MISEQ-LAB244-W7:156:000000000-A80CV:1:1101:15697:2078 2219696 250|120 0:28 350054:5 1224:2 0:1 2:5 0:77 2219696:5 0:93 |:| 379:4 0:82
-U MISEQ-LAB244-W7:156:000000000-A80CV:1:1101:15529:2080 0 250|149 0:216 |:| 0:115
-U MISEQ-LAB244-W7:156:000000000-A80CV:1:1101:14172:2086 0 251|250 0:217 |:| 0:216
-U MISEQ-LAB244-W7:156:000000000-A80CV:1:1101:17552:2088 0 251|249 0:217 |:| 0:215
-U MISEQ-LAB244-W7:156:000000000-A80CV:1:1101:14217:2104 0 251|227 0:217 |:| 0:193
-C MISEQ-LAB244-W7:156:000000000-A80CV:1:1101:15110:2108 2109625 136|169 0:51 31989:5 2109625:7 0:39 |:| 0:5 74033:2 31989:5 1077935:1 31989:7 0:7 60890:2 0:105 2109625:1
-C MISEQ-LAB244-W7:156:000000000-A80CV:1:1101:19558:2111 119045  251|133 0:18 1224:9 2:5 119045:4 0:181 |:| 0:99
 
+~~~
+C       ERR2935805.1    1639    202     1637:2 0:9 1639:3 0:19 1637:8 0:17 1637:5 0:4 A:70 0:6 1637:5 0:18 1637:1 A:1
+U       ERR2935805.2    0       202     A:13 286:2 A:153
+U       ERR2935805.3    0       202     0:67 A:45 0:25 1637:2 A:29
+U       ERR2935805.4    0       202     0:53 A:50 0:65
+C       ERR2935805.5    1639    202     0:50 1639:1 0:16 A:73 0:24 1637:1 0:3
+C       ERR2935805.6    1639    202     0:1 1639:5 0:3 1637:5 0:5 1637:4 0:18 1637:2 0:6 1637:5 0:13 A:35 0:17 1639:1 0:24 1637:1 0:8 1637:1 0:14
+U       ERR2935805.7    0       202     A:42 0:7 A:119
+C       ERR2935805.8    1639    202     0:9 1639:1 0:12 1639:1 0:23 1639:6 0:15 A:36 0:7 1639:5 0:7 1639:5 0:41
+C       ERR2935805.9    1639    202     0:22 91061:5 0:9 1637:2 0:9 1637:7 0:13 A:35 0:7 1637:1 0:21 1637:3 0:8 1639:5 0:20 A:1
+C       ERR2935805.10   1639    202     1639:5 0:8 1639:5 0:1 1637:2 0:36 1639:5 0:1 1639:5 0:58 1639:2 0:5 1639:1 0:13 1639:3 0:18
 ~~~
 {: .output}
 
-This information may be confused, let's take out our cheatsheet to understand some of its components:
+Note that some of lines are quite long and will wrap in the display. Each line corresponds to a sequence and has 5 tab-delimited columns
 
+| Column | Description                | Example from line 1  |
+| ------ | -------------------------- | ---------------------|
+| 1      | one letter code indicating that the sequence was either classified or unclassified. | C |
+| 2      | The sequence ID, obtained from the FASTA/FASTQ header | ERR2935805.1 |
+| 3      | The taxonomy ID Kraken used to label the sequence; this is 0 if the sequence is unclassified. | 1639 |
+| 4      | The length of the sequence in bp. | 202 |
+| 5      | A space-delimited list indicating the LCA mapping of each _k_-mer in the sequence | 1637:2 0:9 1639:3 0:19 1637:8 0:17 1637:5 0:4 A:70 0:6 1637:5 0:18 1637:1 A:1 which means the first 2 _k_-mers mapped to taxonomy ID 1637, the next 9 _k_-mers did not match any taxonomy ID, the next 3 _k_-mers mather taxonomy ID 1639, the next 19 did not match any, the next 8 matched 1637 etc |
 
-|------------------------------+------------------------------------------------------------------------------|  
-| Column                       |                              Description                                     |  
-|------------------------------+------------------------------------------------------------------------------|  
-|   C                          |  Classified or unclassified                                                  |  
-|------------------------------+------------------------------------------------------------------------------|  
-|   MISEQ-LAB244-W7:156:000000000-A80CV:1:1101:15697:2078               |FASTA header of the sequence         |   
-|------------------------------+------------------------------------------------------------------------------|  
-|  2219696                     | Tax ID                                                                       |  
-|------------------------------+------------------------------------------------------------------------------|  
-|    250:120                   |Read length                                                                   |   
-|------------------------------+------------------------------------------------------------------------------|  
-|  0:28 350054:5 1224:2 0:1 2:5 0:77 2219696:5 0:93 379:4 0:82|kmers hit to a taxonomic ID *e.g.* tax ID 350054 has 5 hits, tax ID 1224 has 2 hits, etc. |   
-|-------------------+-----------------------------------------------------------------------------------------|  
 
 There are other set of files with `.report` suffix. This is an output with the same information as the one found
 in the `.kraken` files, but in a more human-readable syntax:
 ~~~
-$ head JP4D.report  
+$ head ERR2935805.report  
 ~~~
 {: .bash}
+
 ~~~
-78.13 587119  587119  U 0 unclassified
- 21.87  164308  1166  R 1 root
- 21.64  162584  0 R1  131567    cellular organisms
- 21.64  162584  3225  D 2     Bacteria
- 18.21  136871  3411  P 1224        Proteobacteria
- 14.21  106746  3663  C 28211         Alphaproteobacteria
-  7.71  57950 21  O 204455            Rhodobacterales
-  7.66  57527 6551  F 31989             Rhodobacteraceae
-  1.23  9235  420 G 1060                Rhodobacter
-  0.76  5733  4446  S 1063                  Rhodobacter sphaeroides
-  ~~~
+18.49  8841988 8841988 U       0       unclassified
+81.51  38990565        215309  R       1       root
+80.98  38733479        2279    R1      131567    cellular organisms
+80.97  38730266        124149  D       2           Bacteria
+72.67  34761467        5082    D1      1783272       Terrabacteria group
+72.64  34747831        4388    P       1239            Firmicutes
+72.63  34742819        460563  C       91061             Bacilli
+71.65  34273479        39112   O       1385                Bacillales
+70.90  33912328        1014    F       186820                Listeriaceae
+70.90  33911307        4877507 G       1637                    Listeria
+~~~
 {: .output}
 
-
-### Generating a phyloseq object
-
-Kraken-biom is a program that creates BIOM tables from the Kraken output
-[kraken-biom](https://github.com/smdabdoub/kraken-biom)
-
-Let's take a look at the different flags that `kraken-biom` has:
-
+With the next command, we are going to create a table in [Biom](https://biom-format.org/) format called `mock.biom` from our sample, ERR2935805.report . 
 ~~~
-$ conda activate metagenomics
+$ kraken-biom ERR2935805.report  --fmt json -o mock.biom
 ~~~
 {: .bash}
 
+If we list the files in our `taxonomy` folder, we will see that the `mock.biom` file has been created.
 ~~~
-$ kraken-biom -h                  
+$ ls -l
 ~~~
 {: .bash}
-
 ~~~
-usage: kraken-biom [-h] [--max {D,P,C,O,F,G,S}] [--min {D,P,C,O,F,G,S}]
-                   [-o OUTPUT_FP] [--otu_fp OTU_FP] [--fmt {hdf5,json,tsv}]
-                   [--gzip] [--version] [-v]
-                   kraken_reports [kraken_reports ...]
-
-Create BIOM-format tables (http://biom-format.org) from Kraken output
-(http://ccb.jhu.edu/software/kraken/).
-.
-.
-.
+-rw-rw-r-- 1 csuser csuser 3935007137 Oct  9 09:16 ERR2935805.kraken
+-rw-rw-r-- 1 csuser csuser     424101 Oct  9 09:16 ERR2935805.report
+-rw-rw-r-- 1 csuser csuser     741259 Oct  9 10:22 mock.biom
 ~~~
 {: .output}
-By a close look at the first output lines, it is noticeable that we need a specific output
-from Kraken: `.reports`.
+  
+###  Analyse the BIOM table  
 
-With the next command, we are going to create a table in [Biom](https://biom-format.org/) format called `cuatroc.biom`. We will include the two samples we have been working with (`JC1A` and `JP4D`) and a thrid one `JP41`, to be able to perform certain analyses later on.
-~~~
-$ kraken-biom JC1A.report JP4D.report JP41.report --fmt json -o cuatroc.biom
-~~~
-{: .bash}
-
-If we inspect our folder, we will see that the `cuatroc.biom` file has been created, this is
-a `biom` object which contains both, the abundances of each OTU and the identificator of each OTU.
-With this result, we are ready to return to RStudio's console and beggin to manipulate our
-taxonomic-data.
-
-##  Manipulating lineage and rank tables with phyloseq  
-
-### Load required packages  
-
-Phyloseq is a library with tools to analyze and plot your metagenomics tables. Let's install [phyloseq](https://joey711.github.io/phyloseq/) (This instruction might not work on certain versions of R) and other libraries required for its execution:  
+We will use a `R` package called [`phyloseq`](https://joey711.github.io/phyloseq/) to analyse our metagenome. Other software for analyses of diversity include [Qiime2](https://qiime2.org/), [MEGAN](https://www.wsi.uni-tuebingen.de/lehrstuehle/algorithms-in-bioinformatics/software/megan6/) and the `R` package [`Vegan`](https://vegandevs.github.io/vegan/) 
+  
+  
+---------------------here--------------
 
 ~~~
-> if (!requireNamespace("BiocManager", quietly = TRUE))
-    install.packages("BiocManager")
-
-> BiocManager::install("phyloseq") # Install phyloseq
-
-> install.packages(c("ggplot2", "readr", "patchwork")) #install ggplot2 and patchwork to chart publication-quality plots and readr to read rectangular datasets.
+nnnnnnnn
 ~~~
 {: .language-r}  
 
