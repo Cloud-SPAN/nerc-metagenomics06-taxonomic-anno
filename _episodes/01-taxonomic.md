@@ -186,35 +186,36 @@ less taxonomy/ERR2935805.report
 > 6. Indented scientific name
 {: .callout}
 
-By looking at the report, we can see that around 18% of the reads are unclassified. This is either because they didn't make the cut-off quality threshold or it was not able to identify them in the database.
+In our case, 18.49% of the reads are unclassified. These reads either didn't meet quality threshold or were not identified in the database.
 
-While we could go through this report by hand it is ~7000 lines so we will instead use a piece of software to visualise and explore it interactively.
+As the report is  nearly 7000 lines, we will explore it with [Pavian](https://github.com/fbreitwieser/pavian), rather than by hand.
 
 ## Visualisation of taxonomic assignment results  
 
 ### Pavian
-[Pavian](https://github.com/fbreitwieser/pavian) is a visualisation tool that allows the interactivate analysis of metagenomics data and also the comparison between multiple samples. Pavian can be installed locally but we will use the browser version of [Pavian](https://fbreitwieser.shinyapps.io/pavian/). 
+[Pavian](https://github.com/fbreitwieser/pavian) is a tool for the interactive visualisation of metagenomics data and allows the comparison of multiple samples. Pavian can be installed locally but we will use the browser version of [Pavian](https://fbreitwieser.shinyapps.io/pavian/). 
 
-First we need to download ERR2935805.report from our instance to out local computer. Launch a git bash window which is logged into your local computer. Then use `scp` to fetch ERR2935805.report
+First we need to download ERR2935805.report from our AWS instance to our local computer. Launch a git bash window or terminal which is logged into your local computer, from the `cloudpan` folder. Then use `scp` to fetch ERR2935805.report. 
 ~~~
 scp -i login-key-instanceNNN.pem csuser@instanceNNN.cloud-span.aws.york.ac.uk.:~/cs_course/analysis/taxonomy/ERR2935805.report .
 ~~~
 {: .language-bash}
-
+Check you have included the ` .` on the end meaning copy the file 'to here'.
+  
+  
 Go to [Pavian site](https://fbreitwieser.shinyapps.io/pavian/), click on Browse and upload the ERR2935805.report file you have just downloaded.
 
 <img src="{{ page.root }}/fig/03_01_pavian_upload.png" alt="Pavian website showing the upload point" />
 
 <img src="{{ page.root }}/fig/03_01_pavian_upload2.png" alt="Pavian website once the sample has uploadded" />
 
-We click on the Results Overview tab.
+Click on **Results Overview** for the summary about the number of classified and unclassified reads.
 
-We click on the Sample tab.
+Click on **Sample**
 
-<a href="{{ page.root }}/fig/03-06-06.png">
-  <img src="{{ page.root }}/fig/03-06-06.png" alt="Sankey type visualization that shows the abundance of each taxonomic label in a tree-like manner" />
-</a>
-
+<img src="{{ page.root }}/fig/03_01_pavian_sample.png" alt="Sankey type visualization that shows the abundance of each taxonomic label in a tree-like manner" />
+  
+  
 We can look at the abundance of a specific taxon by clicking on it.
 
 <a href="{{ page.root }}/fig/03-06-07.png">
