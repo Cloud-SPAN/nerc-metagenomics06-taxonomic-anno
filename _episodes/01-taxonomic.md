@@ -200,7 +200,7 @@ First we need to download ERR2935805.report from our AWS instance to our local c
 scp -i login-key-instanceNNN.pem csuser@instanceNNN.cloud-span.aws.york.ac.uk.:~/cs_course/analysis/taxonomy/ERR2935805.report .
 ~~~
 {: .language-bash}
-Check you have included the ` .` on the end meaning copy the file 'to here'.
+Check you have included the `.` on the end meaning copy the file 'to here'.
 
 
 Go to [Pavian site](https://fbreitwieser.shinyapps.io/pavian/), click on Browse and upload the ERR2935805.report file you have just downloaded.
@@ -209,13 +209,11 @@ Go to [Pavian site](https://fbreitwieser.shinyapps.io/pavian/), click on Browse 
 
 <img src="{{ page.root }}/fig/03_01_pavian_upload2.png" alt="Pavian website once the sample has uploadded" />
 
-We click on the Results Overview tab.
+Click on **Results Overview** for the summary about the number of classified and unclassified reads.
 
-We click on the Sample tab.
+Click on **Sample**
 
-<a href="{{ page.root }}/fig/03-06-06.png">
-  <img src="{{ page.root }}/fig/03-06-06.png" alt="Sankey type visualization that shows the abundance of each taxonomic label in a tree-like manner" />
-</a>
+<img src="{{ page.root }}/fig/03_01_pavian_sample.png" alt="Sankey type visualization that shows the abundance of each taxonomic label in a tree-like manner" />
 
 We can look at the abundance of a specific taxon by clicking on it.
 
