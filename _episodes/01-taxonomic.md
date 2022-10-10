@@ -222,7 +222,7 @@ You can also view the Sankey diagram of our example here [sankey-ERR2935805.repo
 
 <iframe
   src="{{ page.root }}/files/sankey-ERR2935805.report.html"
-  style="width:100%; height:1000px;"
+  style="width:100%; height:500px;"
 ></iframe>
 
 > ## Exercise 1:
