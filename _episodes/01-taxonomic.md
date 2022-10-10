@@ -193,29 +193,30 @@ As the report is  nearly 7000 lines, we will explore it with [Pavian](https://gi
 ## Visualisation of taxonomic assignment results  
 
 ### Pavian
-[Pavian](https://github.com/fbreitwieser/pavian) is a tool for the interactive visualisation of metagenomics data and allows the comparison of multiple samples. Pavian can be installed locally but we will use the browser version of [Pavian](https://fbreitwieser.shinyapps.io/pavian/). 
+[Pavian](https://github.com/fbreitwieser/pavian) is a tool for the interactive visualisation of metagenomics data and allows the comparison of multiple samples. Pavian can be installed locally but we will use the browser version of [Pavian](https://fbreitwieser.shinyapps.io/pavian/).
 
-First we need to download ERR2935805.report from our AWS instance to our local computer. Launch a git bash window or terminal which is logged into your local computer, from the `cloudpan` folder. Then use `scp` to fetch ERR2935805.report. 
+First we need to download ERR2935805.report from our AWS instance to our local computer. Launch a git bash window or terminal which is logged into your local computer, from the `cloudpan` folder. Then use `scp` to fetch ERR2935805.report.
 ~~~
 scp -i login-key-instanceNNN.pem csuser@instanceNNN.cloud-span.aws.york.ac.uk.:~/cs_course/analysis/taxonomy/ERR2935805.report .
 ~~~
 {: .language-bash}
 Check you have included the ` .` on the end meaning copy the file 'to here'.
-  
-  
+
+
 Go to [Pavian site](https://fbreitwieser.shinyapps.io/pavian/), click on Browse and upload the ERR2935805.report file you have just downloaded.
 
 <img src="{{ page.root }}/fig/03_01_pavian_upload.png" alt="Pavian website showing the upload point" />
 
 <img src="{{ page.root }}/fig/03_01_pavian_upload2.png" alt="Pavian website once the sample has uploadded" />
 
-Click on **Results Overview** for the summary about the number of classified and unclassified reads.
+We click on the Results Overview tab.
 
-Click on **Sample**
+We click on the Sample tab.
 
-<img src="{{ page.root }}/fig/03_01_pavian_sample.png" alt="Sankey type visualization that shows the abundance of each taxonomic label in a tree-like manner" />
-  
-  
+<a href="{{ page.root }}/fig/03-06-06.png">
+  <img src="{{ page.root }}/fig/03-06-06.png" alt="Sankey type visualization that shows the abundance of each taxonomic label in a tree-like manner" />
+</a>
+
 We can look at the abundance of a specific taxon by clicking on it.
 
 <a href="{{ page.root }}/fig/03-06-07.png">
@@ -237,7 +238,7 @@ We can look at a comparison of both our samples in the Comparison tab.
 
 
 > ## Other software
-> [Krona](https://github.com/marbl/Krona/wiki) is a hierarchical data visualization software. Krona allows data to be explored with zooming, multi-layered pie charts and includes support for several bioinformatics tools and raw data formats.
+> [Krona](https://github.com/marbl/Krona/wiki) is a hierarchical data visualization software. Krona allows data to be explored with zooming, multi-layered pie charts and includes support for several bioinformatics tools and raw data formats.  
 > Krona is used in the [MG-RAST](https://www.mg-rast.org/) analysis pipeline which you can read more about at the end of this course.
 {: .callout}
 
