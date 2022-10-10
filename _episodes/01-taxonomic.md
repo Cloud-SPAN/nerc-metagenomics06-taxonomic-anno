@@ -220,6 +220,11 @@ On the Sample tab we can see a [Sankey diagram](https://en.wikipedia.org/wiki/Sa
 
 You can also view the Sankey diagram of our example here [sankey-ERR2935805.report.html]({{ page.root }}/files/sankey-ERR2935805.report.html)
 
+<iframe
+  src="{{ page.root }}/files/sankey-ERR2935805.report.html"
+  style="width:100%; height:300px;"
+></iframe>
+
 > ## Exercise 1:
 > Using the Sankey diagram and looking back at the [information](https://cloud-span.github.io/metagenomics01-qc-assembly/00-introduction-meta/index.html) we have about our dataset are we seeing the species that we expect in our Kraken output?  Are there any that we don't expect, and if so why do you think we might be seeing them?  Remember we have run this taxonomic assignment using the Standard 8GB database.
 > > ## Solution
