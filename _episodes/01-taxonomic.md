@@ -209,8 +209,13 @@ Go to [Pavian site](https://fbreitwieser.shinyapps.io/pavian/), click on Browse 
 
 <img src="{{ page.root }}/fig/03_01_pavian_upload2.png" alt="Pavian website once the sample has uploaded" />
 
+
+<img align="left" img src="{{ page.root }}/fig/03_01_pavian_column.png" alt="Pavian columns" />
+
 Once the file is uploaded we can explore the output generated.
 The column on the left has multiple different options. As we only have one sample and don't have an alignment to view, only the "Results Overview" and "Sample" tabs are of interest to us.
+
+<br clear="left"/>
 
 At the bottom of this column there is also an option to "Generate HTML report", this is a very good option if you wanted to share your results with others. We have used that option to generate one here for the `ERR2935805` data in order to share our results. If you haven't been able to generate a Pavian output you can view our exported example here [ERR2935805-pavian-report.html]({{ page.root }}/files/ERR2935805-pavian-report.html) (note this looks a bit different to the website version).
 
@@ -224,6 +229,9 @@ You can also view the Sankey diagram of our example here [sankey-ERR2935805.repo
   src="{{ page.root }}/files/sankey-ERR2935805.report.html"
   style="width:100%; height:500px;"
 ></iframe>
+
+
+
 
 > ## Exercise 1:
 > Using the Sankey diagram and looking back at the [information](https://cloud-span.github.io/metagenomics01-qc-assembly/00-introduction-meta/index.html) we have about our dataset are we seeing the species that we expect in our Kraken output?  Are there any that we don't expect, and if so why do you think we might be seeing them?  Remember we have run this taxonomic assignment using the Standard 8GB database.
