@@ -13,7 +13,7 @@ objectives:
 keypoints:
 - "Taxonomy can only be assigned by comparing against a database with genome annotations. These are not exhaustive and so many things will remain unannotated depending on the samples you are analysing."
 - "Taxonomic assignment can be done using Kraken2."
-- "Krona and Pavian are web based tools that can be used to visualize the assigned taxa."
+- "Pavian is a web based tool that can be used to visualize the assigned taxa."
 ---
 ## What is taxonomic assignment?
 
