@@ -282,16 +282,13 @@ If we type `biom_metagenome@` five options are displayed;  `otu_table`, `tax_tab
 ~~~
 {: .language-r}
 
-<img src="{{ page.root }}/fig/03_02_phyloseq_taxtab.png" alt="A table where the taxonomic
-identification information of all OTUs is displayed. Each row represent one
-OTU and the columns its identification at different levels in the taxonomic taxonomic classification ranks, begging with Kingdom until we reach Species
-in the seventh column " />
+<img src="{{ page.root }}/fig/03_02_phyloseq_taxtab.png" alt="A table where the taxonomic identification information of all OTUs is displayed. Each row represent one OTU and the columns its identification at different levels in the taxonomic taxonomic classification ranks, beginning with Kingdom until we reach Species in the seventh column " />
 <em> Figure 3. Table of the OTU data from our `biom_metagenome` object. <em/>
 
-Next, let's get rid of some of the unnecesary characters
-in the OTUs identificator and put names to the taxonomic ranks:
+To make it easier for us downstream we will remove the prefix on each item which contains information about the rank and instead rename the header of the DataFrame to contain this information.
 
-To remove unnecessary characters in `.Data` (matrix), we are going to use command `substring()`. This command is useful to extract or replace characters in a vector. To use the command, we have to indicate the vector (x) followed by the first element to replace or extract (first) and the last element to be replaced (last). For instance: `substring (x, first, last)`. `substring()` is a "flexible" command, especially to select characters of different lengths as in our case. Therefore, it is not necessary to indicate "last", so it will take the last position of the character by default. Considering that a matrix is a arrangement of vectors, we can use this command. Each character in `.Data` is preceded by 3 spaces occupied by a letter and two underscores, for example: `o__Rhodobacterales`. In this case "Rodobacterales" starts at position 4 with an R. So to remove the unnecessary characteres we will use the following code:
+To remove unnecessary characters we are going to use command `substring()`.
+ This command is useful to extract or replace characters in a vector. To use the command, we have to indicate the vector (x) followed by the first element to replace or extract (first) and the last element to be replaced (last). For instance: `substring (x, first, last)`. `substring()` is a "flexible" command, especially to select characters of different lengths as in our case. Therefore, it is not necessary to indicate "last", so it will take the last position of the character by default. Considering that a matrix is a arrangement of vectors, we can use this command. Each character in `.Data` is preceded by 3 spaces occupied by a letter and two underscores, for example: `o__Rhodobacterales`. In this case "Rodobacterales" starts at position 4 with an R. So to remove the unnecessary characteres we will use the following code:
 
 ~~~
 > biom_metagenome@tax_table@.Data <- substring(biom_metagenome@tax_table@.Data, 4)
@@ -313,18 +310,20 @@ we obtain with the next code:
 ~~~
 {: .language-r}
 ~~~
- [1] "Proteobacteria"              "Actinobacteria"              "Firmicutes"                 
+[1] "Firmicutes"                  "Actinobacteria"              "Tenericutes"                
  [4] "Cyanobacteria"               "Deinococcus-Thermus"         "Chloroflexi"                
- [7] "Armatimonadetes"             "Bacteroidetes"               "Chlorobi"                   
-[10] "Gemmatimonadetes"            "Planctomycetes"              "Verrucomicrobia"            
-[13] "Lentisphaerae"               "Kiritimatiellaeota"          "Chlamydiae"                 
-[16] "Acidobacteria"               "Spirochaetes"                "Synergistetes"              
-[19] "Nitrospirae"                 "Tenericutes"                 "Coprothermobacterota"       
-[22] "Ignavibacteriae"             "Candidatus Cloacimonetes"    "Fibrobacteres"              
-[25] "Fusobacteria"                "Thermotogae"                 "Aquificae"                  
-[28] "Thermodesulfobacteria"       "Deferribacteres"             "Chrysiogenetes"             
-[31] "Calditrichaeota"             "Elusimicrobia"               "Caldiserica"                
-[34] "Candidatus Saccharibacteria" "Dictyoglomi"
+ [7] "Armatimonadetes"             "Proteobacteria"              "Bacteroidetes"              
+[10] "Chlorobi"                    "Balneolaeota"                "Gemmatimonadetes"           
+[13] "Candidatus Cloacimonetes"    "Planctomycetes"              "Verrucomicrobia"            
+[16] "Kiritimatiellaeota"          "Chlamydiae"                  "Spirochaetes"               
+[19] "Aquificae"                   "Fusobacteria"                "Acidobacteria"              
+[22] "Thermotogae"                 "Candidatus Saccharibacteria" "Candidatus Bipolaricaulota"
+[25] "Synergistetes"               "Elusimicrobia"               "Thermodesulfobacteria"      
+[28] "Nitrospirae"                 "Caldiserica"                 "Deferribacteres"            
+[31] "Chrysiogenetes"              "Chordata"                    "Euryarchaeota"              
+[34] "Crenarchaeota"               "Thaumarchaeota"              "Uroviricota"                
+[37] "Peploviricota"               "Nucleocytoviricota"          "Negarnaviricota"            
+[40] "Pisuviricota"                "Artverviricota"             
 ~~~
 {: .output}
 
@@ -335,7 +334,7 @@ Firmicutes?. Let´s use the command `sum()` to ask R:
 ~~~
 {: .language-r}
 ~~~
-[1] 580
+[1] 786
 ~~~
 {: .output}
 
@@ -381,14 +380,14 @@ We want to know how is the bacterial diversity, so we will prune all of the
 non-bacterial organisms in our metagenome. To do this we will make a subset
 of all bacterial groups and save them.
 ~~~
-> biom_metagenome <- subset_taxa(biom_metagenome, Kingdom == "Bacteria")
+> bac_biom_metagenome <- subset_taxa(biom_metagenome, Kingdom == "Bacteria")
 ~~~
 {: .language-r}
 
 Now let's look at some statistics of our metagenomes:
 
 ~~~
-> biom_metagenome
+> bac_biom_metagenome
 ~~~
 {: .language-r}
 ~~~
@@ -398,27 +397,27 @@ tax_table()   Taxonomy Table:    [ 4024 taxa by 7 taxonomic ranks ]
 ~~~
 {: .output}
 ~~~
-> sample_sums(biom_metagenome)
+> sample_sums(bac_biom_metagenome)
 ~~~
 {: .language-r}
 ~~~
-  JC1A   JP4D   JP41
- 18412 149590  76589
+  sa1
+  38057090
 ~~~
 {: .output}
 
 ~~~
-> summary(biom_metagenome@otu_table@.Data)
+> summary(bac_biom_metagenome@otu_table)
 ~~~
 {: .language-r}
 ~~~
-      JC1A              JP4D              JP41        
- Min.   :  0.000   Min.   :   0.00   Min.   :   0.00  
- 1st Qu.:  0.000   1st Qu.:   3.00   1st Qu.:   1.00  
- Median :  0.000   Median :   7.00   Median :   5.00  
- Mean   :  4.575   Mean   :  37.17   Mean   :  19.03  
- 3rd Qu.:  2.000   3rd Qu.:  21.00   3rd Qu.:  14.00  
- Max.   :399.000   Max.   :6551.00   Max.   :1994.00  
+sa1          
+Min.   :       1  
+1st Qu.:       1  
+Median :       2  
+Mean   :   10198  
+3rd Qu.:       3  
+Max.   :28925791  
 ~~~
 {: .output}
 
