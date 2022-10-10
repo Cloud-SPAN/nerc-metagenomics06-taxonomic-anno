@@ -215,25 +215,6 @@ The column on the left
 At the bottom of this column there is also an option to "Generate HTML report", this is a very good option if you wanted to share your results with others. We have used that option to generat one here for the `ERR2935805` data in order to share our results.
 If you haven't been able to generate a Pavian output you can view our example here [ERR2935805-pavian-report.html]({{ page.root }}/files/ERR2935805-pavian-report.html)
 
-We click on the Results Overview tab.
-
-We click on the Sample tab.
-
-<a href="{{ page.root }}/fig/03-06-06.png">
-  <img src="{{ page.root }}/fig/03-06-06.png" alt="Sankey type visualization that shows the abundance of each taxonomic label in a tree-like manner" />
-</a>
-
-We can look at the abundance of a specific taxon by clicking on it.
-
-<a href="{{ page.root }}/fig/03-06-07.png">
-  <img src="{{ page.root }}/fig/03-06-07.png" alt="A bar chart of the abundance of reads of the two samples, showing a segment for the read identified at the specific taxon and another segment for the number of reads identifies at children of the specified taxon" />
-</a>
-
-We can look at a comparison of both our samples in the Comparison tab.
-
-<a href="{{ page.root }}/fig/03-06-08.png">
-  <img src="{{ page.root }}/fig/03-06-08.png" alt="A table of the same format as the Kraken report but for both samples at once." />
-</a>
 
 > ## Exercise 1:
 > Looking back at the [information]{https://cloud-span.github.io/metagenomics01-qc-assembly/00-introduction-meta/index.html} we have about our dataset are we seeing the species that we expect in our Kraken output? Are there any that we don't expect, and if so why do you think we might be seeing them? Remember we have run this taxonomic assignment using the Standard 8GB database.
