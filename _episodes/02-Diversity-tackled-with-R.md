@@ -240,7 +240,7 @@ in R and we are going to use them):
 > library("phyloseq")
 > library("ggplot2")
 > library("readr")
-> library("patchwork")
+> library("patchwork") # Not needed?
 ~~~
 {: .language-r}
 
@@ -249,20 +249,20 @@ in R and we are going to use them):
 
 First we tell R in which directory we are working.
 ~~~
-> setwd("~/dc_workshop/taxonomy/")
+> setwd("~/dc_workshop/taxonomy/") # Not needed?
 ~~~
 {: .language-r}
 
 Let's procced to create the phyloseq object with the `import_biom` command:
 ~~~
-> merged_metagenomes <- import_biom("cuatroc.biom")
+> biom_metagenome <- import_biom("ERR2935805.biom")
 ~~~
 {: .language-r}
 
 Now, we can inspect the result by asking what class is the object created, and
 doing a close inspection of some of its content:
 ~~~
-> class(merged_metagenomes)
+> class(biom_metagenome)
 ~~~
 {: .language-r}
 ~~~
@@ -271,33 +271,31 @@ attr("package")
 [1] "phyloseq"
 ~~~
 {: .output}
+
 The "class" command indicates that we already have our phyloseq object.
-Let's try to access the data that is stored inside our `merged_metagenomes` object. Since a phyloseq object
-is a special object in R, we need to use the operator `@` to explore the subsections of data inside `merged_metagenomes`.
-If we type `merged_metagenomes@` five options are displayed; `tax_table` and `otu_table` are the ones that
-we will use. After writting `merged_metagenomes@otu_table` or `merged_metagenomes@tax_table`, an option of `.Data`
-will be the one choosed in both cases. Let's see what is inside of our `tax_table`:
+Let's try to access the data that is stored inside our `biom_metagenome` object. Since a phyloseq object
+is a special object in R, we need to use the operator `@` to explore the subsections of data inside `biom_metagenome`.
+If we type `biom_metagenome@` five options are displayed;  `otu_table`, `tax_table`, `sam_data`, `phy_tree` and `refseq`. We will first look at `otu_table` and `tax_table`.
+
 ~~~
-> View(merged_metagenomes@tax_table@.Data)
+> View(biom_metagenome@tax_table)
 ~~~
 {: .language-r}
 
-<a href="{{ page.root }}/fig/03-07-03.png">
-  <img src="{{ page.root }}/fig/03-07-03.png" alt="A table where the taxonomic
-  identification information of all OTUs is displayed. Each row represent one
-  OTU and the columns its identification at different levels in the taxonomic taxonomic classification ranks, begging with Kingdom until we reach Species
-  in the seventh column " />
-</a>
-<em> Figure 3. Table of the OTU data from our `merged_metagenomes` object. <em/>
+<img src="{{ page.root }}/fig/03_02_phyloseq_taxtab.png" alt="A table where the taxonomic
+identification information of all OTUs is displayed. Each row represent one
+OTU and the columns its identification at different levels in the taxonomic taxonomic classification ranks, begging with Kingdom until we reach Species
+in the seventh column " />
+<em> Figure 3. Table of the OTU data from our `biom_metagenome` object. <em/>
 
-Next, let's get rid of some of the innecesary characters
+Next, let's get rid of some of the unnecesary characters
 in the OTUs identificator and put names to the taxonomic ranks:
 
 To remove unnecessary characters in `.Data` (matrix), we are going to use command `substring()`. This command is useful to extract or replace characters in a vector. To use the command, we have to indicate the vector (x) followed by the first element to replace or extract (first) and the last element to be replaced (last). For instance: `substring (x, first, last)`. `substring()` is a "flexible" command, especially to select characters of different lengths as in our case. Therefore, it is not necessary to indicate "last", so it will take the last position of the character by default. Considering that a matrix is a arrangement of vectors, we can use this command. Each character in `.Data` is preceded by 3 spaces occupied by a letter and two underscores, for example: `o__Rhodobacterales`. In this case "Rodobacterales" starts at position 4 with an R. So to remove the unnecessary characteres we will use the following code:
 
 ~~~
-> merged_metagenomes@tax_table@.Data <- substring(merged_metagenomes@tax_table@.Data, 4)
-> colnames(merged_metagenomes@tax_table@.Data)<- c("Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Species")
+> biom_metagenome@tax_table@.Data <- substring(biom_metagenome@tax_table@.Data, 4)
+> colnames(biom_metagenome@tax_table@.Data)<- c("Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Species")
 ~~~
 {: .language-r}
 
@@ -306,12 +304,12 @@ To remove unnecessary characters in `.Data` (matrix), we are going to use comman
   3 but with informative names in each of the columns. Now, we can see which of
   the columns are associated with which taxonomic classification rank" />
 </a>
-<em> Figure 4. Table of the OTU data from our `merged_metagenomes` object. With corrections. <em/>
+<em> Figure 4. Table of the OTU data from our `biom_metagenome` object. With corrections. <em/>
 
 To explore how many phyla we have, we are going to use a command name `unique()`. Let's try what result
 we obtain with the next code:
 ~~~
-> unique(merged_metagenomes@tax_table@.Data[,"Phylum"])
+> unique(biom_metagenome@tax_table@.Data[,"Phylum"])
 ~~~
 {: .language-r}
 ~~~
@@ -333,7 +331,7 @@ we obtain with the next code:
 This is useful, but what we need to do if we need to know how many of our OTUs have been assigned to the phylum
 Firmicutes?. Let´s use the command `sum()` to ask R:
 ~~~
-> sum(merged_metagenomes@tax_table@.Data[,"Phylum"] == "Firmicutes")
+> sum(biom_metagenome@tax_table@.Data[,"Phylum"] == "Firmicutes")
 ~~~
 {: .language-r}
 ~~~
@@ -351,7 +349,7 @@ Firmicutes?. Let´s use the command `sum()` to ask R:
 >> Change the name of a new phylum wherever it is needed to get the result.
 >> As an example, here is the solution for Proteobacteria:
 >> ~~~
->> sum(merged_metagenomes@tax_table@.Data[,"Phylum"] == "Proteobacteria")
+>> sum(biom_metagenome@tax_table@.Data[,"Phylum"] == "Proteobacteria")
 >> ~~~
 >> {: .language-r}
 >> ~~~
@@ -359,7 +357,7 @@ Firmicutes?. Let´s use the command `sum()` to ask R:
 >> ~~~
 >> {: .output}
 >> ~~~
->> unique(merged_metagenomes@tax_table@.Data[merged_metagenomes@tax_table@.Data[,"Phylum"] == "Proteobacteria", "Genus"])
+>> unique(biom_metagenome@tax_table@.Data[biom_metagenome@tax_table@.Data[,"Phylum"] == "Proteobacteria", "Genus"])
 >> ~~~
 >> {: .language-r}
 >>
@@ -383,14 +381,14 @@ We want to know how is the bacterial diversity, so we will prune all of the
 non-bacterial organisms in our metagenome. To do this we will make a subset
 of all bacterial groups and save them.
 ~~~
-> merged_metagenomes <- subset_taxa(merged_metagenomes, Kingdom == "Bacteria")
+> biom_metagenome <- subset_taxa(biom_metagenome, Kingdom == "Bacteria")
 ~~~
 {: .language-r}
 
 Now let's look at some statistics of our metagenomes:
 
 ~~~
-> merged_metagenomes
+> biom_metagenome
 ~~~
 {: .language-r}
 ~~~
@@ -400,7 +398,7 @@ tax_table()   Taxonomy Table:    [ 4024 taxa by 7 taxonomic ranks ]
 ~~~
 {: .output}
 ~~~
-> sample_sums(merged_metagenomes)
+> sample_sums(biom_metagenome)
 ~~~
 {: .language-r}
 ~~~
@@ -410,7 +408,7 @@ tax_table()   Taxonomy Table:    [ 4024 taxa by 7 taxonomic ranks ]
 {: .output}
 
 ~~~
-> summary(merged_metagenomes@otu_table@.Data)
+> summary(biom_metagenome@otu_table@.Data)
 ~~~
 {: .language-r}
 ~~~
@@ -431,7 +429,7 @@ diversity inside the samples (i.e. α diversity) we can now look at a ggplot2
 graph created using Phyloseq:
 
 ~~~
-> plot_richness(physeq = merged_metagenomes,
+> plot_richness(physeq = biom_metagenome,
               measures = c("Observed","Chao1","Shannon"))
 ~~~
 {: .language-r}
@@ -465,7 +463,7 @@ and that these two will belong to the same OTU.
 >> The code and the plot using the three options will look as follows:
 >> The "title" option adds a title to the figure.
 >> ~~~
->> > plot_richness(physeq = merged_metagenomes,
+>> > plot_richness(physeq = biom_metagenome,
 >>              title = "Alpha diversity indexes for both samples in Cuatro Cienegas",
 >>              measures = c("Observed","Chao1","Shannon"))
 >> ~~~
@@ -477,7 +475,7 @@ and that these two will belong to the same OTU.
 >>
 >> The "nrow" option arranges the graphics horizontally.
 >> ~~~
->> > plot_richness(physeq = merged_metagenomes,
+>> > plot_richness(physeq = biom_metagenome,
 >>              title = "Alpha diversity indexes for both samples in Cuatro Cienegas",
 >>              measures = c("Observed","Chao1","Shannon"),
 >>              nrow=3)
@@ -490,7 +488,7 @@ and that these two will belong to the same OTU.
 >>
 >> The "sortby" option orders the samples from least to greatest diversity depending on the parameter. In this case, it is ordered by "Shannon" and tells us that the JP4D sample has the lowest diversity and the JP41 sample the highest.
 >> ~~~
->> > plot_richness(physeq = merged_metagenomes,
+>> > plot_richness(physeq = biom_metagenome,
 >>              title = "Alpha diversity indexes for both samples in Cuatro Cienegas",
 >>              measures = c("Observed","Chao1","Shannon"),
 >>              sortby = "Shannon")
