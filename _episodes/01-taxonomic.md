@@ -210,7 +210,7 @@ Go to [Pavian site](https://fbreitwieser.shinyapps.io/pavian/), click on Browse 
 <img src="{{ page.root }}/fig/03_01_pavian_upload2.png" alt="Pavian website once the sample has uploaded" />
 
 
-<img align="left" img src="{{ page.root }}/fig/03_01_pavian_column.png" alt="Pavian columns" />
+<img align="left" img src="{{ page.root }}/fig/03_01_pavian_column.png" alt="Pavian columns" /> &nbsp; &nbsp; &nbsp;
 
 Once the file is uploaded we can explore the output generated.
 The column on the left has multiple different options. As we only have one sample and don't have an alignment to view, only the "Results Overview" and "Sample" tabs are of interest to us.
