@@ -95,6 +95,7 @@ We will be using the command line program Kraken2 to do our taxonomic assignment
 > is a regular file, automatic format detection is attempted.
 > ~~~
 > {: .output}
+{: .solution}
 
 We will be using the flags `-input` to specify our input assembly, `--output` and `--report` to specify the location of the output files Kraken will generate. And also `--threads` to speed up Kraken on our instance. We will also use `--minimum-base-quality` with a value of 30 as we are using unfiltered short reads.
 
