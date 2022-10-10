@@ -253,14 +253,13 @@ First we tell R in which directory we are working.
 ~~~
 {: .language-r}
 
-Let's procced to create the phyloseq object with the `import_biom` command:
+We then need to create the phyloseq object from our `.biom` file with the `import_biom` command:
 ~~~
 > biom_metagenome <- import_biom("ERR2935805.biom")
 ~~~
 {: .language-r}
 
-Now, we can inspect the result by asking what class is the object created, and
-doing a close inspection of some of its content:
+Now, we can inspect the result by checking the class of the object created:
 ~~~
 > class(biom_metagenome)
 ~~~
@@ -272,9 +271,10 @@ attr("package")
 ~~~
 {: .output}
 
-The "class" command indicates that we already have our phyloseq object.
-Let's try to access the data that is stored inside our `biom_metagenome` object. Since a phyloseq object
-is a special object in R, we need to use the operator `@` to explore the subsections of data inside `biom_metagenome`.
+Now we have determined we have a phyloseq obhect we can access the data that is stored inside our `biom_metagenome` object.
+
+A phyloseq object is a special object in R so we need to use the operator `@` to explore the subsections of data inside `biom_metagenome`.
+
 If we type `biom_metagenome@` five options are displayed;  `otu_table`, `tax_table`, `sam_data`, `phy_tree` and `refseq`. We will first look at `otu_table` and `tax_table`.
 
 ~~~
@@ -285,10 +285,14 @@ If we type `biom_metagenome@` five options are displayed;  `otu_table`, `tax_tab
 <img src="{{ page.root }}/fig/03_02_phyloseq_taxtab.png" alt="A table where the taxonomic identification information of all OTUs is displayed. Each row represent one OTU and the columns its identification at different levels in the taxonomic taxonomic classification ranks, beginning with Kingdom until we reach Species in the seventh column " />
 <em> Figure 3. Table of the OTU data from our `biom_metagenome` object. <em/>
 
-To make it easier for us downstream we will remove the prefix on each item which contains information about the rank and instead rename the header of the DataFrame to contain this information.
+To make downstream analysis easier for us we will remove the prefix (e.g. `f__`) on each item. This contains information about the rank of the assigned taxonomy, we don't want to lose this information so will and instead rename the header of each column of the DataFrame to contain this information.
 
 To remove unnecessary characters we are going to use command `substring()`.
- This command is useful to extract or replace characters in a vector. To use the command, we have to indicate the vector (x) followed by the first element to replace or extract (first) and the last element to be replaced (last). For instance: `substring (x, first, last)`. `substring()` is a "flexible" command, especially to select characters of different lengths as in our case. Therefore, it is not necessary to indicate "last", so it will take the last position of the character by default. Considering that a matrix is a arrangement of vectors, we can use this command. Each character in `.Data` is preceded by 3 spaces occupied by a letter and two underscores, for example: `o__Rhodobacterales`. In this case "Rodobacterales" starts at position 4 with an R. So to remove the unnecessary characteres we will use the following code:
+
+This command is useful to extract or replace characters in a vector. To use the command, we have to indicate the vector (x) followed by the first element to replace or extract (first) and the last element to be replaced (last). For instance: `substring (x, first, last)`. If a last position is not used it will be set to the end of the string.
+
+The prefix for each item in `biom_metagenome` is made up of a letter an two underscores, for example: `o__Bacillales`. In this case "Bacillales" starts at position 4 with an B.
+So to remove the unnecessary characters we will use the following code:
 
 ~~~
 > biom_metagenome@tax_table@.Data <- substring(biom_metagenome@tax_table@.Data, 4)
@@ -296,11 +300,7 @@ To remove unnecessary characters we are going to use command `substring()`.
 ~~~
 {: .language-r}
 
-<a href="{{ page.root }}/fig/03-07-04.png">
-  <img src="{{ page.root }}/fig/03-07-04.png" alt="The same table we saw in Figure
-  3 but with informative names in each of the columns. Now, we can see which of
-  the columns are associated with which taxonomic classification rank" />
-</a>
+<img src="{{ page.root }}/fig/03_02_phyloseq_tax_tabe.png" alt="The same table we saw in Figure 3 but with informative headers in each of the columns. Now, we can see which of the columns are associated with which taxonomic classification rank" />
 <em> Figure 4. Table of the OTU data from our `biom_metagenome` object. With corrections. <em/>
 
 To explore how many phyla we have, we are going to use a command name `unique()`. Let's try what result
