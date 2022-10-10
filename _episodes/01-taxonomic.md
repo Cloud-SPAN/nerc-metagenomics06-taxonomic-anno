@@ -212,7 +212,7 @@ Go to [Pavian site](https://fbreitwieser.shinyapps.io/pavian/), click on Browse 
 Once the file is uploaded we can explore the output generated.
 The column on the left has multiple different options. As we only have one sample and don't have an alignment to view, only the "Results Overview" and "Sample" tabs are of interest to us.
 
-At the bottom of this column there is also an option to "Generate HTML report", this is a very good option if you wanted to share your results with others. We have used that option to generate one here for the `ERR2935805` data in order to share our results. If you haven't been able to generate a Pavian output you can view our exported example here [ERR2935805-pavian-report.html]({{ page.root }}/files/ERR2935805-pavian-report.html) (note this looks a bit different than the website version).
+At the bottom of this column there is also an option to "Generate HTML report", this is a very good option if you wanted to share your results with others. We have used that option to generate one here for the `ERR2935805` data in order to share our results. If you haven't been able to generate a Pavian output you can view our exported example here [ERR2935805-pavian-report.html]({{ page.root }}/files/ERR2935805-pavian-report.html) (note this looks a bit different to the website version).
 
 The Results Overview tab shows us how many reads have been classified in our sample(s). From this we can see that 18.5% of the raw reads are unclassified.
 
@@ -236,7 +236,7 @@ You can also view the Sankey diagram of our example here [sankey-ERR2935805.repo
 {: .challenge}
 
 
-> ## Exercise 3: Taxonomic level of assignment
+> ## Exercise 2: Taxonomic level of assignment
 >
 > What do you think is harder to assign, a species (like _E. coli_) or a phylum (like Proteobacteria)?
 >
