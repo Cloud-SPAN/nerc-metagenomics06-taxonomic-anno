@@ -213,7 +213,7 @@ Once the file is uploaded we can explore the output generated.
 The column on the left
 
 At the bottom of this column there is also an option to "Generate HTML report", this is a very good option if you wanted to share your results with others. We have used that option to generat one here for the `ERR2935805` data in order to share our results.
-If you haven't been able to generate a Pavian output you can view our example here [ERR2935805-pavian-report.html](({{ page.root }}/files/ERR2935805-pavian-report.html)
+If you haven't been able to generate a Pavian output you can view our example here [ERR2935805-pavian-report.html]({{ page.root }}/files/ERR2935805-pavian-report.html)
 
 We click on the Results Overview tab.
 
@@ -242,7 +242,7 @@ We can look at a comparison of both our samples in the Comparison tab.
 > > We do not see _Saccharomyces cerevisiae_ in the output and this is likely because of database choice the Standard 8GB does not contain Fungi. This is likely why we are seeing some organisms that aren't supposed to be in our dataset as these may be the closest approximation in this Kraken database. This is why database choice is important! You should aim to use the most comprehensive database for the compute power available to you.  
 > > Something about Limosilactobacillus fermentum...
 > {: .solution}
-
+{: .challenge}
 
 
 > ## Exercise 3: Taxonomic level of assignment
