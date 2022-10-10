@@ -222,16 +222,16 @@ You can also view the Sankey diagram of our example here [sankey-ERR2935805.repo
 
 <iframe
   src="{{ page.root }}/files/sankey-ERR2935805.report.html"
-  style="width:100%; height:300px;"
+  style="width:100%; height:1000px;"
 ></iframe>
 
 > ## Exercise 1:
 > Using the Sankey diagram and looking back at the [information](https://cloud-span.github.io/metagenomics01-qc-assembly/00-introduction-meta/index.html) we have about our dataset are we seeing the species that we expect in our Kraken output?  Are there any that we don't expect, and if so why do you think we might be seeing them?  Remember we have run this taxonomic assignment using the Standard 8GB database.
 > > ## Solution
-> > We are seeing _Listeria monocytogenes_, _Pseudomonas aeruginosa_ and _Salmonella enterica_ in the proportions that we would expect in the Kraken output.
-> > We do not see _Saccharomyces cerevisiae_ in the output, this is likely because of database choice the Standard 8GB does not contain Fungi. This is potentially why we are seeing some organisms that aren't supposed to be in our dataset as these may be the closest approximation in this Kraken database. This is why database choice is important! You should aim to use the most comprehensive database for the compute power available to you.  
-> > _Lactobacillus fermentum_ has since changed it's name to _Limosilactobacillus fermentum_ (this is something that happens quite often with prokaryotes!) so that is also in our output.  
-> > Less abundant organisms are harder to identify as there is just less sequencing data present for them. _Bacillus subtilis_, which makes up 0.89% of our dataset, has only been classified to genera level (Bacillus) as has _Escherichia coli_ which makes up 0.089% of our dataset (Escherichia). Those with the lowest abundance _Enterococcus faecalis_, _Cryptococcus neoformans_ and _Staphylococcus aureus_ have also only been identified to a higher level.
+> > * We are seeing _Listeria monocytogenes_, _Pseudomonas aeruginosa_ and _Salmonella enterica_ in the proportions that we would expect in the Kraken output.
+> > * We do not see _Saccharomyces cerevisiae_ in the output, this is likely because of database choice the Standard 8GB does not contain Fungi. This is potentially why we are seeing some organisms that aren't supposed to be in our dataset as these may be the closest approximation in this Kraken database. This is why database choice is important! You should aim to use the most comprehensive database for the compute power available to you.  
+> > * _Lactobacillus fermentum_ has since changed it's name to _Limosilactobacillus fermentum_ (this is something that happens quite often with prokaryotes!) so that is also in our output.  
+> > * Less abundant organisms are harder to identify as there is just less sequencing data present for them. _Bacillus subtilis_, which makes up 0.89% of our dataset, has only been classified to genera level (Bacillus) as has _Escherichia coli_ which makes up 0.089% of our dataset (Escherichia). Those with the lowest abundance _Enterococcus faecalis_, _Cryptococcus neoformans_ and _Staphylococcus aureus_ have also only been identified to a higher level.
 > {: .solution}
 {: .challenge}
 
