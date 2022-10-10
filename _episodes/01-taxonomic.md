@@ -210,18 +210,23 @@ Go to [Pavian site](https://fbreitwieser.shinyapps.io/pavian/), click on Browse 
 <img src="{{ page.root }}/fig/03_01_pavian_upload2.png" alt="Pavian website once the sample has uploaded" />
 
 Once the file is uploaded we can explore the output generated.
-The column on the left
+The column on the left has multiple different options. As we only have one sample and don't have an alignment to view, only the "Results Overview" and "Sample" tabs are of interest to us.
 
-At the bottom of this column there is also an option to "Generate HTML report", this is a very good option if you wanted to share your results with others. We have used that option to generat one here for the `ERR2935805` data in order to share our results.
-If you haven't been able to generate a Pavian output you can view our example here [ERR2935805-pavian-report.html]({{ page.root }}/files/ERR2935805-pavian-report.html)
+At the bottom of this column there is also an option to "Generate HTML report", this is a very good option if you wanted to share your results with others. We have used that option to generate one here for the `ERR2935805` data in order to share our results. If you haven't been able to generate a Pavian output you can view our exported example here [ERR2935805-pavian-report.html]({{ page.root }}/files/ERR2935805-pavian-report.html) (note this looks a bit different than the website version).
 
+The Results Overview tab shows us how many reads have been classified in our sample(s). From this we can see that 18.5% of the raw reads are unclassified.
+
+On the Sample tab we can see a [Sankey diagram](https://en.wikipedia.org/wiki/Sankey_diagram) which shows us the proportion of our sample that has been classified at each taxa level. If you click on the "Configure Sankey" button you can play with the settings to make the diagram easier to view.
+
+You can also view the Sankey diagram of our example here [sankey-ERR2935805.report.html]({{ page.root }}/files/sankey-ERR2935805.report.html)
 
 > ## Exercise 1:
-> Looking back at the [information]{https://cloud-span.github.io/metagenomics01-qc-assembly/00-introduction-meta/index.html} we have about our dataset are we seeing the species that we expect in our Kraken output? Are there any that we don't expect, and if so why do you think we might be seeing them? Remember we have run this taxonomic assignment using the Standard 8GB database.
+> Using the Sankey diagram and looking back at the [information](https://cloud-span.github.io/metagenomics01-qc-assembly/00-introduction-meta/index.html) we have about our dataset are we seeing the species that we expect in our Kraken output?  Are there any that we don't expect, and if so why do you think we might be seeing them?  Remember we have run this taxonomic assignment using the Standard 8GB database.
 > > ## Solution
-> > We are seeing _Listeria monocytogenes_, _Pseudomonas aeruginosa_, _Bacillus subtilis_, _Escherichia coli_ and _Salmonella enterica_ in the Kraken output.
-> > We do not see _Saccharomyces cerevisiae_ in the output and this is likely because of database choice the Standard 8GB does not contain Fungi. This is likely why we are seeing some organisms that aren't supposed to be in our dataset as these may be the closest approximation in this Kraken database. This is why database choice is important! You should aim to use the most comprehensive database for the compute power available to you.  
-> > Something about Limosilactobacillus fermentum...
+> > We are seeing _Listeria monocytogenes_, _Pseudomonas aeruginosa_ and _Salmonella enterica_ in the proportions that we would expect in the Kraken output.
+> > We do not see _Saccharomyces cerevisiae_ in the output, this is likely because of database choice the Standard 8GB does not contain Fungi. This is potentially why we are seeing some organisms that aren't supposed to be in our dataset as these may be the closest approximation in this Kraken database. This is why database choice is important! You should aim to use the most comprehensive database for the compute power available to you.  
+> > _Lactobacillus fermentum_ has since changed it's name to _Limosilactobacillus fermentum_ (this is something that happens quite often with prokaryotes!) so that is also in our output.  
+> > Less abundant organisms are harder to identify as there is just less sequencing data present for them. _Bacillus subtilis_, which makes up 0.89% of our dataset, has only been classified to genera level (Bacillus) as has _Escherichia coli_ which makes up 0.089% of our dataset (Escherichia). Those with the lowest abundance _Enterococcus faecalis_, _Cryptococcus neoformans_ and _Staphylococcus aureus_ have also only been identified to a higher level.
 > {: .solution}
 {: .challenge}
 
