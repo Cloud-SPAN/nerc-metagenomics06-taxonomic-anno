@@ -16,7 +16,7 @@ keypoints:
 math: yes
 ---
 
-Once we know the taxonomic composition of our metagenomes we can characterise them by their diversity.
+Once we know the taxonomic composition of our metagenomic sequencing data we can characterise them by their diversity.
 
 ## What is diversity?
 Species diversity is the number of species in a system and the relative abundance of each of those species. It can be defined on three different scales (Whittaker, 1960).
@@ -46,11 +46,11 @@ The simplest measure of α diversity is the number of species, or species **rich
 ###  Beta (β) diversity
 β diversity measures how different two or more communities are in their richness, evenness or both.
 
-| β Diversity Index |  Description | 
+| β Diversity Index |  Description |
 |-------------------|--------------|
-| Bray–Curtis dissimilarity  | The compositional _dissimilarity_ between two metagenomes, based on counts in each metagenome. Ranges from 0 (the two metagenomes have the same species composition) to 1 (the two metagenomes do not share any species). Bray–Curtis dissimilarity emphasises abundance.| 
-| Jaccard distance   | Also ranges from 0 (the two metagenomes have the same species) to 1 (the two metagenomes do not share any species) but is based on the presence or absence of species only. This means it emphasises richness.  | 
-| UniFrac           | Differs from the Bray-Curtis dissimilarity and Jaccard distance by including the relatedness between tax in a metagenome. Measures the phylogentic distance between metagenomes as the proportion of unshared phylogentic tree branches. Weighted-Unifrac takes into account the relative abundance of taxa shared between samples; unweighted-Unifrac only considers presence or absence.| 
+| Bray–Curtis dissimilarity  | The compositional _dissimilarity_ between two metagenomes, based on counts in each metagenome. Ranges from 0 (the two metagenomes have the same species composition) to 1 (the two metagenomes do not share any species). Bray–Curtis dissimilarity emphasises abundance.|
+| Jaccard distance   | Also ranges from 0 (the two metagenomes have the same species) to 1 (the two metagenomes do not share any species) but is based on the presence or absence of species only. This means it emphasises richness.  |
+| UniFrac           | Differs from the Bray-Curtis dissimilarity and Jaccard distance by including the relatedness between tax in a metagenome. Measures the phylogentic distance between metagenomes as the proportion of unshared phylogentic tree branches. Weighted-Unifrac takes into account the relative abundance of taxa shared between samples; unweighted-Unifrac only considers presence or absence.|
 
 Figure 2 shows α and the β diversity for three lakes. The most simple way to calculate the β diversity is to calculate the number of species that are unique in two lakes. For example, the number of species in Lake A (the α diversity) is 3 and 1 of these is also found in Lake C; the number of species in Lake C is 2 and 1 of these is also in Lake A. The β diversity between A and C is calculated as (3 - 1) + (2 - 1) = 3
 
@@ -66,7 +66,7 @@ Figure 2 shows α and the β diversity for three lakes. The most simple way to c
 > <a href="{{ page.root }}/fig/03-07-01e.png">
 >   <img src="{{ page.root }}/fig/03-07-01e.png" alt="In lake A, we have four different species, two of these species have 3 specimens each one. This lake also have two specimens of another species and only one specimen of the other specie. We got nine fishes total. On the other hand, lake B has only three different species, the most populated species has five specimens and we have only one specimen of the other two species. We got seven species total in lake B " />
 > </a>
-> Which of the options below is true: 
+> Which of the options below is true:
 > 1. α diversity of A = 4, α diversity of B = 3, β diversity between A and B = 1
 > 2. α diversity of A = 4, α diversity of B = 3, β diversity between A and B = 5
 > 3. α diversity of A = 9, α diversity of B = 7, β diversity between A and B= 16
@@ -81,25 +81,25 @@ Figure 2 shows α and the β diversity for three lakes. The most simple way to c
 {: .challenge}
 
 ## How do we calculate diversity from metagenomic samples?
-  
-There are 2 steps to need to calculaue the diversity of our samples.
+
+There are 2 steps to need to calculate the diversity of our samples.
 
 1. Create a Biological Observation Matrix, BIOM table, from the Kraken output. A BIOM table is an matrix of counts with samples in the columns and taxa in the rows. The values in the matrix are the counts of that taxa in that sample.
-2. Analyse the BIOM table to generate diversity indices and relative abundance plots to compare samples.
-  
+2. Analyse the BIOM table to generate diversity indices and relative abundance plots.
+
 ### Create a BIOM table
-We will use a program called [`kraken-biom`](https://github.com/smdabdoub/kraken-biom) to convert our Kraken output into a BIOM table. `kraken-biom` takes the `.report` output of Kraken and creates a BIOM table in [`.biom`](https://biom-format.org/) format.
+We will use a command-line program called [`kraken-biom`](https://github.com/smdabdoub/kraken-biom) to convert our Kraken output into a BIOM table. `kraken-biom` takes the `.report` output of Kraken and creates a BIOM table in [`.biom`](https://biom-format.org/) format.
 
 Move in to your `taxonomy` folder
 ~~~
-$ cd ~/cs_course/analysis/taxonomy
-~~~~ 
+ cd ~/cs_course/analysis/taxonomy
+~~~~
 {: .bash}
-  
+
 List the files
 ~~~
-$ ls -l
-~~~~ 
+ ls -l
+~~~~
 {: .bash}
 
 ~~~
@@ -108,81 +108,31 @@ $ ls -l
 ~~~
 {: .output}
 
-Files `.kraken` and `.report`are the output of the Kraken program. We can see a few lines of the `.kraken` using the command `head`.   
+As we saw in the previous episode, `.kraken` and `.report` are the output files generated by Kraken.
+
+With the next command, we are going to create a table in [Biom](https://biom-format.org/) format called `ERR2935805.biom` from our Kraken report, `ERR2935805.report`.
 ~~~
-$ head  ERR2935805.kraken  
+ kraken-biom ERR2935805.report --fmt json -o ERR2935805.biom
 ~~~
 {: .bash}
 
+If we list the files in our `taxonomy` folder, we will see that the `ERR2935805.biom` file has been created.
 ~~~
-C       ERR2935805.1    1639    202     1637:2 0:9 1639:3 0:19 1637:8 0:17 1637:5 0:4 A:70 0:6 1637:5 0:18 1637:1 A:1
-U       ERR2935805.2    0       202     A:13 286:2 A:153
-U       ERR2935805.3    0       202     0:67 A:45 0:25 1637:2 A:29
-U       ERR2935805.4    0       202     0:53 A:50 0:65
-C       ERR2935805.5    1639    202     0:50 1639:1 0:16 A:73 0:24 1637:1 0:3
-C       ERR2935805.6    1639    202     0:1 1639:5 0:3 1637:5 0:5 1637:4 0:18 1637:2 0:6 1637:5 0:13 A:35 0:17 1639:1 0:24 1637:1 0:8 1637:1 0:14
-U       ERR2935805.7    0       202     A:42 0:7 A:119
-C       ERR2935805.8    1639    202     0:9 1639:1 0:12 1639:1 0:23 1639:6 0:15 A:36 0:7 1639:5 0:7 1639:5 0:41
-C       ERR2935805.9    1639    202     0:22 91061:5 0:9 1637:2 0:9 1637:7 0:13 A:35 0:7 1637:1 0:21 1637:3 0:8 1639:5 0:20 A:1
-C       ERR2935805.10   1639    202     1639:5 0:8 1639:5 0:1 1637:2 0:36 1639:5 0:1 1639:5 0:58 1639:2 0:5 1639:1 0:13 1639:3 0:18
-~~~
-{: .output}
-
-Note that some of lines are quite long and will wrap in the display. Each line corresponds to a sequence and has 5 tab-delimited columns
-
-| Column | Description                | Example from line 1  |
-| ------ | -------------------------- | ---------------------|
-| 1      | one letter code indicating that the sequence was either classified or unclassified. | C |
-| 2      | The sequence ID, obtained from the FASTA/FASTQ header | ERR2935805.1 |
-| 3      | The taxonomy ID Kraken used to label the sequence; this is 0 if the sequence is unclassified. | 1639 |
-| 4      | The length of the sequence in bp. | 202 |
-| 5      | A space-delimited list indicating the LCA mapping of each _k_-mer in the sequence | 1637:2 0:9 1639:3 0:19 1637:8 0:17 1637:5 0:4 A:70 0:6 1637:5 0:18 1637:1 A:1 which means the first 2 _k_-mers mapped to taxonomy ID 1637, the next 9 _k_-mers did not match any taxonomy ID, the next 3 _k_-mers mather taxonomy ID 1639, the next 19 did not match any, the next 8 matched 1637 etc |
-
-
-There are other set of files with `.report` suffix. This is an output with the same information as the one found
-in the `.kraken` files, but in a more human-readable syntax:
-~~~
-$ head ERR2935805.report  
-~~~
-{: .bash}
-
-~~~
-18.49  8841988 8841988 U       0       unclassified
-81.51  38990565        215309  R       1       root
-80.98  38733479        2279    R1      131567    cellular organisms
-80.97  38730266        124149  D       2           Bacteria
-72.67  34761467        5082    D1      1783272       Terrabacteria group
-72.64  34747831        4388    P       1239            Firmicutes
-72.63  34742819        460563  C       91061             Bacilli
-71.65  34273479        39112   O       1385                Bacillales
-70.90  33912328        1014    F       186820                Listeriaceae
-70.90  33911307        4877507 G       1637                    Listeria
-~~~
-{: .output}
-
-With the next command, we are going to create a table in [Biom](https://biom-format.org/) format called `mock.biom` from our sample, ERR2935805.report . 
-~~~
-$ kraken-biom ERR2935805.report  --fmt json -o mock.biom
-~~~
-{: .bash}
-
-If we list the files in our `taxonomy` folder, we will see that the `mock.biom` file has been created.
-~~~
-$ ls -l
+ ls -l
 ~~~
 {: .bash}
 ~~~
 -rw-rw-r-- 1 csuser csuser 3935007137 Oct  9 09:16 ERR2935805.kraken
 -rw-rw-r-- 1 csuser csuser     424101 Oct  9 09:16 ERR2935805.report
--rw-rw-r-- 1 csuser csuser     741259 Oct  9 10:22 mock.biom
+-rw-rw-r-- 1 csuser csuser     741259 Oct  9 10:22 ERR2935805.biom
 ~~~
 {: .output}
-  
+
 ###  Analyse the BIOM table  
 
-We will use a `R` package called [`phyloseq`](https://joey711.github.io/phyloseq/) to analyse our metagenome. Other software for analyses of diversity include [Qiime2](https://qiime2.org/), [MEGAN](https://www.wsi.uni-tuebingen.de/lehrstuehle/algorithms-in-bioinformatics/software/megan6/) and the `R` package [`Vegan`](https://vegandevs.github.io/vegan/) 
-  
-  
+We will use a `R` package called [`phyloseq`](https://joey711.github.io/phyloseq/) to analyse our metagenome. Other software for analyses of diversity include [Qiime2](https://qiime2.org/), [MEGAN](https://www.wsi.uni-tuebingen.de/lehrstuehle/algorithms-in-bioinformatics/software/megan6/) and the `R` package [`Vegan`](https://vegandevs.github.io/vegan/)
+
+
 ---------------------here--------------
 copy the .biom file to local??
 ~~~
