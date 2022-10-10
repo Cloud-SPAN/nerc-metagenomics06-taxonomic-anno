@@ -200,20 +200,28 @@ First we need to download ERR2935805.report from our AWS instance to our local c
 scp -i login-key-instanceNNN.pem csuser@instanceNNN.cloud-span.aws.york.ac.uk.:~/cs_course/analysis/taxonomy/ERR2935805.report .
 ~~~
 {: .language-bash}
-Check you have included the `.` on the end meaning copy the file 'to here'.
+Check you have included the ` .` on the end meaning copy the file 'to here'.
 
 
 Go to [Pavian site](https://fbreitwieser.shinyapps.io/pavian/), click on Browse and upload the ERR2935805.report file you have just downloaded.
 
 <img src="{{ page.root }}/fig/03_01_pavian_upload.png" alt="Pavian website showing the upload point" />
 
-<img src="{{ page.root }}/fig/03_01_pavian_upload2.png" alt="Pavian website once the sample has uploadded" />
+<img src="{{ page.root }}/fig/03_01_pavian_upload2.png" alt="Pavian website once the sample has uploaded" />
 
-Click on **Results Overview** for the summary about the number of classified and unclassified reads.
+Once the file is uploaded we can explore the output generated.
+The column on the left
 
-Click on **Sample**
+At the bottom of this column there is also an option to "Generate HTML report", this is a very good option if you wanted to share your results with others. We have used that option to generat one here for the `ERR2935805` data in order to share our results.
+If you haven't been able to generate a Pavian output you can view our example here [ERR2935805-pavian-report.html](({{ page.root }}/files/ERR2935805-pavian-report.html)
 
-<img src="{{ page.root }}/fig/03_01_pavian_sample.png" alt="Sankey type visualization that shows the abundance of each taxonomic label in a tree-like manner" />
+We click on the Results Overview tab.
+
+We click on the Sample tab.
+
+<a href="{{ page.root }}/fig/03-06-06.png">
+  <img src="{{ page.root }}/fig/03-06-06.png" alt="Sankey type visualization that shows the abundance of each taxonomic label in a tree-like manner" />
+</a>
 
 We can look at the abundance of a specific taxon by clicking on it.
 
@@ -226,6 +234,15 @@ We can look at a comparison of both our samples in the Comparison tab.
 <a href="{{ page.root }}/fig/03-06-08.png">
   <img src="{{ page.root }}/fig/03-06-08.png" alt="A table of the same format as the Kraken report but for both samples at once." />
 </a>
+
+> ## Exercise 1:
+> Looking back at the [information]{https://cloud-span.github.io/metagenomics01-qc-assembly/00-introduction-meta/index.html} we have about our dataset are we seeing the species that we expect in our Kraken output? Are there any that we don't expect, and if so why do you think we might be seeing them? Remember we have run this taxonomic assignment using the Standard 8GB database.
+> > ## Solution
+> > We are seeing _Listeria monocytogenes_, _Pseudomonas aeruginosa_, _Bacillus subtilis_, _Escherichia coli_ and _Salmonella enterica_ in the Kraken output.
+> > We do not see _Saccharomyces cerevisiae_ in the output and this is likely because of database choice the Standard 8GB does not contain Fungi. This is likely why we are seeing some organisms that aren't supposed to be in our dataset as these may be the closest approximation in this Kraken database. This is why database choice is important! You should aim to use the most comprehensive database for the compute power available to you.  
+> > Something about Limosilactobacillus fermentum...
+> {: .solution}
+
 
 
 > ## Exercise 3: Taxonomic level of assignment
