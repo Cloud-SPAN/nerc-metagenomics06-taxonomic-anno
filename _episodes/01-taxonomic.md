@@ -25,6 +25,7 @@ These assignments are done by comparing our sequence to a database. These search
 1. BLAST: Using BLAST or DIAMOND, these mappers search for the most likely hit for each sequence within a database of genomes (i.e. mapping). This strategy is slow.    
 
 2. K-mers: A genome database is broken into pieces of length k, so as to be able to search for unique pieces by taxonomic group, from lowest common ancestor (LCA), passing through phylum to species. Then, the algorithm breaks the query sequence (reads, contigs) into pieces of length k, looks for where these are placed within the tree and make the classification with the most probable position.  
+
 <img align="centre" width="682" height="377" <img src="{{ page.root }}/fig/03-01_LCA.png" alt="Diagram of taxonomic tree" />
 <br clear="centre"/>
 <em> Figure 1. Lowest common ancestor assignment example.<em/>
