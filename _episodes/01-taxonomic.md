@@ -17,8 +17,7 @@ keypoints:
 ---
 ## What is taxonomic assignment?
 
-Taxonomic assignment is the process of assigning a sequence, in this case a MAG, which is a bin containing contigs, to a specific taxon.
-You may see these referred to as Operational Taxonomic Units (OTUs), particularly if you are dealing with amplicon sequences.
+Taxonomic assignment is the process of assigning a sequence to a specific taxon. In this case we will be assigning metagenome-assembled genomes (MAGs), which are bins containing contigs. You may see these referred to as Operational Taxonomic Units (OTUs), particularly if you are dealing with amplicon sequences.
 
 These assignments are done by comparing our sequence to a database. These searches can be done in many different ways, and against a variety of databases. There are many programs for doing taxonomic mapping, almost all of them follows one of the next strategies:  
 
