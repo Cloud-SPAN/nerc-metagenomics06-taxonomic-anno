@@ -201,19 +201,23 @@ As we saw in the previous episode, `.kraken` and `.report` are the output files 
 
 With the next command, we are going to create a table in [Biom](https://biom-format.org/) format from our Kraken report, `ERR2935805.report` and also from a Kraken report (`JP4D.report`) from a real world metagenome so we can compare the mock metagenome to a real metagenome. This is a sample from the dataset of [JG Okie et al., 2020](https://elifesciences.org/articles/49816).
 
-We should first download the file in the taxonomy directory on the instance using `wget`.
+We should first download the additional Kraken report in the taxonomy directory on the instance using `wget`.
 ~~~
 cd ~/cs_course/analysis/taxonomy
 wget https://cloud-span.github.io/metagenomics03-taxonomic-anno/files/JP4D.report
 ~~~
 {: .bash}
 
+You should `ls` to check that this file has been downloaded.
+
+We can now run `kraken-biom` to generate a biom file for both samples.
+
 ~~~
  kraken-biom ERR2935805.report JP4D.report --fmt json -o metagenome.biom
 ~~~
 {: .bash}
 
-If we list the files in our `taxonomy` folder, we will see that the `ERR2935805.biom` file has been created.
+If we list the files in our `taxonomy` folder, we will see that the `metagenome.biom` file has been created.
 ~~~
  ls -l
 ~~~
@@ -221,17 +225,18 @@ If we list the files in our `taxonomy` folder, we will see that the `ERR2935805.
 ~~~
 -rw-rw-r-- 1 csuser csuser 3935007137 Oct  9 09:16 ERR2935805.kraken
 -rw-rw-r-- 1 csuser csuser     424101 Oct  9 09:16 ERR2935805.report
--rw-rw-r-- 1 csuser csuser     741259 Oct  9 10:22 ERR2935805.biom
+-rw-rw-r-- 1 csuser csuser     404232 Oct  9 09:30 JP4D.report
+-rw-rw-r-- 1 csuser csuser     741259 Oct  9 10:22 metagenome.biom
 ~~~
 {: .output}
 
 ###  Analyse the BIOM table  
 
-We will be using an `R` package called [`phyloseq`](https://joey711.github.io/phyloseq/) to analyse our metagenome. Other software for analyses of diversity include [Qiime2](https://qiime2.org/), [MEGAN](https://www.wsi.uni-tuebingen.de/lehrstuehle/algorithms-in-bioinformatics/software/megan6/) and the `R` package [`Vegan`](https://vegandevs.github.io/vegan/)
+We will be using an `R` package called [`phyloseq`](https://joey711.github.io/phyloseq/) to analyse our biom file. Other software for analyses of diversity include [Qiime2](https://qiime2.org/), [MEGAN](https://www.wsi.uni-tuebingen.de/lehrstuehle/algorithms-in-bioinformatics/software/megan6/) and the `R` package [`Vegan`](https://vegandevs.github.io/vegan/)
 
 We will be using command line R ???
 
-More here about how we're running this. Rstudio cloud or command line R?
+More here about how we're running this. Rstudio cloud
 
 
 ~~~
@@ -261,7 +266,7 @@ First we tell R in which directory we are working.
 
 We then need to create the phyloseq object from our `.biom` file with the `import_biom` command:
 ~~~
-> biom_metagenome <- import_biom("ERR2935805.biom")
+> biom_metagenome <- import_biom("metagenome.biom")
 ~~~
 {: .language-r}
 
@@ -316,20 +321,22 @@ we obtain with the next code:
 ~~~
 {: .language-r}
 ~~~
-[1] "Firmicutes"                  "Actinobacteria"              "Tenericutes"                
- [4] "Cyanobacteria"               "Deinococcus-Thermus"         "Chloroflexi"                
- [7] "Armatimonadetes"             "Proteobacteria"              "Bacteroidetes"              
-[10] "Chlorobi"                    "Balneolaeota"                "Gemmatimonadetes"           
-[13] "Candidatus Cloacimonetes"    "Planctomycetes"              "Verrucomicrobia"            
-[16] "Kiritimatiellaeota"          "Chlamydiae"                  "Spirochaetes"               
-[19] "Aquificae"                   "Fusobacteria"                "Acidobacteria"              
-[22] "Thermotogae"                 "Candidatus Saccharibacteria" "Candidatus Bipolaricaulota"
-[25] "Synergistetes"               "Elusimicrobia"               "Thermodesulfobacteria"      
-[28] "Nitrospirae"                 "Caldiserica"                 "Deferribacteres"            
-[31] "Chrysiogenetes"              "Chordata"                    "Euryarchaeota"              
-[34] "Crenarchaeota"               "Thaumarchaeota"              "Uroviricota"                
-[37] "Peploviricota"               "Nucleocytoviricota"          "Negarnaviricota"            
-[40] "Pisuviricota"                "Artverviricota"             
+[1] "Firmicutes"                  "Proteobacteria"              "Actinobacteria"             
+[4] "Tenericutes"                 "Cyanobacteria"               "Deinococcus-Thermus"        
+[7] "Armatimonadetes"             "Chloroflexi"                 "Bacteroidetes"              
+[10] "Chlorobi"                    "Gemmatimonadetes"            "Candidatus Cloacimonetes"   
+[13] "Planctomycetes"              "Verrucomicrobia"             "Kiritimatiellaeota"         
+[16] "Chlamydiae"                  "Spirochaetes"                "Aquificae"                  
+[19] "Fusobacteria"                "Acidobacteria"               "Thermotogae"                
+[22] "Candidatus Saccharibacteria" "Candidatus Bipolaricaulota"  "Synergistetes"              
+[25] "Elusimicrobia"               "Thermodesulfobacteria"       "Nitrospirae"                
+[28] "Caldiserica"                 "Deferribacteres"             "Chrysiogenetes"             
+[31] "Chordata"                    "Euryarchaeota"               "Crenarchaeota"              
+[34] "Thaumarchaeota"              "Uroviricota"                 "Peploviricota"              
+[37] "Nucleocytoviricota"          "Negarnaviricota"             "Pisuviricota"               
+[40] "Artverviricota"              "Coprothermobacterota"        "Ignavibacteriae"            
+[43] "Fibrobacteres"               "Lentisphaerae"               "Calditrichaeota"            
+[46] "Dictyoglomi"              
 ~~~
 {: .output}
 
@@ -340,7 +347,7 @@ Firmicutes?. Let´s use the command `sum()` to ask R:
 ~~~
 {: .language-r}
 ~~~
-[1] 786
+[1] 969
 ~~~
 {: .output}
 
@@ -348,8 +355,7 @@ Firmicutes?. Let´s use the command `sum()` to ask R:
 >
 > Go into groups and choose one phylum that is interesting for your
 > group, and use the learned code to find out how many OTUs have been assigned to
-> your chosen phylum and what are the unique names of the genera inside it.
-> がんばれ! (ganbate; *good luck*):
+> your chosen phylum and what are the unique names of the genera inside it:
 >> ## Solution
 >> Change the name of a new phylum wherever it is needed to get the result.
 >> As an example, here is the solution for Proteobacteria:
@@ -371,20 +377,14 @@ Firmicutes?. Let´s use the command `sum()` to ask R:
 
 
 > ## Phyloseq objects
-> Finally, we can review our object and see that all datasets (i.e. JC1A, JP4D, and JP41) are in the object.
-> If you look at our Phyloseq object, you will see that there are more data types
-> that we can use to build our object(`?phyloseq()`), such as a phylogenetic tree and metadata
-> concerning our samples. These are optional, so we will use our basic
-> phyloseq object for now, composed of the abundances of specific OTUs and the
-> names of those OTUs.  
+> We can look at the help documenation for the Phyloseq library with `?phyloseq()`
+> Something more here!
 {: .callout}
 
 
 ## Plot alpha diversity
 
-We want to know how is the bacterial diversity, so we will prune all of the
-non-bacterial organisms in our metagenome. To do this we will make a subset
-of all bacterial groups and save them.
+We want to know how is the bacterial diversity of our samples, so we will remove all of the non-bacterial organiss. To do this we will generate a subset of all bacterial groups and save them.
 ~~~
 > bac_biom_metagenome <- subset_taxa(biom_metagenome, Kingdom == "Bacteria")
 ~~~
@@ -398,8 +398,8 @@ Now let's look at some statistics of our metagenomes:
 {: .language-r}
 ~~~
 phyloseq-class experiment-level object
-otu_table()   OTU Table:         [ 4024 taxa and 3 samples ]
-tax_table()   Taxonomy Table:    [ 4024 taxa by 7 taxonomic ranks ]
+otu_table()   OTU Table:         [ 5808 taxa and 2 samples ]
+tax_table()   Taxonomy Table:    [ 5808 taxa by 7 taxonomic ranks ]
 ~~~
 {: .output}
 ~~~
@@ -407,8 +407,8 @@ tax_table()   Taxonomy Table:    [ 4024 taxa by 7 taxonomic ranks ]
 ~~~
 {: .language-r}
 ~~~
-  sa1
-  38057090
+  ERR2935805    JP4D
+  38057090      149590
 ~~~
 {: .output}
 
@@ -417,13 +417,13 @@ tax_table()   Taxonomy Table:    [ 4024 taxa by 7 taxonomic ranks ]
 ~~~
 {: .language-r}
 ~~~
-sa1          
-Min.   :       1  
-1st Qu.:       1  
-Median :       2  
-Mean   :   10198  
-3rd Qu.:       3  
-Max.   :28925791  
+ERR2935805            JP4D        
+Min.   :       0   Min.   :   0.00  
+1st Qu.:       0   1st Qu.:   0.00  
+Median :       1   Median :   3.00  
+Mean   :    6553   Mean   :  25.76  
+3rd Qu.:       2   3rd Qu.:  13.00  
+Max.   :28925791   Max.   :6551.00  
 ~~~
 {: .output}
 
