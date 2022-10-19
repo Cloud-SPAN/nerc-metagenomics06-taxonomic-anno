@@ -369,6 +369,7 @@ Firmicutes?. Let´s use the command `sum()` to ask R:
 >> unique(biom_metagenome@tax_table@.Data[biom_metagenome@tax_table@.Data[,"Phylum"] == "Cyanobacteria", "Genus"])
 >> ~~~
 >> {: .language-r}
+>> 
 >> ~~~
 >>  [1] ""                               "Nostoc"                         "Anabaena"                      
 >> [4] "Richelia"                       "Trichormus"                     "Calothrix"                     
