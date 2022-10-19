@@ -308,10 +308,11 @@ So to remove the unnecessary characters we will use the following code:
 ~~~
 > biom_metagenome@tax_table@.Data <- substring(biom_metagenome@tax_table@.Data, 4)
 > colnames(biom_metagenome@tax_table@.Data)<- c("Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Species")
+> View(biom_metagenome@tax_table)
 ~~~
 {: .language-r}
 
-<img src="{{ page.root }}/fig/03_02_phyloseq_tax_tabe.png" alt="The same table we saw in Figure 3 but with informative headers in each of the columns. Now, we can see which of the columns are associated with which taxonomic classification rank" />
+<img src="{{ page.root }}/fig/03_02_phyloseq_taxtab_e.png" alt="The same table we saw in Figure 3 but with informative headers in each of the columns. Now, we can see which of the columns are associated with which taxonomic classification rank" />
 <em> Figure 4. Table of the OTU data from our `biom_metagenome` object. With corrections. <em/>
 
 To explore how many phyla we have, we are going to use a command name `unique()`. Let's try what result
