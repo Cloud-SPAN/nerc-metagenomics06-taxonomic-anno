@@ -199,7 +199,7 @@ As we saw in the previous episode, `.kraken` and `.report` are the output files 
 > {: .output}
 {: .solution}
 
-With the next command, we are going to create a table in [Biom](https://biom-format.org/) format called `ERR2935805.biom` from our Kraken report, `ERR2935805.report`.
+With the next command, we are going to create a table in [Biom](https://biom-format.org/) format from our Kraken report, `ERR2935805.report` and also from a Kraken report from a real world metagenome so we can compare the mock metagenome to a real metagenome. This is a sample from the dataset of [JG Okie et al., 2020](https://elifesciences.org/articles/49816).
 
 
 ~~~
