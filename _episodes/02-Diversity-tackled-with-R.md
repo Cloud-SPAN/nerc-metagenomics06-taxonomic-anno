@@ -352,26 +352,44 @@ Firmicutes?. Let´s use the command `sum()` to ask R:
 {: .output}
 
 > ## Exercise 2: Explore a phylum
->
-> Go into groups and choose one phylum that is interesting for your
-> group, and use the learned code to find out how many OTUs have been assigned to
-> your chosen phylum and what are the unique names of the genera inside it:
+> Using the example above choose a different phylum and work out the number of the OTUs assigned to this phylum and the unique names of the genera inside it:
 >> ## Solution
 >> Change the name of a new phylum wherever it is needed to get the result.
->> As an example, here is the solution for Proteobacteria:
+>> As an example, here is the solution for Cyanobacteria:
 >> ~~~
->> sum(biom_metagenome@tax_table@.Data[,"Phylum"] == "Proteobacteria")
+>> sum(biom_metagenome@tax_table@.Data[,"Phylum"] == "Cyanobacteria")
 >> ~~~
 >> {: .language-r}
 >> ~~~
->> [1] 1949
+>> [1] 169
 >> ~~~
 >> {: .output}
 >> ~~~
->> unique(biom_metagenome@tax_table@.Data[biom_metagenome@tax_table@.Data[,"Phylum"] == "Proteobacteria", "Genus"])
+>> unique(biom_metagenome@tax_table@.Data[biom_metagenome@tax_table@.Data[,"Phylum"] == "Cyanobacteria", "Genus"])
 >> ~~~
 >> {: .language-r}
->>
+>> ~~~
+>>  [1] ""                               "Nostoc"                         "Anabaena"                      
+>> [4] "Richelia"                       "Trichormus"                     "Calothrix"                     
+>> [7] "Anabaenopsis"                   "Sphaerospermopsis"              "Cylindrospermopsis"            
+>> [10] "Dolichospermum"                 "Fischerella"                    "Brasilonema"                   
+>> [13] "Tolypothrix"                    "Chondrocystis"                  "Geminocystis"                  
+>> [16] "Gloeocapsa"                     "Microcystis"                    "Gloeothece"                    
+>> [19] "Oxynema"                        "Moorea"                         "Allocoleopsis"                 
+>> [22] "Limnospira"                     "Synechococcus"                  "Dactylococcopsis"              
+>> [25] "Prochlorococcus"                "Cyanobium"                      "Parasynechococcus"             
+>> [28] "Acaryochloris"                  "Leptolyngbya"                   "Thermosynechococcus"           
+>> [31] "Stanieria"                      "Pleurocapsa"                    "Gloeobacter"                   
+>> [34] "Chroococcidiopsis"              "Cylindrospermum"                "Rivularia"                     
+>> [37] "Microchaete"                    "Nodularia"                      "Raphidiopsis"                  
+>> [40] "Scytonema"                      "Cyanobacterium"                 "Candidatus Atelocyanobacterium"
+>> [43] "Halothece"                      "Cyanothece"                     "Oscillatoria"                  
+>> [46] "Trichodesmium"                  "Microcoleus"                    "Planktothrix"                  
+>> [49] "Arthrospira"                    "Geitlerinema"                   "Crinalium"                     
+>> [52] "Halomicronema"                  "Synechocystis"                  "Pseudanabaena"                 
+>> [55] "Chamaesiphon"                   "Gloeomargarita"     
+> ~~
+> {: .output}
 > {: .solution}
 {: .challenge}
 
@@ -439,8 +457,8 @@ graph created using Phyloseq:
 ~~~
 {: .language-r}
 
-<a href="{{ page.root }}/fig/03-07-05.png">
-  <img src="{{ page.root }}/fig/03-07-05.png" alt="A figure divided in three
+<a href="{{ page.root }}/fig/03_02_plot_rich.png">
+  <img src="{{ page.root }}/fig/03_02_plot_rich.png" alt="A figure divided in three
   sections. Each of these sections represent a diferent alpha diversity index.
   Inside this sections, each point represent the value assigned on this index to
   the three different samples. We can see how the different indexes gives
