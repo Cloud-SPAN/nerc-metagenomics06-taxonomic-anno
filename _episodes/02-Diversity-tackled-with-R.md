@@ -199,11 +199,17 @@ As we saw in the previous episode, `.kraken` and `.report` are the output files 
 > {: .output}
 {: .solution}
 
-With the next command, we are going to create a table in [Biom](https://biom-format.org/) format from our Kraken report, `ERR2935805.report` and also from a Kraken report from a real world metagenome so we can compare the mock metagenome to a real metagenome. This is a sample from the dataset of [JG Okie et al., 2020](https://elifesciences.org/articles/49816).
+With the next command, we are going to create a table in [Biom](https://biom-format.org/) format from our Kraken report, `ERR2935805.report` and also from a Kraken report (`JP4D.report`) from a real world metagenome so we can compare the mock metagenome to a real metagenome. This is a sample from the dataset of [JG Okie et al., 2020](https://elifesciences.org/articles/49816).
 
+We should first download the file in the taxonomy directory on the instance using `wget`.
+~~~
+cd ~/cs_course/analysis/taxonomy
+wget https://cloud-span.github.io/metagenomics03-taxonomic-anno/files/JP4D.report
+~~~
+{: .bash}
 
 ~~~
- kraken-biom ERR2935805.report --fmt json -o ERR2935805.biom
+ kraken-biom ERR2935805.report JP4D.report --fmt json -o metagenome.biom
 ~~~
 {: .bash}
 
