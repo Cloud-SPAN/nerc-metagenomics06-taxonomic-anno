@@ -354,7 +354,7 @@ Firmicutes?. Let´s use the command `sum()` to ask R:
 > ## Exercise 2: Explore a phylum
 > Using the example above choose a different phylum and work out the number of the OTUs assigned to this phylum and the unique names of the genera inside it:
 >> ## Solution
->> Change the name of a new phylum wherever it is needed to get the result.
+>> You should the name of a new phylum wherever it is needed to get the result.
 >> As an example, here is the solution for Cyanobacteria:
 >> ~~~
 >> sum(biom_metagenome@tax_table@.Data[,"Phylum"] == "Cyanobacteria")
@@ -388,8 +388,8 @@ Firmicutes?. Let´s use the command `sum()` to ask R:
 >> [49] "Arthrospira"                    "Geitlerinema"                   "Crinalium"                     
 >> [52] "Halomicronema"                  "Synechocystis"                  "Pseudanabaena"                 
 >> [55] "Chamaesiphon"                   "Gloeomargarita"     
-> ~~
-> {: .output}
+>> ~~
+>> {: .output}
 > {: .solution}
 {: .challenge}
 
