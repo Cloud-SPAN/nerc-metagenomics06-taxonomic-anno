@@ -390,7 +390,7 @@ Firmicutes?. Let´s use the command `sum()` to ask R:
 >> [49] "Arthrospira"                    "Geitlerinema"                   "Crinalium"                     
 >> [52] "Halomicronema"                  "Synechocystis"                  "Pseudanabaena"                 
 >> [55] "Chamaesiphon"                   "Gloeomargarita"     
->> ~~
+>> ~~~  
 >> {: .output}
 > {: .solution}
 {: .challenge}
