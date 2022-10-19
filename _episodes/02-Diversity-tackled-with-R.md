@@ -371,7 +371,7 @@ Firmicutes?. Let´s use the command `sum()` to ask R:
 >> {: .language-r}
 >>
 >> ~~~  
->>  [1] ""                               "Nostoc"                         "Anabaena"                      
+>> [1] ""                               "Nostoc"                         "Anabaena"                      
 >> [4] "Richelia"                       "Trichormus"                     "Calothrix"                     
 >> [7] "Anabaenopsis"                   "Sphaerospermopsis"              "Cylindrospermopsis"            
 >> [10] "Dolichospermum"                 "Fischerella"                    "Brasilonema"                   
