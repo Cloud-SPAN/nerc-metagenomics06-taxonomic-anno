@@ -25,13 +25,14 @@ These assignments are done by comparing our sequence to a database. These search
 
 2. K-mers: A genome database is broken into pieces of length k, so as to be able to search for unique pieces by taxonomic group, from lowest common ancestor (LCA), passing through phylum to species. Then, the algorithm breaks the query sequence (reads, contigs) into pieces of length k, looks for where these are placed within the tree and make the classification with the most probable position.  
 
+3. Markers: They look for markers of a database made _a priori_ in the sequences to be classified and assign the taxonomy depending on the hits obtained.    
+
 <a href="{{ page.root }}/fig/03-01_LCA.png">
   <img src="{{ page.root }}/fig/03-01_LCA.png" alt="Diagram of taxonomic tree " />
 </a>
 <br clear="centre"/>
 <em> Figure 1. Lowest common ancestor assignment example.<em/>
 
-3. Markers: They look for markers of a database made _a priori_ in the sequences to be classified and assign the taxonomy depending on the hits obtained.    
 
 A key result when you do taxonomic assignment of metagenomes is the abundance of each taxa in your sample. The absolute abundance of a taxon is the number of sequences (reads or contigs within a MAG, depending on how you have performed the searches) assigned to it.  
 We also often use relative abundance, which is the proportion of sequences assigned to it from the total number of sequences rather than absolute abundances. This is because the absolute abundance can be misleading and samples can be sequenced to different depths, and the relative abundance makes it easier to compare between samples accounting for sequencing depth differences.  
