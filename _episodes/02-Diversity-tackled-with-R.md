@@ -259,41 +259,33 @@ You will need the Bioconductor package, `phloseq` and the `tidyverse` packages. 
 Make an RStudio project workshop by clicking on the drop-down menu on top right where it says Project: (None) and choosing New Project and then New Directory, then New Project. In the "Create project as a subdirectory" box, use Browse to navigate to the "cloudspan" folder. Name the RStudio Project 'diversity'.
 
 4. Download the `metagenome.biom` file to the project folder
-Download the file to the project folder using `scp`. Use a terminal  that is **_not_** logged into the cloud instance and ensure you are in your `cloudspan` directory. 
-
-Use `scp` to copy the file - the command will look something like:
-~~~
-scp -i login-key-instanceNNN.pem csuser@instanceNNN.cloud-span.aws.york.ac.uk:~/cs_course/analysis/taxonomy/metagenome.biom .
-~~~
-{: .bash}
-Remember to replace NNN with the instance number specific to you. And don't forget the `.` at the end meaning "to here"
+Download the file to the project folder using `scp`. Use a terminal  that is **_not_** logged into the cloud instance and ensure you are in your `cloudspan` directory. Use `scp` to copy the file to the `diversity` folder - the command will look something like:
+ ~~~
+ scp -i login-key-instanceNNN.pem csuser@instanceNNN.cloud-span.aws.york.ac.uk:~/cs_course/analysis/taxonomy/metagenome.biom diversity
+ ~~~
+ {: .bash}
+ Remember to replace NNN with the instance number specific to you. 
 
 5. Open a new script.
 
 Now go to **Start the analysis**
 
 #### Option B: I don't know R and RStudio.
-If you don't know R and RStudio we suggest you to use this option. We have put the data, `metagenome.biom` and a script `analysis.R` in the RStudio Cloud Project.
+If you don't know R and RStudio we suggest you to use this option. We have installed the packages needed and put the data, `metagenome.biom` and a script `analysis.R` in the RStudio Cloud Project.
 
-Make an RStudio Cloud account
+1. Make an RStudio Cloud account
+  Go to https://rstudio.cloud/ and follow Get Started for Free. We recommend signing up with your Google account if you use one.
 
-Follow the link to this project
+2. Follow the link to this project.
+  Open the project we have set up: [cloud-span-metagenomics](https://rstudio.cloud/content/4671746). You'll get a message saying "Deploying project". This will take a few seconds.
 
-Make your own copy of the project
+3. Make your own copy of the project
+  At the top of the Screen there is a message asking you if you want to Save a permanent copy. You do! 
 
-Open `analysis.R` from the Files pane on the bottom right of the display.
+4. Open `analysis.R` from the Files pane on the bottom right of the display.
 
-
-  
   
 #### Start the Analysis
-~~~
-> install.libraries()
-~~~
-{: .language-r}  
-
-Once the libraries are installed, we must make them available for this R session. Now load the libraries (a process needed every time we begin a new work
-in R and we are going to use them):
 
 ~~~
 > library("phyloseq")
@@ -306,11 +298,6 @@ in R and we are going to use them):
 
 ### Load data with the number of reads per OTU and taxonomic labels for each OTU  
 
-First we tell R in which directory we are working.
-~~~
-> setwd("~/dc_workshop/taxonomy/") # Not needed?
-~~~
-{: .language-r}
 
 We then need to create the phyloseq object from our `.biom` file with the `import_biom` command:
 ~~~
