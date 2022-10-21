@@ -11,21 +11,13 @@ objectives:
 - "Understand how to extract specific information from taxonomic-assignation data"
 keypoints:
 - "The library `phyloseq` lets you manipulate metagenomic data in a taxonomic specific perspective."  
-- "The library `ggplot2` creates plots that helps/remarks the data analysis"
-- "Creativity is welcome to explore and present your data"
+- "The library `ggplot2` is helpful for visualising your taxonomy data"
 ---
 
-## Assemble and manipulate a phyloseq object with a myriad of samples
-
-*Before your fingers touch the keys, it must be decided in your mind why you are doing it...exploration
-is welcome and praised, not moving at all or senseless movement will draw you somewhere far from your
-goal*
-
-  -Sergio Cuellar
 
 ## Visualizing our data with ggplot2
 In the last lesson, we created our phyloseq object, which contains the information
-of our samples: `JC1A`, `JP41` and `JP4D`. Let´s take a look again at the
+of our samples: `ERR2935805` and `JP4D`. Let´s take a look again at the
  number of reads in our data.  
 ~~~
 > merged_metagenomes
