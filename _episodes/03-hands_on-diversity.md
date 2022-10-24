@@ -470,7 +470,7 @@ look deeply to a function that we already use, but now with a guided exploration
 command is used to extract specific lineages from a stated taxonomic level, we have used it to get
 rid from the reads that does not belong to bacteria:
 ~~~
-> merged_metagenomes <- subset_taxa(merged_metagenomes, Kingdom == "Bacteria")
+>> merged_metagenomes <- subset_taxa(merged_metagenomes, Kingdom == "Bacteria")
 ~~~
 {: .language-r}
 
@@ -478,7 +478,7 @@ We are going to use it now to extract an specific phylum from our data, and expl
 taxonomic level: Genus. We will take as an example the phylum cyanobacteria (certainly, this is a biased
 and arbitrary decision, but who does not feel attracted these incredible microorganisms?):
 ~~~
-> cyanos <- subset_taxa(merged_metagenomes, Phylum == "Cyanobacteria")
+> cyanos <- subset_taxa(bac_biom_metagenome, Phylum == "Cyanobacteria")
 > unique(cyanos@tax_table@.Data[,2])
 ~~~
 {: .language-r}
@@ -500,9 +500,9 @@ information; and plotting**:
 ~~~
 {: .language-r}
 
-<a href="{{ page.root }}/fig/03-08-07.png">
-  <img src="{{ page.root }}/fig/03-08-07.png" alt="A new plot with three bars
-  representing the absolute abundance of Cyanobacteria in each of the samples.
+<a href="{{ page.root }}/fig/03_03_cyano.png">
+  <img src="{{ page.root }}/fig/03_03_cyano.png" alt="A new plot with two bars
+  representing the relative abundance of Cyanobacteria in each of the samples.
   Each of the colors represent a Genus. Because we are seeing relative
   abundances, all the bars are of the same hight." />
 </a>
@@ -510,15 +510,13 @@ information; and plotting**:
 
 > ## Exercise 3
 >
-> Go into groups and choose one phylum that is interesting for your
-> group, and use the code learned to generate a plot where you can
+> Choose one phylum that is interesting and use the code learned to generate a plot where you can
 > show us the abundance at genus level in each of the samples.
-> Please, paste your result on the collaborative document provided by instructors. がんばて!(ganbate; *good luck*):
 >> ## Solution
 >> Change "Cyanobacteria" wherever it is needed to get a result for
 >> other phylum, as an example, here is the solution for Proteobacteria:
 >>
->>`proteo <- subset_taxa(merged_metagenomes, Phylum == "Proteobacteria")`
+>>`proteo <- subset_taxa(bac_biom_metagenome, Phylum == "Proteobacteria")`
 >>
 >>`proteo  = transform_sample_counts(proteo, function(x) x*100 / sum(x) )`
 >>
@@ -534,8 +532,8 @@ information; and plotting**:
 >>  `geom_bar(aes(), stat="identity", position="stack")`
 >>
 >>`proteo`
->><a href="{{ page.root }}/fig/03-08-02e.png">
->>  <img src="{{ page.root }}/fig/03-08-02e.png" alt="A new plot with three bars
+>><a href="{{ page.root }}/fig/03_03_proteo.png">
+>>  <img src="{{ page.root }}/fig/03_03_proteo.png" alt="A new plot with three bars
   representing the absolute abundance of Proteobacteria in each of the samples.
   Each of the colors represent a Genus. Because we are seeing relative
   abundances, all the bars are of the same hight." />
