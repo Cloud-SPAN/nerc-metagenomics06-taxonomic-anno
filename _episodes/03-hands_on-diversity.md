@@ -166,7 +166,7 @@ reads(i.e. information) of each sample. Before we further process our data, take
 non-identified read. Marked as blank (i.e "") on the different taxonomic levels:
 
 ~~~
-> summary(bac_biom_metagenome@tax_table== "")
+> summary(bac_biom_metagenome@tax_table@.Data == "")
 ~~~
 {: .language-r}
 ~~~
@@ -350,42 +350,44 @@ both datasets.
 ~~~
 {: .language-r}
 ~~~
-'data.frame':	72 obs. of  5 variables:
+'data.frame':	70 obs. of  5 variables:
  $ OTU      : chr  "1639" "286" "286" "78331" ...
  $ Sample   : chr  "ERR2935805" "ERR2935805" "JP4D" "JP4D" ...
- $ Abundance: num  34279615 3768222 128236 9475 8071 ...
+ $ Abundance: num  34238425 3717008 116538 9227 8037 ...
  $ Kingdom  : chr  "Bacteria" "Bacteria" "Bacteria" "Bacteria" ...
  $ Phylum   : chr  "Firmicutes" "Proteobacteria" "Proteobacteria" "Actinobacteria" ...
 ~~~
 {: .output}
 
 With these objects and what we have learned regarding `ggplot2`, we can proceed to compare them
-with a plot. First, let´s create the figure for the absolute abundances data (*i.e* `raw.plot` object)
+with a plot. First, let´s create the figure for the absolute abundances data (*i.e* `abs.plot` object)
 ~~~
 > abs.plot <- ggplot(data=raw.data, aes(x=Sample, y=Abundance, fill=Phylum))+
     geom_bar(aes(), stat="identity", position="stack")
+> abs.plot
 ~~~
 {: .language-r}
+<a href="{{ page.root }}/fig/03_03_abs_plot.png">
+  <img src="{{ page.root }}/fig/03_03_abs_plot.png" alt="A two-part plot contrasting
+  the absolute abundance between the two samples." />
+</a>
+<em> Figure 6. Taxonomic diversity of absolute and relative abundance. <em/>
+
 With the `position="stack"` command, we are telling the `ggplot` function that the values must stack each other for each of the samples. In this way, we will
 have all of our different categories (OTUs) stacked in one bar and not each in a separate one.
 For more info [position_stack](https://ggplot2.tidyverse.org/reference/position_stack.html)
 
 Next, we will create the figure for the representation of the relative abundance data, and ask
-RStudio to show us both plots:
+RStudio to show us both plots side by side:
 ~~~
 > rel.plot <- ggplot(data=percentages, aes(x=Sample, y=Abundance, fill=Phylum))+
   geom_bar(aes(), stat="identity", position="stack")
-> raw.plot | rel.plot
+> rel.plot
 ~~~
 {: .language-r}
 
-<a href="{{ page.root }}/fig/03-08-05.png">
-  <img src="{{ page.root }}/fig/03-08-05.png" alt="A two-part plot contrasting
-  the absolute versus the relative abundance of the three samples. On the right
-  side we can see how each of the bars have its own height, making difficult
-  to compare the information between samples. Whereas, the right side shows
-  three bars with the same height after the abundance was transformed to
-  percentage inside of each sample." />
+<a href="{{ page.root }}fig/03_03_abs_plot.png">
+  <img src="{{ page.root }}fig/03_03_abs_plot.png" alt="A two-part plot contrasting the relative abundance of the two samples." />
 </a>
 <em> Figure 6. Taxonomic diversity of absolute and relative abundance. <em/>
 
@@ -401,8 +403,8 @@ the identification of the OTUs whose relative abundance is less than 0.2%:
 ~~~
 {: .language-r}
 ~~~
-[1] "Proteobacteria"    "Bacteroidetes"     "Actinobacteria"    "Firmicutes"        "Cyanobacteria"    
-[6] "Planctomycetes"    "Verrucomicrobia"   "Phyla < 0.5 abund"
+[1] "Firmicutes"          "Proteobacteria"      "Actinobacteria"     
+[4] "Bacteroidetes"       "Cyanobacteria"       "Phyla < 0.5% abund."
 ~~~
 {: .output}
 
@@ -410,12 +412,12 @@ Let's ask R to display the figures again by re-running our code:
 ~~~
 > rel.plot <- ggplot(data=percentages, aes(x=Sample, y=Abundance, fill=Phylum))+
     geom_bar(aes(), stat="identity", position="stack")
-> raw.plot | rel.plot
+> rel.plot
 ~~~
 {: .language-r}
 
-<a href="{{ page.root }}/fig/03-08-06.png">
-  <img src="{{ page.root }}/fig/03-08-06.png" alt="A new two-part plot with
+<a href="{{ page.root }}/fig/03_03_top5.png">
+  <img src="{{ page.root }}/fig/03_03_top5.png" alt="A new two-part plot with
   a reassignment of the low-abundant taxa on the right side. Compared to the
   left legend, the one in the right has fewer groups because the process of
   reassigning the taxa with an abundance lower than 0.5 % to just one
