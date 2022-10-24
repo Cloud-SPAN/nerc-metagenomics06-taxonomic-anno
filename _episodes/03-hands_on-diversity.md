@@ -123,8 +123,8 @@ We need to tell `ggplot` how we want to visually represent the data, which we di
 example, we used `geom_col`, which tells `ggplot` we want to visually represent the relationship between **x** and
 **y** as columns-bars:
 
-<a href="{{ page.root }}/fig/03-08-01.png">
-  <img src="{{ page.root }}/fig/03-08-01.png" alt="The same plot as Figure 1. Here
+<a href="{{ page.root }}/fig/03_03_deep.png">
+  <img src="{{ page.root }}/fig/03_03_deep.png" alt="The same plot as Figure 1. Here
   we see again the complete plot, with the corresponding bars to each of the
   samples." />
 </a>
@@ -166,14 +166,14 @@ reads(i.e. information) of each sample. Before we further process our data, take
 non-identified read. Marked as blank (i.e "") on the different taxonomic levels:
 
 ~~~
-> summary(merged_metagenomes@tax_table@.Data== "")
+> summary(bac_biom_metagenome@tax_table== "")
 ~~~
 {: .language-r}
 ~~~
-  Kingdom          Phylum          Class           Order           Family          Genus          Species       
- Mode :logical   Mode :logical   Mode :logical   Mode :logical   Mode :logical   Mode :logical   Mode :logical  
- FALSE:4024      FALSE:4024      FALSE:3886      FALSE:4015      FALSE:3967      FALSE:3866      FALSE:3540     
-                                 TRUE :138       TRUE :9         TRUE :57        TRUE :158       TRUE :484      
+Kingdom          Phylum          Class           Order           Family          Genus          Species       
+Mode :logical   Mode :logical   Mode :logical   Mode :logical   Mode :logical   Mode :logical   Mode :logical  
+FALSE:5808      FALSE:5808      FALSE:5645      FALSE:5796      FALSE:5754      FALSE:5647      FALSE:5251     
+                               TRUE :163       TRUE :12        TRUE :54        TRUE :161       TRUE :557      
 ~~~
 {: .output}
 With the command above, we can see that there are blanks on different taxonomic leves. Although it is
@@ -181,15 +181,15 @@ expected to see some blanks at the species, or even at the genus level, we will 
 the genus level to proceed with the analysis:
 
 ~~~
-> merged_metagenomes <- subset_taxa(merged_metagenomes, Genus != "")
-> summary(merged_metagenomes@tax_table@.Data== "")
+> bac_biom_metagenome <- subset_taxa(bac_biom_metagenome, Genus != "")
+> summary(bac_biom_metagenome@tax_table@.Data== "")
 ~~~
 {: .language-r}
 ~~~
-  Kingdom          Phylum          Class           Order           Family          Genus          Species       
- Mode :logical   Mode :logical   Mode :logical   Mode :logical   Mode :logical   Mode :logical   Mode :logical  
- FALSE:3866      FALSE:3866      FALSE:3739      FALSE:3860      FALSE:3858      FALSE:3866      FALSE:3527     
-                                 TRUE :127       TRUE :6         TRUE :8                         TRUE :339
+Kingdom          Phylum          Class           Order           Family          Genus          Species       
+Mode :logical   Mode :logical   Mode :logical   Mode :logical   Mode :logical   Mode :logical   Mode :logical  
+FALSE:5808      FALSE:5808      FALSE:5645      FALSE:5796      FALSE:5754      FALSE:5647      FALSE:5251     
+                               TRUE :163       TRUE :12        TRUE :54        TRUE :161       TRUE :557     
 ~~~
 {: .output}
 
@@ -197,32 +197,32 @@ the genus level to proceed with the analysis:
 Next, since our metagenomes have different sizes, it is imperative to convert the number
 of assigned read into percentages (i.e. relative abundances) so as to compare them.
 ~~~
-> head(merged_metagenomes@otu_table@.Data)
+> head(bac_biom_metagenome@otu_table@.Data)
 ~~~
 {: .language-r}
 ~~~
-        JC1A JP4D JP41
-1060      32  420   84
-1063     316 5733 1212
-2033869  135 1232  146
-1850250  114  846  538
-1061      42 1004  355
-265       42  975  205
+  ERR2935805 JP4D
+1385        39112   31
+186820       1014    0
+1637      4877507    7
+1639     28925791    8
+1642        48735    1
+529731      21018    0
 ~~~
 {: .output}
 ~~~
-> percentages  = transform_sample_counts(merged_metagenomes, function(x) x*100 / sum(x) )
+> percentages  = transform_sample_counts(bac_biom_metagenome, function(x) x*100 / sum(x) )
 > head(percentages@otu_table@.Data)
 ~~~
 {: .language-r}
 ~~~
-             JC1A      JP4D      JP41
-1060    0.1877383 0.3065134 0.1179709
-1063    1.8539161 4.1839080 1.7021516
-2033869 0.7920211 0.8991060 0.2050447
-1850250 0.6688178 0.6174056 0.7555755
-1061    0.2464066 0.7327130 0.4985675
-265     0.2464066 0.7115490 0.2879052
+  ERR2935805         JP4D
+1385    0.102771915 0.0207233104
+186820  0.002664418 0.0000000000
+1637   12.816289948 0.0046794572
+1639   76.006313147 0.0053479511
+1642    0.128057610 0.0006684939
+529731  0.055227554 0.0000000000
 ~~~
 {: .output}
 
@@ -247,13 +247,12 @@ $JSD
 [1] "jsd"
 
 $vegdist
- [1] "manhattan"  "euclidean"  "canberra"   "bray"       "kulczynski" "jaccard"    "gower"     
- [8] "altGower"   "morisita"   "horn"       "mountford"  "raup"       "binomial"   "chao"      
-[15] "cao"       
+ [1] "manhattan"  "euclidean"  "canberra"   "bray"       "kulczynski" "jaccard"    "gower"      "altGower"   "morisita"   "horn"      
+[11] "mountford"  "raup"       "binomial"   "chao"       "cao"       
 
 $betadiver
- [1] "w"   "-1"  "c"   "wb"  "r"   "I"   "e"   "t"   "me"  "j"   "sor" "m"   "-2"  "co"  "cc"  "g"  
-[17] "-3"  "l"   "19"  "hk"  "rlb" "sim" "gl"  "z"  
+ [1] "w"   "-1"  "c"   "wb"  "r"   "I"   "e"   "t"   "me"  "j"   "sor" "m"   "-2"  "co"  "cc"  "g"   "-3"  "l"   "19"  "hk"  "rlb" "sim"
+[23] "gl"  "z"  
 
 $dist
 [1] "maximum"   "binary"    "minkowski"
@@ -313,12 +312,12 @@ we will use the function `tax_glom()`.
 
 ~~~
 > glom <- tax_glom(percentages, taxrank = 'Phylum')
-> View(glom@tax_table@.Data)
+> View(glom@tax_table)
 ~~~
 {: .language-r}  
 
-<a href="{{ page.root }}/fig/03-08-04.png">
-  <img src="{{ page.root }}/fig/03-08-04.png" alt="Table containing the
+<a href="{{ page.root }}/fig/03_03_glom_tax.png">
+  <img src="{{ page.root }}/fig/03_03_glom_tax.png" alt="Table containing the
   taxonomic information of each of the OTUs inside the three samples. Here,
   we can see how only the Phylum column has information, leaving the other
   taxonomic levels in blank." />
@@ -333,37 +332,37 @@ to manipulate them with packages like `ggplot2` and `vegan`.
 ~~~
 {: .language-r}
 ~~~
-'data.frame': 99 obs. of  5 variables:
- $ OTU      : chr  "1063" "1063" "1063" "2350" ...
- $ Sample   : chr  "JP4D" "JC1A" "JP41" "JP41" ...
- $ Abundance: num  85 73.5 58.7 23.8 19.1 ...
+'data.frame':	72 obs. of  5 variables:
+ $ OTU      : chr  "1639" "286" "286" "1883" ...
+ $ Sample   : chr  "ERR2935805" "JP4D" "ERR2935805" "JP4D" ...
+ $ Abundance: num  90.07 85.72 9.9 6.33 3.98 ...
  $ Kingdom  : chr  "Bacteria" "Bacteria" "Bacteria" "Bacteria" ...
- $ Phylum   : chr  "Proteobacteria" "Proteobacteria" "Proteobacteria" "Bacteroidetes" ...
+ $ Phylum   : chr  "Firmicutes" "Proteobacteria" "Proteobacteria" "Actinobacteria" ...
 ~~~
 {: .output}
 
 Now, let's create another data-frame with the original data. This will help us to compare
 both datasets.
 ~~~
-> raw <- tax_glom(physeq = merged_metagenomes, taxrank = "Phylum")
+> raw <- tax_glom(physeq = bac_biom_metagenome, taxrank = "Phylum")
 > raw.data <- psmelt(raw)
 > str(raw.data)
 ~~~
 {: .language-r}
 ~~~
-'data.frame': 99 obs. of  5 variables:
- $ OTU      : chr  "1063" "1063" "2350" "1063" ...
- $ Sample   : chr  "JP4D" "JP41" "JP41" "JC1A" ...
- $ Abundance: num  116538 41798 16964 12524 9227 ...
+'data.frame':	72 obs. of  5 variables:
+ $ OTU      : chr  "1639" "286" "286" "78331" ...
+ $ Sample   : chr  "ERR2935805" "ERR2935805" "JP4D" "JP4D" ...
+ $ Abundance: num  34279615 3768222 128236 9475 8071 ...
  $ Kingdom  : chr  "Bacteria" "Bacteria" "Bacteria" "Bacteria" ...
- $ Phylum   : chr  "Proteobacteria" "Proteobacteria" "Bacteroidetes" "Proteobacteria" ...
+ $ Phylum   : chr  "Firmicutes" "Proteobacteria" "Proteobacteria" "Actinobacteria" ...
 ~~~
 {: .output}
 
 With these objects and what we have learned regarding `ggplot2`, we can proceed to compare them
-with a plot. First, let´s create the figure for the raw data (*i.e* `raw.plot` object)
+with a plot. First, let´s create the figure for the absolute abundances data (*i.e* `raw.plot` object)
 ~~~
-> raw.plot <- ggplot(data=raw.data, aes(x=Sample, y=Abundance, fill=Phylum))+
+> abs.plot <- ggplot(data=raw.data, aes(x=Sample, y=Abundance, fill=Phylum))+
     geom_bar(aes(), stat="identity", position="stack")
 ~~~
 {: .language-r}
