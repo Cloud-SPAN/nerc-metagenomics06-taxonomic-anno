@@ -20,18 +20,18 @@ In the last lesson, we created our phyloseq object, which contains the informati
 of our samples: `ERR2935805` and `JP4D`. Let´s take a look again at the
  number of reads in our data.  
 ~~~
-> merged_metagenomes
-> sample_sums(x = merged_metagenomes)
+> bac_biom_metagenome
+> sample_sums(x = bac_biom_metagenome)
 ~~~
 {: .language-r}
 
 ~~~
 phyloseq-class experiment-level object
-otu_table()   OTU Table:         [ 4024 taxa and 3 samples ]
-tax_table()   Taxonomy Table:    [ 4024 taxa by 7 taxonomic ranks ]
+otu_table()   OTU Table:         [ 5808 taxa and 2 samples ]
+tax_table()   Taxonomy Table:    [ 5808 taxa by 7 taxonomic ranks ]
 
-  JC1A   JP4D   JP41
- 18412 149590  76589
+  ERR2935805       JP4D
+    38057090     149590
 ~~~
 {: .output}
 
@@ -43,17 +43,17 @@ in an OTU, and what are the maximum numbers of reads in certain category.
 
 
 ~~~
-> summary(merged_metagenomes@otu_table@.Data)
+> summary(bac_biom_metagenome@otu_table)
 ~~~
 {: .language-r}
 ~~~
-      JC1A              JP4D              JP41        
- Min.   :  0.000   Min.   :   0.00   Min.   :   0.00  
- 1st Qu.:  0.000   1st Qu.:   3.00   1st Qu.:   1.00  
- Median :  0.000   Median :   7.00   Median :   5.00  
- Mean   :  4.575   Mean   :  37.17   Mean   :  19.03  
- 3rd Qu.:  2.000   3rd Qu.:  21.00   3rd Qu.:  14.00  
- Max.   :399.000   Max.   :6551.00   Max.   :1994.00
+ERR2935805            JP4D        
+Min.   :       0   Min.   :   0.00  
+1st Qu.:       0   1st Qu.:   0.00  
+Median :       1   Median :   3.00  
+Mean   :    6553   Mean   :  25.76  
+3rd Qu.:       2   3rd Qu.:  13.00  
+Max.   :28925791   Max.   :6551.00  
 ~~~
 {: .output}
 
@@ -71,17 +71,16 @@ This **geoms** can be thought as layers that can be overlapped one over another,
 is required to show useful information-layers to deliver a messagge. We are going to create an
 example with some of the data that we already have. Let's create a data-frame with the next code:
 ~~~
-> deep <- data.frame(Samples = sample_names(merged_metagenomes),
-                    Reads = sample_sums(merged_metagenomes))
+> deep <- data.frame(Samples = sample_names(bac_biom_metagenome),
+                     Reads = sample_sums(bac_biom_metagenome))
 > deep
 ~~~
 {: .language-r}
 
 ~~~
-     Samples  Reads
-JC1A    JC1A  18412
-JP4D    JP4D 149590
-JP41    JP41  76589
+           Samples    Reads
+ERR2935805 ERR2935805 38057090
+JP4D             JP4D   149590
 ~~~
 {: .output}
 `deep` is a new dataframe where we store the name of the sample and its corresponding number of reads.
@@ -93,9 +92,9 @@ Now, we can do a figure with the three components mentioned(data, coordinates, a
 ~~~
 {: .language-r}
 
-<a href="{{ page.root }}/fig/03-08-01.png">
-  <img src="{{ page.root }}/fig/03-08-01.png" alt="Three-bar plot where the height
-  of each bar represents the number of reads of each sample. The samples are represented from the one with lower reads to the larger one: JC1A, JP41, and JP4D. " />
+<a href="{{ page.root }}/fig/03_03_deep.png">
+  <img src="{{ page.root }}/fig/03_03_deep.png" alt="Two-bar plot where the height
+  of each bar represents the number of reads of each sample. The samples are represented from the one with more reads to the less: ERR2935805 and JP4D" />
 </a>
 <em> Figure 1. Sample read counts as bars in a plot. <em/>
 
@@ -113,8 +112,8 @@ written that it figures it out by itself. What would happend if we only call `gg
 ~~~
 {: .language-r}
 
-<a href="{{ page.root }}/fig/03-08-02.png">
-  <img src="{{ page.root }}/fig/03-08-02.png" alt="A blank plot. The names of the
+<a href="{{ page.root }}/fig/03_03_mapping.png">
+  <img src="{{ page.root }}/fig/03_03_mapping.png" alt="A blank plot. The names of the
   samples is on the x-axis and the read quantity on the y-axis, but the bars are
   missing because we did not specify which geom to use." />
 </a>
