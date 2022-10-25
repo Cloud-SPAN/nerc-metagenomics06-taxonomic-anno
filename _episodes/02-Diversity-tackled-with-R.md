@@ -94,7 +94,7 @@ There are 2 steps to need to calculate the diversity of our samples.
 2. Analyse the BIOM table to generate diversity indices and relative abundance plots.
 
 
-### What part of the Kraken output do we need?
+## What part of the Kraken output do we need?
 We will use a command-line program called [`kraken-biom`](https://github.com/smdabdoub/kraken-biom) to convert our Kraken output into a BIOM table. `kraken-biom` takes the `.report` output of Kraken and creates a BIOM table in [`.biom`](https://biom-format.org/) format.
 
 Move in to your `taxonomy` folder
@@ -125,7 +125,7 @@ wget https://cloud-span.github.io/metagenomics03-taxonomic-anno/files/JP4D.repor
 
 You should `ls` to check that this file has been downloaded.  
   
-### Create the BIOM table 
+## Create the BIOM table 
 
 `kraken-biom` has many options which you can see with the help command. However, we only need to specify an output format `--fmt` of `json` to use the file in the next step.
 
@@ -235,98 +235,104 @@ With the next command, we are going to create a table in [Biom](https://biom-for
 ~~~
 {: .output}
 
-###  Analyse the BIOM table using R 
+##  Analyse the BIOM table using R 
 
 We will be using an `R` package called [`phyloseq`](https://joey711.github.io/phyloseq/) to analyse our biom file. Other software for analyses of diversity include [Qiime2](https://qiime2.org/), [MEGAN](https://www.wsi.uni-tuebingen.de/lehrstuehle/algorithms-in-bioinformatics/software/megan6/) and the `R` package [`Vegan`](https://vegandevs.github.io/vegan/)
 
 If you a very familiar with R and RStudio and already have them on your machine, you may want to install the packages needed and download the `metagenome.biom` file to do the analysis on your own computer. However, you do not need prior experience with R and RStudio for this part of the course: we have set up the analysis in RStudio Cloud, an online version of RStudio which has everything you need, including the code. We have given instructions for both options.
 
-#### Option A: I know R and RStudio.
+### Option A: I know R and RStudio.
 If you know R and RStudio and already have them on your machine you may want to use this option.
 
-1. Open RStudio
-
-2. Install the packages
-You will need the Bioconductor package, `phloseq` and the `tidyverse` packages. Bioconductor packages are installed using the `install()` function from the `BioManager` package so we first install that, then `phyloseq` and `tidyverse`:
-~~~
-> install.packages("BiocManager")
-> BiocManager::install("phyloseq")
-> install.packages("tidyverse")
-~~~
-{: .language-r}
-
-3. Make an RStudio project
-Make an RStudio project workshop by clicking on the drop-down menu on top right where it says Project: (None) and choosing New Project and then New Directory, then New Project. In the "Create project as a subdirectory" box, use Browse to navigate to the "cloudspan" folder. Name the RStudio Project 'diversity'.
-
-4. Download the `metagenome.biom` file to the project folder
-Download the file to the project folder using `scp`. Use a terminal  that is **_not_** logged into the cloud instance and ensure you are in your `cloudspan` directory. Use `scp` to copy the file to the `diversity` folder - the command will look something like:
- ~~~
- scp -i login-key-instanceNNN.pem csuser@instanceNNN.cloud-span.aws.york.ac.uk:~/cs_course/analysis/taxonomy/metagenome.biom diversity
- ~~~
- {: .bash}
- Remember to replace NNN with the instance number specific to you. 
-
-5. Open a new script.
+1. Open RStudio    
+2. Install the packages    
+    You will need the Bioconductor package, `phloseq` and the `tidyverse` packages. Bioconductor packages are installed using the `install()` function from the `BioManager` package so we first install that, then `phyloseq` and `tidyverse`:
+    ~~~
+    > install.packages("BiocManager")
+    > BiocManager::install("phyloseq")
+    > install.packages("tidyverse")
+    ~~~
+    {: .language-r}
+3. Make an RStudio project    
+    Make an RStudio project workshop by clicking on the drop-down menu on top right where it says Project: (None) and choosing New Project and then New Directory, then New Project. In the "Create project as a subdirectory" box, use Browse to navigate to the "cloudspan" folder. Name the RStudio Project 'diversity'.
+4. Download the `metagenome.biom` file to the project folder    
+    Download the file to the project folder using `scp`. Use a terminal  that is **_not_** logged into the cloud instance and ensure you are in your `cloudspan` directory. Use `scp` to copy the file to the `diversity` folder - the command will look something like:
+    ~~~
+    scp -i login-key-instanceNNN.pem csuser@instanceNNN.cloud-span.aws.york.ac.uk:~/cs_course/analysis/taxonomy/metagenome.biom diversity
+    ~~~
+    {: .bash}
+     Remember to replace NNN with the instance number specific to you. 
+5. Open a new script.    
 
 Now go to **Start the analysis**
 
-#### Option B: I don't know R and RStudio.
+### Option B: I don't know R and RStudio.
 If you don't know R and RStudio we suggest you to use this option. We have installed the packages needed and put the data, `metagenome.biom` and a script `analysis.R` in the RStudio Cloud Project.
 
-1. Make an RStudio Cloud account
-  Go to https://rstudio.cloud/ and follow Get Started for Free. We recommend signing up with your Google account if you use one.
-
-2. Follow the link to this project.
-  Open the project we have set up: [cloud-span-metagenomics](https://rstudio.cloud/content/4671746). You'll get a message saying "Deploying project". This will take a few seconds.
-
-3. Make your own copy of the project
-  At the top of the Screen there is a message asking you if you want to Save a permanent copy. You do! 
-
-4. Open `analysis.R` from the Files pane on the bottom right of the display.
+1. Make an RStudio Cloud account    
+    Go to https://rstudio.cloud/ and follow Get Started for Free. We recommend signing up with your Google account if you use one.    
+2. Follow the link to this project.    
+    Open the project we have set up: [cloud-span-metagenomics](https://rstudio.cloud/content/4671746). You'll get a message saying "Deploying project". This will take a few seconds.    
+3. Make your own copy of the project    
+    At the top of the Screen there is a message asking you if you want to Save a permanent copy. You do!     
+4. Open `analysis.R` from the Files pane on the bottom right of the display.    
 
   
-#### Start the Analysis
+### Start the Analysis
+If you are using RStudio Cloud, we will run through the code in `analysis.R` line by line. If you are using RStudio on your own machine you can type in the commands or copy them from [analysis.R](files/analysis.R)
 
+First load the packages we need. Put your cursor on the line you want to run and press <kbd>CTRL</kdb><kbd>ENTER</kdb>    
 ~~~
 > library("phyloseq")
-> library("ggplot2")
-> library("readr")
-> library("patchwork") # Not needed?
+> library("tidyverse")
+
 ~~~
 {: .language-r}
 
 
-### Load data with the number of reads per OTU and taxonomic labels for each OTU  
-
-
-We then need to create the phyloseq object from our `.biom` file with the `import_biom` command:
+Now import the data in `metagenome.biom` into R using the `import_biom()` function from `phyloseq`
 ~~~
 > biom_metagenome <- import_biom("metagenome.biom")
 ~~~
 {: .language-r}
 
-Now, we can inspect the result by checking the class of the object created:
+This command has create a special class of R object which is defined by the `phloseq` package and called it `biom_metagenome`. Click on the object name, biom_metagenome, in the Environment pane (top right).  This will open a view of the object in the same pane as your script.
+
+A phyloseq object is a special object in R. It has five parts, called 'slots' which you can see listed in the object view. These are `otu_table`, `tax_table`, `sam_data`, `phy_tree` and `refseq`. In our case, `sam_data`, `phy_tree` and `refseq` are empty. The useful data are in otu_table` and `tax_table`.
+
+
+<a href="{{ page.root }}/fig/r-phyloseq-obj.png">
+  <img src="{{ page.root }}/fig/r-phyloseq-obj.png" alt="Screenshot of RStudio showing the bio_metagenomeobject in the environment window which has been clicked on to open a view of the object. The five slots are listed in that view." />
+</a>
+
+Return to your script (click on the tab). Typing `biom_metagenome` will give some summary information about the `biom_metagenome` object:  
 ~~~
-> class(biom_metagenome)
+> biom_metagenome
 ~~~
 {: .language-r}
+
 ~~~
-[1] "phyloseq"
-attr("package")
-[1] "phyloseq"
+phyloseq-class experiment-level object
+otu_table()   OTU Table:         [ 5905 taxa and 2 samples ]
+tax_table()   Taxonomy Table:    [ 5905 taxa by 7 taxonomic ranks ]
 ~~~
 {: .output}
 
-Now we have determined we have a phyloseq obhect we can access the data that is stored inside our `biom_metagenome` object.
+The line starting `otu_table` tells us we have two samples - these are ERR2935805 and JP4D - with a total of 5905 taxa. The `tax_table` again tells us how many taxa wwe have. The seven ranks indicates that we have some identifications down to species level. The taxonomic ranks are from the classification system of taxa from the most general (kingdom) to the most specific (species): kingdom/domain, phylum, class, order, family, genus, species.
 
-A phyloseq object is a special object in R so we need to use the operator `@` to explore the subsections of data inside `biom_metagenome`.
-
-If we type `biom_metagenome@` five options are displayed;  `otu_table`, `tax_table`, `sam_data`, `phy_tree` and `refseq`. We will first look at `otu_table` and `tax_table`.
-
+We can view the `otu_table` with:
 ~~~
-> View(biom_metagenome@tax_table)
+> View(biom_metagenome@otu_table)
 ~~~
 {: .language-r}
+
+This table has the OTU identity in the row names and the samples in the columns. The values in the columns are the abundance of that OYU in that sample.
+
+
+-------------------------
+**HERE**
+
+
 
 <img src="{{ page.root }}/fig/03_02_phyloseq_taxtab.png" alt="A table where the taxonomic identification information of all OTUs is displayed. Each row represent one OTU and the columns its identification at different levels in the taxonomic taxonomic classification ranks, beginning with Kingdom until we reach Species in the seventh column " />
 <em> Figure 3. Table of the OTU data from our `biom_metagenome` object. <em/>
