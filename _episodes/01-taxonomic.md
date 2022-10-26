@@ -7,8 +7,8 @@ questions:
 - "How can I visualise these assignments?"
 objectives:
 - "Understand how taxonomic assignment works."
-- "Use kraken2 to assign taxonomies to reads and contigs."
-- "Visualize taxonomic annotations in dataset."
+- "Use kraken2 to assign taxonomies to raw reads."
+- "Visualize taxonomic annotations in a dataset."
 
 keypoints:
 - "Taxonomy can only be assigned by comparing against a database with genome annotations. These are not exhaustive and so many things will remain unannotated depending on the samples you are analysing."
@@ -17,7 +17,7 @@ keypoints:
 ---
 ## What is taxonomic assignment?
 
-Taxonomic assignment is the process of assigning a sequence to a specific taxon. In this case we will be assigning metagenome-assembled genomes (MAGs), which are bins containing contigs. You may see these referred to as Operational Taxonomic Units (OTUs), particularly if you are dealing with amplicon sequences.
+Taxonomic assignment is the process of assigning a sequence to a specific taxon. In this case we will be assigning our raw short reads but you can also assign metagenome-assembled genomes (MAGs), which we will be generating in next week's lesson.
 
 These assignments are done by comparing our sequence to a database. These searches can be done in many different ways, and against a variety of databases. There are many programs for doing taxonomic mapping, almost all of them follows one of the next strategies:  
 
