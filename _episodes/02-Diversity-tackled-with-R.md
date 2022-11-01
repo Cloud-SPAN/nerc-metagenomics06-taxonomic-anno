@@ -367,7 +367,34 @@ View(biom_metagenome@tax_table)
 <img src="{{ page.root }}/fig/03_02_phyloseq_taxtab_e.png" alt="The same table we saw in Figure 3 but with informative headers in each of the columns. Now, we can see which of the columns are associated with which taxonomic classification rank" />
 <em> Figure 4. Table of the OTU data from our `biom_metagenome` object. With corrections. <em/>
 
-We can explore how many phlya we have and how many OTU there are in each phylum by combining some commands. We need to 
+How many OTUs are in each kingdome? We can find out by combining some commands. 
+We need to: 
+ - turn the tax_table into a data frame (a useful data structure in R)
+ - group by the Kingdom column
+ - summarise by counting the number of rows for each Kingdom
+
+This can be achieved with the following command:
+~~~
+biom_metagenome@tax_table %>% 
+  data.frame() %>% 
+  group_by(Kingdom) %>% 
+  summarise(n = length(Kingdom)) 
+~~~
+{: .language-r}
+
+~~~
+# A tibble: 4 × 2
+Kingdom       n
+<chr>     <int>
+1 Archaea      67
+2 Bacteria   5808
+3 Eukaryota     1
+4 Viruses      29
+~~~
+{: .output}
+Most things are bacteria!  
+  
+We can explore how many phlya we have and how many OTU there are in each phlya in a similar way. This time we will use View() to see the whole table because it won't all print to the console 
   - turn the tax_table into a data frame (a useful data structure in R)
   - group by the Phylum column
   - summarise by counting the number of rows for each phylum
@@ -387,10 +414,10 @@ This shows us a table with a phylum, and the number times it appeared, in each r
   
 
 > ## Exercise 2: Explore the Orders
-> Adapt the code to explore how many Orders we have and how many OTU there are in each order.
-> a) How many orders are there?
-> b) What is the most common order?
-> c) How many OTUs did not get down to order level?
+> Adapt the code to explore how many Orders we have and how many OTU there are in each order.  
+> a) How many orders are there?  
+> b) What is the most common order?  
+> c) How many OTUs did not get down to order level?  
 >> ## Solution
 >> You should the use the column name 'Order' instead of 'Phylum' in the code
 >> 
@@ -402,9 +429,10 @@ This shows us a table with a phylum, and the number times it appeared, in each r
 >>   View()
 >> ~~~
 >> {: .language-r}
->> a) 204. This is the number of rows in the table
->> b) Bacillales. Sorting the column n will bring this to the top. Bacillales appears 456 times
->> c) 32. If an OTU has not been identified to order level the order column will be blank. The table shows there were 32 such cases.
+>>    
+>> a) 204. This is the number of rows in the table  
+>> b) Bacillales. Sorting the column n will bring this to the top. Bacillales appears 456 times  
+>> c) 32. If an OTU has not been identified to order level the order column will be blank. The table shows there were 32 such cases.  
 >> 
 > {: .solution}
 {: .challenge}
@@ -417,7 +445,7 @@ We want to know how is the bacterial diversity of our samples, so we will remove
 ~~~
 {: .language-r}
 
-Now let's look at some statistics of our metagenomes:
+Now let's look at some statistics of our bacterial metagenomes:
 
 ~~~
 > bac_biom_metagenome
@@ -429,6 +457,8 @@ otu_table()   OTU Table:         [ 5808 taxa and 2 samples ]
 tax_table()   Taxonomy Table:    [ 5808 taxa by 7 taxonomic ranks ]
 ~~~
 {: .output}
+
+`phyloseq` includes a function called `sample_sums()` that can be used to count the number of reads in each sample:  
 ~~~
 > sample_sums(bac_biom_metagenome)
 ~~~
@@ -439,6 +469,7 @@ tax_table()   Taxonomy Table:    [ 5808 taxa by 7 taxonomic ranks ]
 ~~~
 {: .output}
 
+The `summary()` function can give us an indication of species evenness  
 ~~~
 > summary(bac_biom_metagenome@otu_table)
 ~~~
@@ -454,14 +485,11 @@ Max.   :28925791   Max.   :6551.00
 ~~~
 {: .output}
 
-By the output of the `sample_sums()` command we can see how many reads there are
-in the library. Also, the Max, Min and Mean output on `summary()` can give us an
-idea of the evenness. Nevertheless, to have a more visual representation of the
-diversity inside the samples (i.e. α diversity) we can now look at a ggplot2
-graph created using Phyloseq:
-
+The median in sample ERR2935805 is 1, meaning many of OTU occur only once and the maximum is very high so at least one OUT is very abundant.
+  
+The `plot_richness()` command will give us a visual representation of the diversity inside the samples (i.e. α diversity): 
 ~~~
-> plot_richness(physeq = biom_metagenome,
+plot_richness(physeq = biom_metagenome,
               measures = c("Observed","Chao1","Shannon"))
 ~~~
 {: .language-r}
@@ -477,11 +505,15 @@ graph created using Phyloseq:
 
 Each of these metrics can give insight of the distribution of the OTUs inside
 our samples. For example Chao1 diversity index gives more weight to singletons
-and doubletons observed in our samples, while Shannon is a entropy index
-remarking the impossiblity of taking two reads out of the metagenome "bag"
-and that these two will belong to the same OTU.
+and doubletons observed in our samples, while the Shannon is a measure of species
+richness and species evenness with more weigth on richness.
 
-
+Use the following to open the manual page for plot_richness
+~~~
+?plot_richness
+~~~
+{: .language-r}
+  
 > ## Exercise 3:
 > While using the help provided explore these options available for the function in `plot_richness()`:
 > 1. `nrow`
