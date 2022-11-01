@@ -270,8 +270,8 @@ Now go to **Start the analysis**
 If you don't know R and RStudio we suggest you to use this option. We have installed the packages needed and put the data, `metagenome.biom` and a script `analysis.R` in the RStudio Cloud Project.
 
 1. Make an RStudio Cloud account    
-    Go to https://rstudio.cloud/ and follow Get Started for Free. We recommend signing up with your Google account if you use one.    
-2. Follow the link to this project.    
+    Go to [https://rstudio.cloud/](https://rstudio.cloud/) and follow Get Started for Free. We recommend signing up with your Google account if you use one.    
+2. Follow the link to the [cloud-span-metagenomics](https://rstudio.cloud/content/4671746) project.    
     Open the project we have set up: [cloud-span-metagenomics](https://rstudio.cloud/content/4671746). You'll get a message saying "Deploying project". This will take a few seconds.    
 3. Make your own copy of the project    
     At the top of the Screen there is a message asking you if you want to Save a permanent copy. You do!     
@@ -281,10 +281,10 @@ If you don't know R and RStudio we suggest you to use this option. We have insta
 ### Start the Analysis
 If you are using RStudio Cloud, we will run through the code in `analysis.R` line by line. If you are using RStudio on your own machine you can type in the commands or copy them from [analysis.R](files/analysis.R)
 
-First load the packages we need. Put your cursor on the line you want to run and press <kbd>CTRL</kdb><kbd>ENTER</kdb>    
+First load the packages we need. Put your cursor on the line you want to run and press <kbd>CTRL</kbd><kbd>ENTER</kbd>    
 ~~~
-> library("phyloseq")
-> library("tidyverse")
+library("phyloseq")
+library("tidyverse")
 
 ~~~
 {: .language-r}
@@ -292,11 +292,11 @@ First load the packages we need. Put your cursor on the line you want to run and
 
 Now import the data in `metagenome.biom` into R using the `import_biom()` function from `phyloseq`
 ~~~
-> biom_metagenome <- import_biom("metagenome.biom")
+biom_metagenome <- import_biom("metagenome.biom")
 ~~~
 {: .language-r}
 
-This command has create a special class of R object which is defined by the `phloseq` package and called it `biom_metagenome`. Click on the object name, biom_metagenome, in the Environment pane (top right).  This will open a view of the object in the same pane as your script.
+This command produces no output in the console but created a special class of R object which is defined by the `phloseq` package and called it `biom_metagenome`. Click on the object name, biom_metagenome, in the Environment pane (top right).  This will open a view of the object in the same pane as your script.
 
 A phyloseq object is a special object in R. It has five parts, called 'slots' which you can see listed in the object view. These are `otu_table`, `tax_table`, `sam_data`, `phy_tree` and `refseq`. In our case, `sam_data`, `phy_tree` and `refseq` are empty. The useful data are in otu_table` and `tax_table`.
 
@@ -307,7 +307,7 @@ A phyloseq object is a special object in R. It has five parts, called 'slots' wh
 
 Return to your script (click on the tab). Typing `biom_metagenome` will give some summary information about the `biom_metagenome` object:  
 ~~~
-> biom_metagenome
+biom_metagenome
 ~~~
 {: .language-r}
 
@@ -322,16 +322,11 @@ The line starting `otu_table` tells us we have two samples - these are ERR293580
 
 We can view the `otu_table` with:
 ~~~
-> View(biom_metagenome@otu_table)
+View(biom_metagenome@otu_table)
 ~~~
 {: .language-r}
 
 This table has the OTU identity in the row names and the samples in the columns. The values in the columns are the abundance of that OYU in that sample.
-
-
--------------------------
-**HERE**
-
 
 
 <img src="{{ page.root }}/fig/03_02_phyloseq_taxtab.png" alt="A table where the taxonomic identification information of all OTUs is displayed. Each row represent one OTU and the columns its identification at different levels in the taxonomic taxonomic classification ranks, beginning with Kingdom until we reach Species in the seventh column " />
@@ -347,101 +342,72 @@ The prefix for each item in `biom_metagenome` is made up of a letter an two unde
 So to remove the unnecessary characters we will use the following code:
 
 ~~~
-> biom_metagenome@tax_table@.Data <- substring(biom_metagenome@tax_table@.Data, 4)
-> colnames(biom_metagenome@tax_table@.Data)<- c("Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Species")
-> View(biom_metagenome@tax_table)
+biom_metagenome@tax_table@.Data <- substring(biom_metagenome@tax_table@.Data, 4)
+~~~
+{: .language-r}                                   
+
+And change the names of the columns
+~~~                                   
+colnames(biom_metagenome@tax_table) <- c("Kingdom",
+           "Phylum", 
+           "Class", 
+           "Order", 
+           "Family", 
+           "Genus", 
+           "Species")
+~~~
+{: .language-r}
+
+Check it worked:
+~~~  
+View(biom_metagenome@tax_table)
 ~~~
 {: .language-r}
 
 <img src="{{ page.root }}/fig/03_02_phyloseq_taxtab_e.png" alt="The same table we saw in Figure 3 but with informative headers in each of the columns. Now, we can see which of the columns are associated with which taxonomic classification rank" />
 <em> Figure 4. Table of the OTU data from our `biom_metagenome` object. With corrections. <em/>
 
-To explore how many phyla we have, we are going to use a command name `unique()`. Let's try what result
-we obtain with the next code:
+We can explore how many phlya we have and how many OTU there are in each phylum by combining some commands. We need to 
+  - turn the tax_table into a data frame (a useful data structure in R)
+  - group by the Phylum column
+  - summarise by counting the number of rows for each phylum
+  - viewing the result
+This can be achieved with the following command:
 ~~~
-> unique(biom_metagenome@tax_table@.Data[,"Phylum"])
-~~~
-{: .language-r}
-~~~
-[1] "Firmicutes"                  "Proteobacteria"              "Actinobacteria"             
-[4] "Tenericutes"                 "Cyanobacteria"               "Deinococcus-Thermus"        
-[7] "Armatimonadetes"             "Chloroflexi"                 "Bacteroidetes"              
-[10] "Chlorobi"                    "Gemmatimonadetes"            "Candidatus Cloacimonetes"   
-[13] "Planctomycetes"              "Verrucomicrobia"             "Kiritimatiellaeota"         
-[16] "Chlamydiae"                  "Spirochaetes"                "Aquificae"                  
-[19] "Fusobacteria"                "Acidobacteria"               "Thermotogae"                
-[22] "Candidatus Saccharibacteria" "Candidatus Bipolaricaulota"  "Synergistetes"              
-[25] "Elusimicrobia"               "Thermodesulfobacteria"       "Nitrospirae"                
-[28] "Caldiserica"                 "Deferribacteres"             "Chrysiogenetes"             
-[31] "Chordata"                    "Euryarchaeota"               "Crenarchaeota"              
-[34] "Thaumarchaeota"              "Uroviricota"                 "Peploviricota"              
-[37] "Nucleocytoviricota"          "Negarnaviricota"             "Pisuviricota"               
-[40] "Artverviricota"              "Coprothermobacterota"        "Ignavibacteriae"            
-[43] "Fibrobacteres"               "Lentisphaerae"               "Calditrichaeota"            
-[46] "Dictyoglomi"              
-~~~
-{: .output}
-
-This is useful, but what we need to do if we need to know how many of our OTUs have been assigned to the phylum
-Firmicutes?. Let´s use the command `sum()` to ask R:
-~~~
-> sum(biom_metagenome@tax_table@.Data[,"Phylum"] == "Firmicutes")
+biom_metagenome@tax_table %>% 
+ data.frame() %>% 
+ group_by(Phylum) %>% 
+ summarise(n = length(Phylum)) %>% 
+ View()
 ~~~
 {: .language-r}
-~~~
-[1] 969
-~~~
-{: .output}
 
-> ## Exercise 2: Explore a phylum
-> Using the example above choose a different phylum and work out the number of the OTUs assigned to this phylum and the unique names of the genera inside it:
+This shows us a table with a phylum, and the number times it appeared, in each row. The number of phyla is given by the number of rows in this table.  By defualt, the table is sorted alphabetically by phylum. We can sort by frequency by clicking on the 'n' column. There are 2743 Proteobacteria and 1050 Actinobacteria for example.
+<img src="{{ page.root }}/fig/03-02-phyla-freq-table.png" alt="Two views of the phyla frequency table: sorted alphabetically by phylum on the left and by the number of OTUs (n) in each phylum on the right" /> 
+  
+
+> ## Exercise 2: Explore the Orders
+> Adapt the code to explore how many Orders we have and how many OTU there are in each order.
+> a) How many orders are there?
+> b) What is the most common order?
+> c) How many OTUs did not get down to order level?
 >> ## Solution
->> You should the name of a new phylum wherever it is needed to get the result.
->> As an example, here is the solution for Cyanobacteria:
+>> You should the use the column name 'Order' instead of 'Phylum' in the code
+>> 
 >> ~~~
->> sum(biom_metagenome@tax_table@.Data[,"Phylum"] == "Cyanobacteria")
->> ~~~
->> {: .language-r}
->> ~~~
->> [1] 169
->> ~~~
->> {: .output}
->> ~~~
->> unique(biom_metagenome@tax_table@.Data[biom_metagenome@tax_table@.Data[,"Phylum"] == "Cyanobacteria", "Genus"])
+>> biom_metagenome@tax_table %>% 
+>>   data.frame() %>% 
+>>   group_by(Order) %>% 
+>>   summarise(n = length(Order)) %>% 
+>>   View()
 >> ~~~
 >> {: .language-r}
->>
->> ~~~  
->> [1] ""                               "Nostoc"                         "Anabaena"                      
->> [4] "Richelia"                       "Trichormus"                     "Calothrix"                     
->> [7] "Anabaenopsis"                   "Sphaerospermopsis"              "Cylindrospermopsis"            
->> [10] "Dolichospermum"                 "Fischerella"                    "Brasilonema"                   
->> [13] "Tolypothrix"                    "Chondrocystis"                  "Geminocystis"                  
->> [16] "Gloeocapsa"                     "Microcystis"                    "Gloeothece"                    
->> [19] "Oxynema"                        "Moorea"                         "Allocoleopsis"                 
->> [22] "Limnospira"                     "Synechococcus"                  "Dactylococcopsis"              
->> [25] "Prochlorococcus"                "Cyanobium"                      "Parasynechococcus"             
->> [28] "Acaryochloris"                  "Leptolyngbya"                   "Thermosynechococcus"           
->> [31] "Stanieria"                      "Pleurocapsa"                    "Gloeobacter"                   
->> [34] "Chroococcidiopsis"              "Cylindrospermum"                "Rivularia"                     
->> [37] "Microchaete"                    "Nodularia"                      "Raphidiopsis"                  
->> [40] "Scytonema"                      "Cyanobacterium"                 "Candidatus Atelocyanobacterium"
->> [43] "Halothece"                      "Cyanothece"                     "Oscillatoria"                  
->> [46] "Trichodesmium"                  "Microcoleus"                    "Planktothrix"                  
->> [49] "Arthrospira"                    "Geitlerinema"                   "Crinalium"                     
->> [52] "Halomicronema"                  "Synechocystis"                  "Pseudanabaena"                 
->> [55] "Chamaesiphon"                   "Gloeomargarita"     
->> ~~~  
->> {: .output}
+>> a) 204. This is the number of rows in the table
+>> b) Bacillales. Sorting the column n will bring this to the top. Bacillales appears 456 times
+>> c) 32. If an OTU has not been identified to order level the order column will be blank. The table shows there were 32 such cases.
+>> 
 > {: .solution}
 {: .challenge}
-
-
-> ## Phyloseq objects
-> We can look at the help documenation for the Phyloseq library with `?phyloseq()`
-> Something more here!
-{: .callout}
-
 
 ## Plot alpha diversity
 
