@@ -279,7 +279,7 @@ If you don't know R and RStudio we suggest you to use this option. We have insta
 
   
 ### Start the Analysis
-If you are using RStudio Cloud, we will run through the code in `analysis.R` line by line. If you are using RStudio on your own machine you can type in the commands or copy them from [analysis.R](files/analysis.R)
+If you are using RStudio Cloud, we will run through the code in `analysis.R` line by line. If you are using RStudio on your own machine you can type in the commands or copy them from [analysis.R](../files/analysis.R)
 
 First load the packages we need. Put your cursor on the line you want to run and press <kbd>CTRL</kbd><kbd>ENTER</kbd>    
 ~~~
