@@ -565,7 +565,7 @@ Use the following to open the manual page for plot_richness
 >>
 >> The "sortby" option orders the samples from least to greatest diversity depending on the parameter. In this case, it is ordered by "Shannon" and tells us that the JP4D sample has the lowest diversity and the JP41 sample the highest.
 >> ~~~
->> plot_richness(physeq = biom_metagenome,
+>> plot_richness(physeq = bac_biom_metagenome,
 >>              title = "Alpha diversity indexes for both metagenomic samples",
 >>              measures = c("Observed","Chao1","Shannon"),
 >>              sortby = "Shannon")
