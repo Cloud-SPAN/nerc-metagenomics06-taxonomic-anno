@@ -441,7 +441,7 @@ This shows us a table with a phylum, and the number times it appeared, in each r
 
 We want to know how is the bacterial diversity of our samples, so we will remove all of the non-bacterial organiss. To do this we will generate a subset of all bacterial groups and save them.
 ~~~
-> bac_biom_metagenome <- subset_taxa(biom_metagenome, Kingdom == "Bacteria")
+bac_biom_metagenome <- subset_taxa(biom_metagenome, Kingdom == "Bacteria")
 ~~~
 {: .language-r}
 
@@ -458,9 +458,22 @@ tax_table()   Taxonomy Table:    [ 5808 taxa by 7 taxonomic ranks ]
 ~~~
 {: .output}
 
-`phyloseq` includes a function called `sample_sums()` that can be used to count the number of reads in each sample:  
+`phyloseq` includes a function to find the sample names and one to count the number of reads in each sample.
+
+Find the sample names with `sample_names()`:  
 ~~~
-> sample_sums(bac_biom_metagenome)
+sample_names(bac_biom_metagenome)
+~~~
+{: .language-r}
+~~~
+"ERR2935805" "JP4D"  
+~~~
+{: .output} 
+  
+  
+Count the number of reads with `sample_sums()`:  
+~~~
+sample_sums(bac_biom_metagenome)
 ~~~
 {: .language-r}
 ~~~
@@ -471,7 +484,7 @@ tax_table()   Taxonomy Table:    [ 5808 taxa by 7 taxonomic ranks ]
 
 The `summary()` function can give us an indication of species evenness  
 ~~~
-> summary(bac_biom_metagenome@otu_table)
+summary(bac_biom_metagenome@otu_table)
 ~~~
 {: .language-r}
 ~~~
@@ -527,7 +540,7 @@ Use the following to open the manual page for plot_richness
 >> The code and the plot using the three options will look as follows:
 >> The "title" option adds a title to the figure.
 >> ~~~
->> > plot_richness(physeq = biom_metagenome,
+>> plot_richness(physeq = biom_metagenome,
 >>              title = "Alpha diversity indexes for both metagenomic samples",
 >>              measures = c("Observed","Chao1","Shannon"))
 >> ~~~
@@ -539,7 +552,7 @@ Use the following to open the manual page for plot_richness
 >>
 >> The "nrow" option arranges the graphics horizontally.
 >> ~~~
->> > plot_richness(physeq = biom_metagenome,
+>> plot_richness(physeq = biom_metagenome,
 >>              title = "Alpha diversity indexes for both metagenomic samples",
 >>              measures = c("Observed","Chao1","Shannon"),
 >>              nrow=3)
@@ -552,7 +565,7 @@ Use the following to open the manual page for plot_richness
 >>
 >> The "sortby" option orders the samples from least to greatest diversity depending on the parameter. In this case, it is ordered by "Shannon" and tells us that the JP4D sample has the lowest diversity and the JP41 sample the highest.
 >> ~~~
->> > plot_richness(physeq = biom_metagenome,
+>> plot_richness(physeq = biom_metagenome,
 >>              title = "Alpha diversity indexes for both metagenomic samples",
 >>              measures = c("Observed","Chao1","Shannon"),
 >>              sortby = "Shannon")
