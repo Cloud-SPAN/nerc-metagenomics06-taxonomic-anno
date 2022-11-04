@@ -21,7 +21,7 @@ of our samples: `ERR2935805` and `JP4D`. Let´s take a look again at the
  number of reads in our data.  
 ~~~
 > bac_biom_metagenome
-> sample_sums(x = bac_biom_metagenome)
+> sample_sums(bac_biom_metagenome)
 ~~~
 {: .language-r}
 
@@ -36,31 +36,7 @@ tax_table()   Taxonomy Table:    [ 5808 taxa by 7 taxonomic ranks ]
 {: .output}
 
 
-Now with `summary` lets get a sense about the distribution of the reads
-in the different OTUs. This function answers how many reads are in average
-in an OTU, and what are the maximum numbers of reads in certain category.
-
-
-
-~~~
-> summary(bac_biom_metagenome@otu_table)
-~~~
-{: .language-r}
-~~~
-ERR2935805            JP4D        
-Min.   :       0   Min.   :   0.00  
-1st Qu.:       0   1st Qu.:   0.00  
-Median :       1   Median :   3.00  
-Mean   :    6553   Mean   :  25.76  
-3rd Qu.:       2   3rd Qu.:  13.00  
-Max.   :28925791   Max.   :6551.00  
-~~~
-{: .output}
-
-It is useful to see numbers, but there are other ways to deliver information and to
-unerstand the relationships between variables. Lets try some graphics.
-R has its own [base plotting system](https://www.statmethods.net/graphs/index.html), but we have already
-loaded a package that will help us to create artistically-proclived figures:[ggplot2](https://www.statmethods.net/advgraphs/ggplot2.html).
+[ggplot2](https://www.statmethods.net/advgraphs/ggplot2.html).
 
 ggplot2 has been created with the idea that any graphic can be expressed with three components:
 * Data set
