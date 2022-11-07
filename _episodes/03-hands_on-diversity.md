@@ -15,7 +15,7 @@ keypoints:
 ---
 
 
-## Visualizing our data with ggplot2
+## Visualizing our data 
 In the last lesson, we created our phyloseq object, which contains the information
 of our samples: `ERR2935805` and `JP4D`. Let´s take a look again at the
  number of reads in our data.  
@@ -36,104 +36,7 @@ tax_table()   Taxonomy Table:    [ 5808 taxa by 7 taxonomic ranks ]
 {: .output}
 
 
-[ggplot2](https://www.statmethods.net/advgraphs/ggplot2.html).
 
-ggplot2 has been created with the idea that any graphic can be expressed with three components:
-* Data set
-* Coordinates
-* Set of **geoms**, that is the visual representation of the data
-
-This **geoms** can be thought as layers that can be overlapped one over another, so special care
-is required to show useful information-layers to deliver a messagge. We are going to create an
-example with some of the data that we already have. Let's create a data-frame with the next code:
-~~~
-> deep <- data.frame(Samples = sample_names(bac_biom_metagenome),
-                     Reads = sample_sums(bac_biom_metagenome))
-> deep
-~~~
-{: .language-r}
-
-~~~
-           Samples    Reads
-ERR2935805 ERR2935805 38057090
-JP4D             JP4D   149590
-~~~
-{: .output}
-`deep` is a new dataframe where we store the name of the sample and its corresponding number of reads.
-
-Now, we can do a figure with the three components mentioned(data, coordinates, and geom):
-~~~
-> ggplot(data = deep, mapping = aes(x = Samples,y = Reads)) +
-    geom_col()
-~~~
-{: .language-r}
-
-<a href="{{ page.root }}/fig/03_03_deep.png">
-  <img src="{{ page.root }}/fig/03_03_deep.png" alt="Two-bar plot where the height
-  of each bar represents the number of reads of each sample. The samples are represented from the one with more reads to the less: ERR2935805 and JP4D" />
-</a>
-<em> Figure 1. Sample read counts as bars in a plot. <em/>
-
-Unraveling the above code. We first called the `ggplot` function (*i.e. ggplot()*). This will tell R that we want to
-create a new plot and the parameters indicated inside this function will apply to all the layers of the plot. We
-gave two arguments to the `ggplot` code: (i) the data that we want to show in our figure (*i.e. data = deep*),
-that is the data inside `deep`, and (ii) we defined the `aes` function(*i.e. mapping = aes(x = Samples,y = Reads)*),
-which will tell `ggplot` how the variables will be mapped in the figure. In this case, **x** is the name of the
-samples and **y** the number of reads. It is noticiable that we did not need to express the entire path to access
-to this columns to the `aes` function (*i.e.* x = deep[,"Samples"]), that is because the code is so well
-written that it figures it out by itself. What would happend if we only call `ggplot` without any **geom**(*i.e.* `geom_col`) is:
-
-~~~
-> ggplot(data = deep, mapping = aes(x = Samples,y = Reads))
-~~~
-{: .language-r}
-
-<a href="{{ page.root }}/fig/03_03_mapping.png">
-  <img src="{{ page.root }}/fig/03_03_mapping.png" alt="A blank plot. The names of the
-  samples is on the x-axis and the read quantity on the y-axis, but the bars are
-  missing because we did not specify which geom to use." />
-</a>
-<em> Figure 2. ggplot function result without a specified geom. <em/>
-
-We need to tell `ggplot` how we want to visually represent the data, which we did by adding a new geom layer. In this
-example, we used `geom_col`, which tells `ggplot` we want to visually represent the relationship between **x** and
-**y** as columns-bars:
-
-<a href="{{ page.root }}/fig/03_03_deep.png">
-  <img src="{{ page.root }}/fig/03_03_deep.png" alt="The same plot as Figure 1. Here
-  we see again the complete plot, with the corresponding bars to each of the
-  samples." />
-</a>
-
-<em> Figure 3. Sample read as bars in a plot. <em/>
-
->## Exercise 1  : Exploring geoms
->
-> There are other types of geoms that we can use to visualize our data.
-> One of them is `geom_jitter()`.
-> If you would like to try how to see your data in jitters, which of the next lines
-> of codes you will use to generate that figure. You can always request help to
-> explore this type of geom with `?geom_jitter`.
->
-> A) `ggplot(data = deep, mapping = aes(x = Samples,y = Reads)) + geom_jitter()`
->
-> B) `ggplot(data = deep, mapping = aes(x = Samples,y = Reads))`
->
-> C) `ggplot(data = deep, mapping = aes(x = Samples)) + geom_jitter()`
->
-> D) `ggplot(mapping = aes(x = Samples,y = Reads)) + geom_jitter()`
->
->> ## Solution
->> The correct answer is option A)
->>
->> Option B) lacks the `geom_jitter()` part of code that instruct `ggplot2` how to
->> graphic the data
->>
->> On option C) what is going to be represented in the x axes is missing.
->>
->> Option D) does not have the data to produce the plot.
-> {: .solution}
-{: .challenge}
 
 ## Transformation and manipulation of data
 
