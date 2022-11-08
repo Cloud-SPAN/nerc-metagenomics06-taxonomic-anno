@@ -25,6 +25,7 @@ For the whole metagenome:
 ~~~
 biom_metagenome
 sample_sums(biom_metagenome)
+~~~
 {: .language-r}
 
 ~~~
