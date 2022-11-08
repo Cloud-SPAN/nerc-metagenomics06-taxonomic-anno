@@ -103,6 +103,7 @@ number_of_taxa <- bac_meta_df %>%
   summarise(n = length(Abundance))
 ~~~
 {: .language-r}  
+
 Clicking on `number_of_taxa` on the Environment window will open a spreadsheet-like view of it
 This shows us that we have some phyla:
   - present in both samples such as Acidobacteria and Actinobacteria
@@ -110,11 +111,13 @@ This shows us that we have some phyla:
   - and present in just JP4D such as Calditrichaeota
 
 We can use a similar approach to examine the abundance of each of these taxa:
+
 ~~~
 abundance_of_taxa <- bac_meta_df %>% 
   filter(Abundance > 0) %>% 
   group_by(Sample, Phylum) %>% 
   summarise(abund = sum(Abundance))
+~~~
 {: .language-r}  
 
 We can see the vast majority of our taxa are Proteobacteria and Firmicutes in ERR2935805
@@ -149,9 +152,10 @@ abundance_of_taxa <- abundance_of_taxa %>%
   group_by(Sample) %>% 
   mutate(relative = Abundance/sum(Abundance) * 100)
 ~~~
+{: .language-r}
 
 Then plot the result:
-{: .language-r}
+
 ~~~
 abundance_of_taxa %>% 
   ggplot(aes(x = Sample, y = relative, fill = Phylum)) +
