@@ -19,22 +19,55 @@ keypoints:
 In the last lesson, we created our phyloseq object, which contains the information
 of our samples: `ERR2935805` and `JP4D`. Let´s take a look again at the
  number of reads in our data.  
+
+For the whole metagenome:
 ~~~
-> bac_biom_metagenome
-> sample_sums(bac_biom_metagenome)
-~~~
+biom_metagenome
+sample_sums(biom_metagenome)
 {: .language-r}
 
 ~~~
 phyloseq-class experiment-level object
-otu_table()   OTU Table:         [ 5808 taxa and 2 samples ]
-tax_table()   Taxonomy Table:    [ 5808 taxa by 7 taxonomic ranks ]
+otu_table()   OTU Table:         [ 5905 taxa and 2 samples ]
+tax_table()   Taxonomy Table:    [ 5905 taxa by 7 taxonomic ranks ]
 
-  ERR2935805       JP4D
-    38057090     149590
+ERR2935805       JP4D 
+  38058101     149590 
 ~~~
 {: .output}
 
+> ## Exercise 1
+>
+> Repeat this for the bacterial metagenome.
+>> ## Solution
+>> `Use bac_biom_metagenome` instead of `biom_metagenome`
+>> ~~~
+>> bac_biom_metagenome
+>> sample_sums(bac_biom_metagenome)
+>> ~~~
+>> {: .language-r}
+>>
+>> ~~~
+>> phyloseq-class experiment-level object
+>> otu_table()   OTU Table:         [ 5808 taxa and 2 samples ]
+>> tax_table()   Taxonomy Table:    [ 5808 taxa by 7 taxonomic ranks ]
+>> 
+>>   ERR2935805       JP4D
+>>     38057090     149590
+>> ~~~
+>> {: .output}
+>>
+> {: .solution}
+{: .challenge}
+
+
+We can use the `plot_bar()` function to visualise the breakdown by phylum in these two samples.
+
+~~~
+bac_biom_metagenome
+sample_sums(bac_biom_metagenome)
+~~~
+{: .language-r}
 
 
 
