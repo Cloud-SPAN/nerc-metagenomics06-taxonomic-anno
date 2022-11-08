@@ -43,7 +43,7 @@ ERR2935805       JP4D
 >
 > Repeat this for the bacterial metagenome.
 >> ## Solution
->> `Use bac_biom_metagenome` instead of `biom_metagenome`
+>> Use `bac_biom_metagenome` instead of `biom_metagenome`
 >> ~~~
 >> bac_biom_metagenome
 >> sample_sums(bac_biom_metagenome)
@@ -80,6 +80,7 @@ bac_biom_metagenome@tax_table %>%
 ~~~
 {: .language-r}
 
+## Summarise metagenomes
 `phyloseq` has a useful function that turns a phyloseq object into a dataframe.
 Since the dataframe is a standard data format in R, this makes it easier for R 
 users to apply methods they are familiar with.
@@ -110,7 +111,101 @@ This shows us that we have some phyla:
   - present in just ERR2935805 such as Candidatus Bipolaricaulota
   - and present in just JP4D such as Calditrichaeota
 
-We can use a similar approach to examine the abundance of each of these taxa:
+One way to visualise the number of shared phyla is with a Venn diagram. The package `ggvenn` will draw one for us. It needs a data structure called a list which will contain an item for each sample of the phyla in that sample. We can see the phyla in the ERR2935805 sample with:
+
+~~~
+unique(number_of_taxa$Phylum[number_of_taxa$Sample == "ERR2935805"])
+~~~
+{: .language-r}  
+
+~~~
+"Acidobacteria"               "Actinobacteria"              "Aquificae"                  
+"Armatimonadetes"             "Bacteroidetes"               "Caldiserica"                
+"Candidatus Bipolaricaulota"  "Candidatus Cloacimonetes"    "Candidatus Saccharibacteria"
+"Chlamydiae"                  "Chlorobi"                    "Chloroflexi"                
+"Chrysiogenetes"              "Cyanobacteria"               "Deferribacteres"            
+"Deinococcus-Thermus"         "Elusimicrobia"               "Firmicutes"                 
+"Fusobacteria"                "Gemmatimonadetes"            "Kiritimatiellaeota"         
+"Nitrospirae"                 "Planctomycetes"              "Proteobacteria"             
+"Spirochaetes"                "Synergistetes"               "Tenericutes"                
+"Thermodesulfobacteria"       "Thermotogae"                 "Verrucomicrobia"
+~~~
+{: .output}
+
+> ## Exercise 2
+>
+> Repeat this for the JP4D sample
+>> ## Solution
+>> Use JP4D instead of ERR2935805
+>> ~~~
+>> unique(number_of_taxa$Phylum[number_of_taxa$Sample == "JP4D"])
+>> ~~~
+>> {: .language-r}
+>>
+>> ~~~
+>> "Acidobacteria"               "Actinobacteria"              "Aquificae"                  
+>> "Armatimonadetes"             "Bacteroidetes"               "Caldiserica"                
+>> "Calditrichaeota"             "Candidatus Cloacimonetes"    "Candidatus Saccharibacteria"
+>> "Chlamydiae"                  "Chlorobi"                    "Chloroflexi"                
+>> "Chrysiogenetes"              "Coprothermobacterota"        "Cyanobacteria"              
+>> "Deferribacteres"             "Deinococcus-Thermus"         "Dictyoglomi"                
+>> "Elusimicrobia"               "Fibrobacteres"               "Firmicutes"                 
+>> "Fusobacteria"                "Gemmatimonadetes"            "Ignavibacteriae"            
+>> "Kiritimatiellaeota"          "Lentisphaerae"               "Nitrospirae"                
+>> "Planctomycetes"              "Proteobacteria"              "Spirochaetes"               
+>> "Synergistetes"               "Tenericutes"                 "Thermodesulfobacteria"      
+>> "Thermotogae"                 "Verrucomicrobia"      
+>> ~~~
+>> {: .output}
+>>
+> {: .solution}
+{: .challenge}
+
+To place the two sets of phlya in a list, we use
+~~~
+venn_data <- list(ERR2935805 = unique(number_of_taxa$Phylum[number_of_taxa$Sample == "ERR2935805"]),
+                  JP4D = unique(number_of_taxa$Phylum[number_of_taxa$Sample == "JP4D"]))
+~~~
+{: .language-r}  
+
+And to draw the venn diagram
+~~~
+ggvenn(venn_data)
+~~~
+{: .language-r}  
+
+
+<a href="{{ page.root }}/fig/03_03_phlya_venn.png">
+  <img src="{{ page.root }}/fig/03_03_phlya_venn.png" alt="venn diagram for the phyla in the two sample." />
+</a>
+The Venn diagram shows that most of the phyla (29 which is 80.6%) are in both samples, one is in ERR2935805 only and 6 are in JP4D only. 
+Perhaps you would like to know which phyla is in ERR2935805 only? The following command will print that for us:
+~~~
+venn_data$ERR2935805[!venn_data$ERR2935805 %in% venn_data$JP4D]
+~~~
+{: .language-r}  
+
+> ## Exercise 3
+>
+> Which phyla are in JP4D only?
+>> ## Solution
+>> Use JP4D instead of ERR2935805 and ERR2935805 instead of JP4D!
+>> ~~~
+>> venn_data$JP4D[!venn_data$JP4D %in% venn_data$ERR2935805]
+>> ~~~
+>> {: .language-r}
+>>
+>> ~~~
+>> "Calditrichaeota"      "Coprothermobacterota" "Dictyoglomi"         
+>> "Fibrobacteres"        "Ignavibacteriae"      "Lentisphaerae"  
+>> ~~~
+>> {: .output}
+>>
+> {: .solution}
+{: .challenge}
+
+
+We summarised our metagenomes for the number of phyla in each sample in `number_of_taxa`. We can use a similar approach to examine the abundance of each of these taxa:
 
 ~~~
 abundance_of_taxa <- bac_meta_df %>% 
