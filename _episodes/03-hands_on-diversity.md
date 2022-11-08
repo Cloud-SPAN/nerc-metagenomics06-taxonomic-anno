@@ -180,6 +180,7 @@ ggvenn(venn_data)
 </a>
 The Venn diagram shows that most of the phyla (29 which is 80.6%) are in both samples, one is in ERR2935805 only and 6 are in JP4D only. 
 Perhaps you would like to know which phyla is in ERR2935805 only? The following command will print that for us:
+
 ~~~
 venn_data$ERR2935805[!venn_data$ERR2935805 %in% venn_data$JP4D]
 ~~~
