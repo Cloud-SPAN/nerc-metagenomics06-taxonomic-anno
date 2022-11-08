@@ -186,6 +186,12 @@ venn_data$ERR2935805[!venn_data$ERR2935805 %in% venn_data$JP4D]
 ~~~
 {: .language-r}  
 
+~~~
+"Candidatus Bipolaricaulota"
+~~~
+{: .output}
+
+
 > ## Exercise 3
 >
 > Which phyla are in JP4D only?
