@@ -21,20 +21,22 @@ of our samples: `ERR2935805` and `JP4D`. Let´s take a look again at the
  number of reads in our data.  
 
 For the whole metagenome:
+
 ~~~
 biom_metagenome
 sample_sums(biom_metagenome)
 {: .language-r}
 
 ~~~
-phyloseq-class experiment-level object
-otu_table()   OTU Table:         [ 5905 taxa and 2 samples ]
-tax_table()   Taxonomy Table:    [ 5905 taxa by 7 taxonomic ranks ]
+phyloseq-class experiment-level object  
+otu_table()   OTU Table:         [ 5905 taxa and 2 samples ]  
+tax_table()   Taxonomy Table:    [ 5905 taxa by 7 taxonomic ranks ]  
 
-ERR2935805       JP4D 
-  38058101     149590 
+ERR2935805       JP4D   
+  38058101     149590   
 ~~~
 {: .output}
+
 
 > ## Exercise 1
 >
