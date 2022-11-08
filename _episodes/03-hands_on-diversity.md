@@ -153,34 +153,6 @@ So we can not use any of those three. We will use [Bray-curtis](http://www.pelag
 since is one of the most robust and widely use distance metric to
 calculate beta diversity.
 
-**Let's keep this up!** We already have all that we need to begin the beta diversity analysis. We will use
-the `phyloseq` command `ordinate` to generate a new object where the distances between our samples will be
-allocated after they are calculated. For this command, we need to specify which method we will use to generate
-a matrix. In this example, we will use Non-Metric Multidimensional Scaling or [NMDS](https://academic.oup.com/bioinformatics/article/21/6/730/199398). NMDS attempts to represent
-the pairwise dissimilarity between objects in a low-dimensional space, in this case a two dimensional plot.
-~~~
-> meta.ord <- ordinate(physeq = percentages, method = "NMDS",
-                     distance = "bray")
-~~~
-{: .language-r}
-If you get some warning messages after running this script, fear not. This is because we only have three samples
-,this makes the algorithm to displays a warning concerning the lack of difficulty in generating the distance
-matrix.
-
-By now, we just need the command `plot_ordination()`, to see the results from our beta diversity analysis:
-~~~
-> plot_ordination(physeq = percentages, ordination = meta.ord)
-~~~
-{: .language-r}  
-
-<a href="{{ page.root }}/fig/03-08-03.png">
-  <img src="{{ page.root }}/fig/03-08-03.png" alt="NMDS plot where each of the
-  points represents the combined abundance of all its OTUs. As is depicted,  
-  each of the samples ocuppy its own space in the plot without forming any
-  clusters. This is because each sample is different enough to be considered
-  its own point in the NMDS space." />
-</a>
-<em> Figure 4. Beta diversity with NMDS of "three" samples. <em/>
 
 ## Ploting our data
 
