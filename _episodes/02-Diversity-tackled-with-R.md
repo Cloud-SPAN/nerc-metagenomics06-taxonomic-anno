@@ -597,11 +597,6 @@ The output of this function is a distance matrix. When we have just two samples 
 distance to calculate. If we had many samples, the output would have the pairwise distances
 between all of them
 
-> ## Discussion
->
-> How much can the α diversity can be changed by eliminating the singletons
-> and doubletons?
-{: .discussion}
 
 ## Reading
 Tuomisto, H. A consistent terminology for quantifying species diversity? Yes, it does exist. Oecologia 164, 853–860 (2010). [https://doi.org/10.1007/s00442-010-1812-0](https://doi.org/10.1007/s00442-010-1812-0)
