@@ -10,13 +10,12 @@ questions:
 objectives:
 - "Explain α and β diversity."
 - "Explain what a BIOM table is and be able to generate one with `kraken-biom` "  
-- "Use R to analyse and plot metagenome diversity."
+- "Use R to summarise metagenomes and calculate diversity indices."
 
 keypoints:
 - "α diversity measures diversity in a metagenome"
 - "β diversity measures the difference in diversity between metagenomes."
-- "A Biological Observation Matrix, BIOM table is a matrix of counts and is generated from the Kraken output using `kraken-biom` "  
-- "The `phyloseq` package be used to analyse and plot metagenome diversity using the BIOM table."  
+- "A Biological Observation Matrix, BIOM table is a matrix of counts and is generated from the Kraken output using `kraken-biom` "  - "The `phyloseq` package be used to analyse metagenome diversity using the BIOM table."  
 math: yes
 ---
 
