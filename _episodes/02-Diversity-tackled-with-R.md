@@ -37,8 +37,8 @@ The simplest measure of α diversity is the number of species, or species **rich
 
 | α Diversity Index |  Description | Calculation | Where |
 |-------------------|--------------|-------------|-------|
-| Shannon (H)       | Estimation of species richness and species evenness. More weigth on richness.  | $$H = - \sum_{i=1}^{S} p_{i} \ln{p_{i}}$$ | $$S$$ is the number of OTUs and $$p_{i}$$ is the proportion of the community represented by OTU|
-| Simpson's (D)     |Estimation of species richness and species evenness. More weigth on evenness.  | $$D = \frac{1}{\sum_{i=1}^{S} p_{i}^{2}}$$| $$S$$ is Total number of the species in the community and $$p_{i}$$ is the proportion of community represented by OTU i |  
+| Shannon (H)       | Estimation of species richness and species evenness. More weight on richness.  | $$H = - \sum_{i=1}^{S} p_{i} \ln{p_{i}}$$ | $$S$$ is the number of OTUs and $$p_{i}$$ is the proportion of the community represented by OTU|
+| Simpson's (D)     |Estimation of species richness and species evenness. More weight on evenness.  | $$D = \frac{1}{\sum_{i=1}^{S} p_{i}^{2}}$$| $$S$$ is Total number of the species in the community and $$p_{i}$$ is the proportion of community represented by OTU i |  
 | Chao1           | Abundance based on species represented by a single individual (singletons) and two individuals (doubletons). | $$S_{chao1} = S_{Obs} + \frac{F_{1} \times (F_{1} - 1)}{2 \times (F_{2} + 1)}$$ |$$F_{1}$$ and $$F_{2}$$ are the counts of singletons and doubletons respectively and $$S_{chao1}=S_{Obs}$$ is the number of observed species|
 
 
@@ -54,7 +54,7 @@ The simplest measure of α diversity is the number of species, or species **rich
 |-------------------|--------------|
 | Bray–Curtis dissimilarity  | The compositional _dissimilarity_ between two metagenomes, based on counts in each metagenome. Ranges from 0 (the two metagenomes have the same species composition) to 1 (the two metagenomes do not share any species). Bray–Curtis dissimilarity emphasises abundance.|
 | Jaccard distance   | Also ranges from 0 (the two metagenomes have the same species) to 1 (the two metagenomes do not share any species) but is based on the presence or absence of species only. This means it emphasises richness.  |
-| UniFrac           | Differs from the Bray-Curtis dissimilarity and Jaccard distance by including the relatedness between tax in a metagenome. Measures the phylogentic distance between metagenomes as the proportion of unshared phylogentic tree branches. Weighted-Unifrac takes into account the relative abundance of taxa shared between samples; unweighted-Unifrac only considers presence or absence.|
+| UniFrac           | Differs from the Bray-Curtis dissimilarity and Jaccard distance by including the relatedness between taxa in a metagenome. Measures the phylogentic distance between metagenomes as the proportion of unshared phylogentic tree branches. Weighted-Unifrac takes into account the relative abundance of taxa shared between samples; unweighted-Unifrac only considers presence or absence.|
 
 Figure 2 shows α and the β diversity for three lakes. The most simple way to calculate the β diversity is to calculate the number of species that are unique in two lakes. For example, the number of species in Lake A (the α diversity) is 3 and 1 of these is also found in Lake C; the number of species in Lake C is 2 and 1 of these is also in Lake A. The β diversity between A and C is calculated as (3 - 1) + (2 - 1) = 3
 
@@ -201,21 +201,21 @@ You should `ls` to check that this file has been downloaded.
 >   --min {D,P,C,O,F,G,S}
 >                         Reads assigned at and below min rank will be recorded as being assigned to the min rank level. Default: S.
 >   -o OUTPUT_FP, --output_fp OUTPUT_FP
->                         Path to the BIOM-format file. By default, the table will be in the HDF5 BIOM 2.x format. Users can output to a different format using the --fmt
->                         option. The output can also be gzipped using the --gzip option. Default path is: ./table.biom
->   --otu_fp OTU_FP       Create a file containing just the (NCBI) OTU IDs for use with a service such as phyloT (http://phylot.biobyte.de/) to generate a phylogenetic tree
->                         for use in downstream analysis such as UniFrac, iTol (itol.embl.de), or PhyloToAST (phylotoast.org).
->   --fmt {hdf5,json,tsv}
->                         Set the output format of the BIOM table. Default is HDF5.
->   --gzip                Compress the output BIOM table with gzip. HDF5 BIOM (v2.x) files are internally compressed by default, so this option is not needed when
->                         specifying --fmt hdf5.
+>                         Path to the BIOM-format file. By default, the table will be in the HDF5 BIOM 2.x format. Users can output to a different format using the --fmt option. The output can also be gzipped using the --gzip option. Default path is: ./table.biom
+>   --otu_fp OTU_FP       Create a file containing just the (NCBI) OTU IDs for use with a service such as phyloT (http://phylot.biobyte.de/) to generate a phylogenetic tree for use in downstream analysis such as UniFrac, iTol (itol.embl.de), or PhyloToAST (phylotoast.org).
+>   --fmt {hdf5,json,tsv}      Set the output format of the BIOM table. Default is HDF5.
+>   --gzip                Compress the output BIOM table with gzip. HDF5 BIOM (v2.x) files are internally compressed by default, so this option is not needed when specifying --fmt hdf5.
 >   --version             show program's version number and exit
 >   -v, --verbose         Prints status messages during program execution.
 > ~~~
 > {: .output}
 {: .solution}
 
-With the next command, we are going to create a table in [Biom](https://biom-format.org/) format from our two Kraken reports: `ERR2935805.report` and `JP4D.report`
+With the next command, we are going to create a table in [Biom](https://biom-format.org/) format from our two Kraken reports: `ERR2935805.report` and `JP4D.report`.
+
+We customise the command with a couple of flags:
+- `--fmt json` tells kraken-biom that we want the output table to be in JSON format as opposed to the default HDF5 BIOM2.x format
+- `-o metagenome.biom` means our output table will be named `metagenome.biom`
 
 ~~~
  kraken-biom ERR2935805.report JP4D.report --fmt json -o metagenome.biom
@@ -320,14 +320,13 @@ tax_table()   Taxonomy Table:    [ 5905 taxa by 7 taxonomic ranks ]
 
 The line starting `otu_table` tells us we have two samples - these are ERR2935805 and JP4D - with a total of 5905 taxa. The `tax_table` again tells us how many taxa wwe have. The seven ranks indicates that we have some identifications down to species level. The taxonomic ranks are from the classification system of taxa from the most general (kingdom) to the most specific (species): kingdom/domain, phylum, class, order, family, genus, species.
 
-We can view the `otu_table` with:
+We can view the `tax_table` with:
 ~~~
-View(biom_metagenome@otu_table)
+View(biom_metagenome@tax_table)
 ~~~
 {: .language-r}
 
 This table has the OTU identity in the row names and the samples in the columns. The values in the columns are the abundance of that OYU in that sample.
-
 
 <img src="{{ page.root }}/fig/03_02_phyloseq_taxtab.png" alt="A table where the taxonomic identification information of all OTUs is displayed. Each row represent one OTU and the columns its identification at different levels in the taxonomic taxonomic classification ranks, beginning with Kingdom until we reach Species in the seventh column " />
 <em> Figure 3. Table of the OTU data from our `biom_metagenome` object. <em/>
@@ -367,7 +366,7 @@ View(biom_metagenome@tax_table)
 <img src="{{ page.root }}/fig/03_02_phyloseq_taxtab_e.png" alt="The same table we saw in Figure 3 but with informative headers in each of the columns. Now, we can see which of the columns are associated with which taxonomic classification rank" />
 <em> Figure 4. Table of the OTU data from our `biom_metagenome` object. With corrections. <em/>
 
-How many OTUs are in each kingdome? We can find out by combining some commands. 
+How many OTUs are in each kingdom? We can find out by combining some commands. 
 We need to: 
  - turn the tax_table into a data frame (a useful data structure in R)
  - group by the Kingdom column
