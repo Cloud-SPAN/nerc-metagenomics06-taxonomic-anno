@@ -3,15 +3,18 @@ title: "Taxonomic Analysis with R"
 teaching: 40
 exercises: 20
 questions:
-- "How can we compare depth-contrasting samples?"
-- "How can we manipulate our data to deliver a messagge?"
+- "How can we use standard R methods to summarise metagenomes?"
+- "How can we plot the shared and unique compositions of samples?"
+- "How can we compare samples with very different numbers of reads?"
 objectives:
-- "Learn and create figures using `ggplot2`"
-- "Learn how to manipulate data-types inside your phyloseq object"
-- "Understand how to extract specific information from taxonomic-assignation data"
+- "Make dataframes out of `phyloseq` objects"
+- "Summarise metagenomes with standard R methods"
+- "Make Venn diagrams for samples"
+- "Plot absolute and relative abundances of samples"
 keypoints:
-- "The R package `phyloseq` lets you manipulate metagenomic data in a taxonomic specific perspective."  
-- 
+- "The R package `phyloseq` has a function `psmelt()` to make dataframes from `phyloseq` objects."  
+- "A venn diagram can be used to show the shared and unique compositions of samples." 
+- "Plotting relative abundance allows you to compare samples with differing numbers of reads"
 ---
 
 
