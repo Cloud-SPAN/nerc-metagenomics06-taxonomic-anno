@@ -398,7 +398,8 @@ We can explore how many phlya we have and how many OTU there are in each phlya i
   - turn the tax_table into a data frame (a useful data structure in R)
   - group by the Phylum column
   - summarise by counting the number of rows for each phylum
-  - viewing the result
+  - viewing the result 
+
 This can be achieved with the following command:
 ~~~
 biom_metagenome@tax_table %>% 
@@ -448,7 +449,7 @@ bac_biom_metagenome <- subset_taxa(biom_metagenome, Kingdom == "Bacteria")
 Now let's look at some statistics of our bacterial metagenomes:
 
 ~~~
-> bac_biom_metagenome
+bac_biom_metagenome
 ~~~
 {: .language-r}
 ~~~
@@ -546,7 +547,7 @@ Use the following to open the manual page for plot_richness
 >> ~~~
 >> {: .language-r}
 >>
->> <a href="{{ page.root }}/fig/03_02_plot_rich2.png>
+>> <a href="{{ page.root }}/fig/03_02_plot_rich2.png">
 >> <img src="{{ page.root }}/fig/03_02_plot_rich2.png" alt="Alpha diversity indexes for both samples with title" />
 >> </a>
 >>
@@ -576,12 +577,26 @@ Use the following to open the manual page for plot_richness
 >> <img src="{{ page.root }}/fig/03_02_plot_rich4.png" alt="Alpha diversity indexes for both samples with title sort by Shannon" />
 >> </a>
 >>
->>
->>  Considering the above mentioned, together with the 3 graphs, we can say that the samples JP41 and JP4D present a high diversity with respect to the JC1A, but that the diversity of the sample JP41 is mainly given by singletons or doubletons, instead, the diversity of JP4D is given by species in much greater abundance. Although because the values of H (Shannon) above 3 are considered to have a lot of diversity.
->>
 >  {: .solution}
 {: .challenge}  
 
+## Beta diversity
+
+The β diversity between ERR2935805 and JP4D can be calculated with the `distance()` function. For example, we can 
+find the Bray–Curtis dissimilarity with:
+~~~
+distance(bac_biom_metagenome, method="bray")
+~~~
+{: .language-r}
+~~~
+     ERR2935805
+JP4D  0.9996153
+~~~
+{: .output}
+
+The output of this function is a distance matrix. When we have just two samples there is only one 
+distance to calculate. If we had many samples, the output would have the pairwise distances
+between all of them
 
 > ## Discussion
 >
