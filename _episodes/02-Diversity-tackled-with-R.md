@@ -15,7 +15,8 @@ objectives:
 keypoints:
 - "α diversity measures diversity in a metagenome"
 - "β diversity measures the difference in diversity between metagenomes."
-- "A Biological Observation Matrix, BIOM table is a matrix of counts and is generated from the Kraken output using `kraken-biom` "  - "The `phyloseq` package be used to analyse metagenome diversity using the BIOM table."  
+- "A Biological Observation Matrix, BIOM table is a matrix of counts and is generated from the Kraken output using `kraken-biom` "  
+- "The `phyloseq` package be used to analyse metagenome diversity using the BIOM table."  
 math: yes
 ---
 
