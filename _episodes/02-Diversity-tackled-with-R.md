@@ -246,11 +246,12 @@ If you know R and RStudio and already have them on your machine you may want to 
 
 1. Open RStudio    
 2. Install the packages    
-    You will need the Bioconductor package, `phloseq` and the `tidyverse` packages. Bioconductor packages are installed using the `install()` function from the `BioManager` package so we first install that, then `phyloseq` and `tidyverse`:
+    You will need `phyloseq`, a Bioconductor package, and the `tidyverse` and `ggvenn` packages. Bioconductor packages are installed using the `install()` function from the `BioManager` package so we first install that, then `phyloseq`, `tidyverse` and `ggvenn`:
     ~~~
     > install.packages("BiocManager")
     > BiocManager::install("phyloseq")
     > install.packages("tidyverse")
+    > install.packages("ggvenn")
     ~~~
     {: .language-r}
 3. Make an RStudio project    
@@ -285,7 +286,7 @@ First load the packages we need. Put your cursor on the line you want to run and
 ~~~
 library("phyloseq")
 library("tidyverse")
-
+library("ggvenn")
 ~~~
 {: .language-r}
 
