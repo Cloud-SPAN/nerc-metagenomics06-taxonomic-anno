@@ -249,9 +249,9 @@ We can see that the most abundant phyla in ERR2935805 are Proteobacteria and Fir
 ## Transformation of data
 
 Since our metagenomes have different sizes, it is imperative to convert the number
-of assigned read into percentages (i.e. relative abundances) so as to compare them.
+of assigned read into percentages (i.e. relative abundances) to compare them.
 
-We can acheive this with:
+We can achieve this with:
 ~~~
 abundance_of_taxa <- abundance_of_taxa %>% 
   group_by(Sample) %>% 
