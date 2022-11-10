@@ -221,7 +221,7 @@ We summarised our metagenomes for the number of phyla in each sample in `number_
 abundance_of_taxa <- bac_meta_df %>% 
   filter(Abundance > 0) %>% 
   group_by(Sample, Phylum) %>% 
-  summarise(abund = sum(Abundance))
+  summarise(Abundance = sum(Abundance))
 ~~~
 {: .language-r}  
 
