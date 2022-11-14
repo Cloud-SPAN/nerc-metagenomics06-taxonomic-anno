@@ -3,7 +3,7 @@ title: "Taxonomic Assignment"
 teaching: 30
 exercises: 15
 questions:
-- "How can I assign a taxonomy to my contigs?"
+- "How can I assign a taxonomy to my raw reads?"
 - "How can I visualise these assignments?"
 objectives:
 - "Understand how taxonomic assignment works."
@@ -11,7 +11,7 @@ objectives:
 - "Visualize taxonomic annotations in a dataset."
 
 keypoints:
-- "Taxonomy can only be assigned by comparing against a database with genome annotations. These are not exhaustive and so many things will remain unannotated depending on the samples you are analysing."
+- "Taxonomy can be assigned by comparing against a database with genome annotations. These are not exhaustive and so many things will remain unannotated depending on the samples you are analysing."
 - "Taxonomic assignment can be done using Kraken2."
 - "Pavian is a web based tool that can be used to visualize the assigned taxa."
 ---
