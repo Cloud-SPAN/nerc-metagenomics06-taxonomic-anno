@@ -342,18 +342,18 @@ The prefix for each item in `biom_metagenome` is made up of a letter an two unde
 So to remove the unnecessary characters we will use the following code:
 
 ~~~
-biom_metagenome@tax_table@.Data <- substring(biom_metagenome@tax_table@.Data, 4)
+biom_metagenome@tax_table <- substring(biom_metagenome@tax_table, 4)
 ~~~
 {: .language-r}                                   
 
 And change the names of the columns
 ~~~                                   
 colnames(biom_metagenome@tax_table) <- c("Kingdom",
-           "Phylum", 
-           "Class", 
-           "Order", 
-           "Family", 
-           "Genus", 
+           "Phylum",
+           "Class",
+           "Order",
+           "Family",
+           "Genus",
            "Species")
 ~~~
 {: .language-r}
