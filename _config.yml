@@ -91,4 +91,4 @@ exclude:
 highlighter: rouge
 math: yes
 
-remote_theme: Cloud-SPAN/metagenomics-theme
+remote_theme: Cloud-SPAN/nerc-metagenomics-theme
