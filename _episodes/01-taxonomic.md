@@ -239,9 +239,6 @@ You can also view the Sankey diagram of our example here: [sankey-ERR4998593.rep
   style="width:100%; height:500px;"
 ></iframe>
 
-
-
-
 > ## Exercise 1: Comparison
 > Have a look at the [Results section](https://environmentalmicrobiome.biomedcentral.com/articles/10.1186/s40793-022-00424-2#Sec11) of our source paper, where the authors describe some of the genera (subsection 2) and phyla (subsection 3) they documented. Which of our identified taxa match up with the paper's?
 >
