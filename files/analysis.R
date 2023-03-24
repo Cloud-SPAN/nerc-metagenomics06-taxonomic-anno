@@ -51,7 +51,7 @@ biom_metagenome
 ### tax_table()   Taxonomy Table:    [ 5905 taxa by 7 taxonomic ranks ]
 
 # The line starting otu_table tells us we have two samples -
-# these are ERR2935805 and JP4D - with a total of 5905 taxa. 
+# these are ERR4998593 and JP4D - with a total of 5905 taxa. 
 # The tax_table again tells us how many taxa wwe have. The seven ranks
 # indicates that we have some identifications down to species level. 
 # The taxonomic ranks are from the classification system of taxa from
@@ -188,7 +188,7 @@ sample_sums(bac_biom_metagenome)
 
 summary(bac_biom_metagenome@otu_table)
 
-# The median in sample ERR2935805 is 1, meaning many of OTU occur only 
+# The median in sample ERR4998593 is 1, meaning many of OTU occur only 
 # once and the maximum is very high so at least one OTU is very abundant.
 
 # The `plot_richness()` command will give us a visual representation of 
@@ -206,7 +206,7 @@ plot_richness(physeq = bac_biom_metagenome,
 # Use the following to open the manual page for plot_richness
 ?plot_richness
 
-# The β diversity between ERR2935805 and JP4D can be calculated with 
+# The β diversity between ERR4998593 and JP4D can be calculated with 
 # the `distance()` function.
 
 # For example Bray–Curtis dissimilarity
@@ -227,7 +227,7 @@ distanceMethodList$vegdist
 
 ## Reminder 
 # In the last lesson, we created our phyloseq object, which contains 
-# the information of our samples: `ERR2935805` and `JP4D`. 
+# the information of our samples: `ERR4998593` and `JP4D`. 
 # Let´s take a look again at the number of reads in our data.  
 # For the whole metagenome:
 biom_metagenome
@@ -272,31 +272,31 @@ number_of_taxa <- bac_meta_df %>%
 
 # This shows us that we have some phyla:
 # - present in both samples such as Acidobacteria and Actinobacteria
-# - present in just ERR2935805 such as Candidatus Bipolaricaulota
+# - present in just ERR4998593 such as Candidatus Bipolaricaulota
 # - and present in just JP4D such as Calditrichaeota
 
 # One way to visualise the number of shared phyla is with a Venn diagram. 
 # The package `ggvenn` will draw one for us. It needs a data structure 
 # called a list which will contain an item for each sample of the phyla
 # in that sample. 
-# We can see the phyla in the ERR2935805 sample with:
-unique(number_of_taxa$Phylum[number_of_taxa$Sample == "ERR2935805"])
+# We can see the phyla in the ERR4998593 sample with:
+unique(number_of_taxa$Phylum[number_of_taxa$Sample == "ERR4998593"])
 
 
 # Exercise 2: For the JP4D sample
 
 # To place the two sets of phlya in a list, we use
-venn_data <- list(ERR2935805 = unique(number_of_taxa$Phylum[number_of_taxa$Sample == "ERR2935805"]),
+venn_data <- list(ERR4998593 = unique(number_of_taxa$Phylum[number_of_taxa$Sample == "ERR4998593"]),
                   JP4D = unique(number_of_taxa$Phylum[number_of_taxa$Sample == "JP4D"]))
 
 # And to draw the venn diagram
 ggvenn(venn_data)
 
 # The Venn diagram shows that most of the phyla (29 which is 80.6%) are in both
-# samples, one is in ERR2935805 only and 6 are in JP4D only. 
-# Perhaps you would like to know which phyla is in ERR2935805 only? 
+# samples, one is in ERR4998593 only and 6 are in JP4D only. 
+# Perhaps you would like to know which phyla is in ERR4998593 only? 
 # The following command will print that for us:
-venn_data$ERR2935805[!venn_data$ERR2935805 %in% venn_data$JP4D]
+venn_data$ERR4998593[!venn_data$ERR4998593 %in% venn_data$JP4D]
 
 # Exercise 3: Which phyla are in JP4D only?
 
@@ -310,7 +310,7 @@ abundance_of_taxa <- bac_meta_df %>%
   group_by(Sample, Phylum) %>% 
   summarise(Abundance = sum(Abundance))
 
-# We can see the vast majority of our taxa are Proteobacteria and Firmicutes in ERR2935805
+# We can see the vast majority of our taxa are Proteobacteria and Firmicutes in ERR4998593
 
 ## Visualizing our data 
 
@@ -323,7 +323,7 @@ abundance_of_taxa %>%
   geom_col(position = "stack")
 
 
-# We can see that the most abundant phyla in ERR2935805 are 
+# We can see that the most abundant phyla in ERR4998593 are 
 # Proteobacteria and Firmicutes. However, we can't tell much 
 # from JP4D because the total number of reads is so much less.
 

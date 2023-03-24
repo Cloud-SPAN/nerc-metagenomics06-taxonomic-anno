@@ -17,7 +17,7 @@ keypoints:
 ---
 ## What is taxonomic assignment?
 
-Taxonomic assignment is the process of assigning a sequence to a specific taxon. In this case we will be assigning our raw short reads but you can also assign metagenome-assembled genomes (MAGs), which we will be generating in next week's lesson.
+Taxonomic assignment is the process of assigning a sequence to a specific taxon. In this case we will be assigning our raw short reads but you can also assign metagenome-assembled genomes (MAGs).
 
 These assignments are done by comparing our sequence to a database. These searches can be done in many different ways, and against a variety of databases. There are many programs for doing taxonomic mapping, almost all of them follows one of the next strategies:  
 
@@ -123,7 +123,7 @@ First, we need to make a directory for the kraken output and then we can run our
  cd ~/cs_course/analysis/
  mkdir taxonomy
 
-kraken2 --db ../databases/kraken_20220926/ --output taxonomy/ERR2935805.kraken --report taxonomy/ERR2935805.report --minimum-base-quality 30 --threads 8 ../data/illumina_fastq/ERR2935805.fastq
+kraken2 --db ../databases/kraken_20220926/ --output taxonomy/ERR4998593.kraken --report taxonomy/ERR4998593.report --minimum-base-quality 30 --threads 8 ../data/illumina_fastq/ERR4998593_1.fastq ../data/illumina_fastq/ERR4998593_2.fastq
 ~~~
 {: .bash}
 
@@ -132,52 +132,56 @@ This should take around 3 - 5 minutes to run so we will run it in the foreground
 You should see an output similar to below:
 ~~~
 Loading database information... done.
-47832553 sequences (9662.18 Mbp) processed in 225.420s (12731.6 Kseq/m, 2571.78 Mbp/m).
-  38990565 sequences classified (81.51%)
-  8841988 sequences unclassified (18.49%)
-
+68527220 sequences (10347.61 Mbp) processed in 109.270s (37628.2 Kseq/m, 5681.86 Mbp/m).
+  616037 sequences classified (0.90%)
+  67911183 sequences unclassified (99.10%)
 ~~~
 {: .output}
 
 This command generates two outputs, a .kraken and a .report file. Let's look at the top of these files with the following commands:
 ~~~
-head taxonomy/ERR2935805.kraken  
+head taxonomy/ERR4998593.kraken  
 ~~~
 {: .bash}
 
 ~~~
-C	ERR2935805.1	1639	202	1637:2 0:9 1639:3 0:19 1637:8 0:17 1637:5 0:4 A:70 0:6 1637:5 0:18 1637:1 A:1
-U	ERR2935805.2	0	202	A:13 286:2 A:153
-U	ERR2935805.3	0	202	0:67 A:45 0:25 1637:2 A:29
-U	ERR2935805.4	0	202	0:53 A:50 0:65
-C	ERR2935805.5	1639	202	0:50 1639:1 0:16 A:73 0:24 1637:1 0:3
-C	ERR2935805.6	1639	202	0:1 1639:5 0:3 1637:5 0:5 1637:4 0:18 1637:2 0:6 1637:5 0:13 A:35 0:17 1639:1 0:24 1637:1 0:8 1637:1 0:14
-U	ERR2935805.7	0	202	A:42 0:7 A:119
-C	ERR2935805.8	1639	202	0:9 1639:1 0:12 1639:1 0:23 1639:6 0:15 A:36 0:7 1639:5 0:7 1639:5 0:41
-C	ERR2935805.9	1639	202	0:22 91061:5 0:9 1637:2 0:9 1637:7 0:13 A:35 0:7 1637:1 0:21 1637:3 0:8 1639:5 0:20 A:1
-C	ERR2935805.10	1639	202	1639:5 0:8 1639:5 0:1 1637:2 0:36 1639:5 0:1 1639:5 0:58 1639:2 0:5 1639:1 0:13 1639:3 0:18
+U       ERR4998593.40838091     0       151     A:117
+U       ERR4998593.57624042     0       151     0:113 A:4
+U       ERR4998593.3    0       151     A:1 0:39 A:34 0:43
+U       ERR4998593.4    0       151     A:1 0:8 A:34 0:73 A:1
+U       ERR4998593.34339006     0       151     A:20 0:41 A:56
+U       ERR4998593.6    0       151     A:1 0:17 A:99
+U       ERR4998593.59019952     0       151     A:117
+C       ERR4998593.34862640     2686094 151     0:9 A:62 0:6 2686094:5 0:10 28211:1 0:24
+U       ERR4998593.63611176     0       151     0:1 A:42 0:58 A:16
+U       ERR4998593.57807180     0       151     A:5 0:112
 ~~~
 {: .output}
 
 This gives us information about every read in the raw reads. As we can see, the kraken file is not very readable. So let's look at the report file instead:
 
 ~~~
-less taxonomy/ERR2935805.report
+less taxonomy/ERR4998593.report
 ~~~
 {: .bash}
 
 ~~~
-18.49  8841988 8841988 U       0       unclassified
- 81.51  38990565        215309  R       1       root
- 80.98  38733479        2279    R1      131567    cellular organisms
- 80.97  38730266        124149  D       2           Bacteria
- 72.67  34761467        5082    D1      1783272       Terrabacteria group
- 72.64  34747831        4388    P       1239            Firmicutes
- 72.63  34742819        460563  C       91061             Bacilli
- 71.65  34273479        39112   O       1385                Bacillales
- 70.90  33912328        1014    F       186820                Listeriaceae
- 70.90  33911307        4877507 G       1637                    Listeria
- 60.47  28925791        28824549        S       1639                      Listeria monocytogenes
+99.10  67911183        67911183        U       0       unclassified
+  0.90  616037  78      R       1       root
+  0.90  615923  1416    R1      131567    cellular organisms
+  0.89  612469  36540   D       2           Bacteria
+  0.53  365022  26922   P       1224          Proteobacteria
+  0.42  289043  21461   C       28211           Alphaproteobacteria
+  0.35  240214  23691   O       356               Hyphomicrobiales
+  0.27  181802  17554   F       41294               Nitrobacteraceae
+  0.23  154769  60679   G       374                   Bradyrhizobium
+  0.06  41382   12771   G1      2631580                 unclassified Bradyrhizobium
+  0.00  2594    2594    S       2782665                   Bradyrhizobium sp. 200
+  0.00  2553    2553    S       2782654                   Bradyrhizobium sp. 186
+  0.00  2520    2520    S       2782641                   Bradyrhizobium sp. 170
+  0.00  1549    1549    S       858422                    Bradyrhizobium sp. CCBAU 051011
+  0.00  1405    1405    S       2840469                   Bradyrhizobium sp. S2-20-1
+
 ...
 ~~~
 {: .bash}
@@ -192,60 +196,87 @@ less taxonomy/ERR2935805.report
 > 6. Indented scientific name
 {: .callout}
 
-In our case, 18.49% of the reads are unclassified. These reads either didn't meet quality threshold or were not identified in the database.
+In our case, 99.1% of the reads are unclassified. These reads either didn't meet quality threshold or were not identified in the database. That leaves the other 0.9% as our classified reads.
 
-As the report is  nearly 7000 lines, we will explore it with [Pavian](https://github.com/fbreitwieser/pavian), rather than by hand.
+0.9% of reads classified seems small, but remember that 0.9% of our reads is still over 600,000 reads successfully classified! We can still get a good grasp of the kinds of species present, even if it isn't a definitive list.
+
+This  data is real environmental data, and this means the quality of the DNA is likely to be low - it may have degraded in the time between sampling and extraction, or been damaged during the extraction process. In addition, we would see a higher percentage of our reads classified if we ran them through a bigger database - the Standard-8 database we used is fairly small. We [the course writers] saw up to 14% of reads classified when we used Kraken on the same data with a much bigger database and a more powerful computer.
+
+As the report is nearly 10,000 lines, we will explore it with [Pavian](https://github.com/fbreitwieser/pavian), rather than by hand.
 
 ## Visualisation of taxonomic assignment results  
 
 ### Pavian
 [Pavian](https://github.com/fbreitwieser/pavian) is a tool for the interactive visualisation of metagenomics data and allows the comparison of multiple samples. Pavian can be installed locally but we will use the browser version of [Pavian](https://fbreitwieser.shinyapps.io/pavian/).
 
-First we need to download ERR2935805.report from our AWS instance to our local computer. Launch a git bash window or terminal which is logged into your local computer, from the `cloudpan` folder. Then use `scp` to fetch ERR2935805.report.
+First we need to download our `ERR4998593.report` file from our AWS instance to our local computer. Launch a GitBash window or terminal which is logged into your local computer, from the `cloudspan` folder. Then use `scp` to fetch the report.
 ~~~
-scp -i login-key-instanceNNN.pem csuser@instanceNNN.cloud-span.aws.york.ac.uk.:~/cs_course/analysis/taxonomy/ERR2935805.report .
+scp -i login-key-instanceNNN.pem csuser@instanceNNN.cloud-span.aws.york.ac.uk.:~/cs_course/analysis/taxonomy/ERR4998593.report .
 ~~~
-{: .language-bash}
+{: .bash}
 Check you have included the ` .` on the end meaning copy the file 'to here'.
 
 
-Go to [Pavian site](https://fbreitwieser.shinyapps.io/pavian/), click on Browse and upload the ERR2935805.report file you have just downloaded.
+Go to [the Pavian website](https://fbreitwieser.shinyapps.io/pavian/), click on Browse and upload the `ERR4998593.report` file you have just downloaded.
 
 <img src="{{ page.root }}/fig/03_01_pavian_upload.png" alt="Pavian website showing the upload point" />
 
 <img src="{{ page.root }}/fig/03_01_pavian_upload2.png" alt="Pavian website once the sample has uploaded" />
 
-
-<img align="left" img src="{{ page.root }}/fig/03_01_pavian_column.png" alt="Pavian columns" /> &nbsp; &nbsp; &nbsp;
-
 Once the file is uploaded we can explore the output generated.
 The column on the left has multiple different options. As we only have one sample and don't have an alignment to view, only the "Results Overview" and "Sample" tabs are of interest to us.
 
-<br clear="left"/>
+At the bottom of this column there is also an option to "Generate HTML report". This is a very good option if you want to share your results with others. We have used that option to generate one here for the `ERR4998593` data in order to share our results. If you haven't been able to generate a Pavian output you can view our exported example here: [ERR4998593-pavian-report.html]({{ page.root }}/files/ERR4998593-pavian-report.html) (note this looks a bit different to the website version).
 
-At the bottom of this column there is also an option to "Generate HTML report", this is a very good option if you wanted to share your results with others. We have used that option to generate one here for the `ERR2935805` data in order to share our results. If you haven't been able to generate a Pavian output you can view our exported example here [ERR2935805-pavian-report.html]({{ page.root }}/files/ERR2935805-pavian-report.html) (note this looks a bit different to the website version).
+The Results Overview tab shows us how many reads have been classified in our sample(s). From this we can see what proportion of our reads were classified as being bacterial, viral, fungal etc.
 
-The Results Overview tab shows us how many reads have been classified in our sample(s). From this we can see that 18.5% of the raw reads are unclassified.
+On the Sample tab we can see a [Sankey diagram](https://en.wikipedia.org/wiki/Sankey_diagram) which shows us the proportion of our sample that has been classified at each taxa level. If you click on the "Configure Sankey" button you can play with the settings to make the diagram easier to view. Since there are many different species in our Sankey, you might want to try increasing the height of the figure and the number of taxa at each level, to get a broader overview of the species present.
 
-On the Sample tab we can see a [Sankey diagram](https://en.wikipedia.org/wiki/Sankey_diagram) which shows us the proportion of our sample that has been classified at each taxa level. If you click on the "Configure Sankey" button you can play with the settings to make the diagram easier to view.
-
-You can also view the Sankey diagram of our example here [sankey-ERR2935805.report.html]({{ page.root }}/files/sankey-ERR2935805.report.html)
+You can also view the Sankey diagram of our example here: [sankey-ERR4998593.report.html]({{ page.root }}/files/sankey-ERR4998593.report.html)
 
 <iframe
-  src="{{ page.root }}/files/sankey-ERR2935805.report.html"
+  src="{{ page.root }}/files/sankey-ERR4998593.report.html"
   style="width:100%; height:500px;"
 ></iframe>
 
 
 
 
-> ## Exercise 1:
-> Using the Sankey diagram and looking back at the [information](https://cloud-span.github.io/metagenomics01-qc-assembly/00-introduction-meta/index.html) we have about our dataset are we seeing the species that we expect in our Kraken output?  Are there any that we don't expect, and if so why do you think we might be seeing them?  Remember we have run this taxonomic assignment using the Standard 8GB database.
+> ## Exercise 1: Comparison
+> Have a look at the [Results section](https://environmentalmicrobiome.biomedcentral.com/articles/10.1186/s40793-022-00424-2#Sec11) of our source paper, where the authors describe some of the genera (subsection 2) and phyla (subsection 3) they documented. Which of our identified taxa match up with the paper's?
+>
+> You might find it helpful to import the data from `ERR4998593.report` file we downloaded into a spreadsheet program (as previously described) to take a more in-depth look at the taxa identified. Remember that you can use filtering to see specific taxonomic levels (e.g. only phyla or only genera). You could also use the search function. [Here's one we made earlier.](https://docs.google.com/spreadsheets/d/1vEts5l8_49UD6SRCK3zLH2CCAhq4DXmlwmcW3ieBg0M/edit?usp=sharing)
 > > ## Solution
-> > * We are seeing _Listeria monocytogenes_, _Pseudomonas aeruginosa_ and _Salmonella enterica_ in the proportions that we would expect in the Kraken output.
-> > * We do not see _Saccharomyces cerevisiae_ in the output, this is likely because of database choice the Standard 8GB does not contain Fungi. This is potentially why we are seeing some organisms that aren't supposed to be in our dataset as these may be the closest approximation in this Kraken database. This is why database choice is important! You should aim to use the most comprehensive database for the compute power available to you.  
-> > * _Lactobacillus fermentum_ has since changed it's name to _Limosilactobacillus fermentum_ (this is something that happens quite often with prokaryotes!) so that is also in our output.  
-> > * Less abundant organisms are harder to identify as there is just less sequencing data present for them. _Bacillus subtilis_, which makes up 0.89% of our dataset, has only been classified to genera level (Bacillus) as has _Escherichia coli_ which makes up 0.089% of our dataset (Escherichia). Those with the lowest abundance _Enterococcus faecalis_, _Cryptococcus neoformans_ and _Staphylococcus aureus_ have also only been identified to a higher level.
+> > The subsection titled "Differences in microbial community structure across soils ecosystems" lists examples genera present in heathland soils (like our sample): *Acidipila/Silvibacterium*, *Bryobacter*, *Granulicella*, *Acidothermus*, *Conexibacter*, *Mycobacterium*, *Mucilaginibacter*, *Bradyrhizobium*, and *Roseiarcus*. Here's how many of our sequences belong to these genera:
+> > 
+> > | Genus                      | Sequences assigned |
+> > |----------------------------|--------------------|
+> > | *Bradyrhizobium*           | 154769             |
+> > | *Mycobacterium*            | 10863              |
+> > | *Granulicella*             | 1344               |
+> > | *Conexibacter*             | 2272               |
+> > | *Mucilaginibacter*         | 197                |
+> > | *Acidothermus*             | 122                |
+> > | *Bryobacter*               | 0                  |
+> > | *Acidipila/Silvibacterium* | 0                  |
+> > | *Roseiarcus*               | 0                  |
+> > 
+> > Note that 298 sequences are assigned to *Bryobacteraceae*, the family to which the genus *Bryobacter* belongs. However, all 298 of these sequences are assigned to the genus *Paludibaculum*, another genus in the *Bryobacteraceae* family, so we can still confidently say that there are no species belonging to the *Bryobacter* genus present.
+> > 
+> > The subsection titled "A manually curated genomic database from tundra soil metagenomes" describes more generally the most represented phyla across the MAGs generated:  *Acidobacteriota* (n = 172), *Actinobacteriota* (n = 163), *Proteobacteria* (*Alphaproteobacteria*, n = 54; *Gammaproteobacteria*, n = 39), *Chloroflexota* (n = 84), and *Verrucomicrobiota* (n = 43). All of these phyla are present in our sample too, albeit in different proportions:
+> > 
+> > | Phylum                | Sequences assigned |
+> > |-----------------------|--------------------|
+> > | *Alphaproteobacteria* | 289043             |
+> > | *Actinobacteria*      | 187653             |
+> > | *Gammaproteobacteria*      | 18733              |
+> > | *Acidobacteria*       | 5500               |
+> > | *Verrucomicrobia*     | 778                |
+> > | *Chloroflexi*         | 122                |
+> >
+> > The same subsections states that "in general, barren, heathland, and meadow soils were dominated by the same set of MAGs": *Acidobacteriota*, *Actinobacteria* and *Proteobacteria*. This holds true for our sample, which is taken from a heathland site. Several of the specific genera mentioned (e.g. unclassified genera in class *Acidobacteriae*, *Mycobacterium*, *Bradyrhizobium*, unclassified *Xantherobacteraceae* and *Steroidobacteraceae*) are also present. 
+> >
+> >
 > {: .solution}
 {: .challenge}
 

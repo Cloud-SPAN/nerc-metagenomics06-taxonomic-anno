@@ -86,7 +86,7 @@ Figure 2 shows α and the β diversity for three lakes. The most simple way to c
 
 ## How do we calculate diversity from metagenomic samples?
 
-We will calculate the diversity in our mock sample `ERR2935805` and also that from a real world metagenome, `JP4D`, for comparison. `JP4D` is from [JG Okie et al., 2020](https://elifesciences.org/articles/49816). 
+We will calculate the diversity in our mock sample `ERR4998593` and also that from a real world metagenome, `JP4D`, for comparison. `JP4D` is from [JG Okie et al., 2020](https://elifesciences.org/articles/49816). 
   
 There are 2 steps to need to calculate the diversity of our samples.
 
@@ -110,8 +110,8 @@ List the files
 {: .bash}
 
 ~~~
--rw-rw-r-- 1 csuser csuser 3935007137 Oct  9 09:16 ERR2935805.kraken
--rw-rw-r-- 1 csuser csuser     424101 Oct  9 09:16 ERR2935805.report
+-rw-rw-r-- 1 csuser csuser 3935007137 Oct  9 09:16 ERR4998593.kraken
+-rw-rw-r-- 1 csuser csuser     424101 Oct  9 09:16 ERR4998593.report
 ~~~
 {: .output}
 
@@ -211,14 +211,14 @@ You should `ls` to check that this file has been downloaded.
 > {: .output}
 {: .solution}
 
-With the next command, we are going to create a table in [Biom](https://biom-format.org/) format from our two Kraken reports: `ERR2935805.report` and `JP4D.report`.
+With the next command, we are going to create a table in [Biom](https://biom-format.org/) format from our two Kraken reports: `ERR4998593.report` and `JP4D.report`.
 
 We customise the command with a couple of flags:
 - `--fmt json` tells kraken-biom that we want the output table to be in JSON format as opposed to the default HDF5 BIOM2.x format
 - `-o metagenome.biom` means our output table will be named `metagenome.biom`
 
 ~~~
- kraken-biom ERR2935805.report JP4D.report --fmt json -o metagenome.biom
+ kraken-biom ERR4998593.report JP4D.report --fmt json -o metagenome.biom
 ~~~
 {: .bash}
 
@@ -228,8 +228,8 @@ We customise the command with a couple of flags:
 ~~~
 {: .bash}
 ~~~
--rw-rw-r-- 1 csuser csuser 3935007137 Oct  9 09:16 ERR2935805.kraken
--rw-rw-r-- 1 csuser csuser     424101 Oct  9 09:16 ERR2935805.report
+-rw-rw-r-- 1 csuser csuser 3935007137 Oct  9 09:16 ERR4998593.kraken
+-rw-rw-r-- 1 csuser csuser     424101 Oct  9 09:16 ERR4998593.report
 -rw-rw-r-- 1 csuser csuser     404232 Oct  9 09:30 JP4D.report
 -rw-rw-r-- 1 csuser csuser     741259 Oct  9 10:22 metagenome.biom
 ~~~
@@ -319,7 +319,7 @@ tax_table()   Taxonomy Table:    [ 5905 taxa by 7 taxonomic ranks ]
 ~~~
 {: .output}
 
-The line starting `otu_table` tells us we have two samples - these are ERR2935805 and JP4D - with a total of 5905 taxa. The `tax_table` again tells us how many taxa wwe have. The seven ranks indicates that we have some identifications down to species level. The taxonomic ranks are from the classification system of taxa from the most general (kingdom) to the most specific (species): kingdom/domain, phylum, class, order, family, genus, species.
+The line starting `otu_table` tells us we have two samples - these are ERR4998593 and JP4D - with a total of 5905 taxa. The `tax_table` again tells us how many taxa wwe have. The seven ranks indicates that we have some identifications down to species level. The taxonomic ranks are from the classification system of taxa from the most general (kingdom) to the most specific (species): kingdom/domain, phylum, class, order, family, genus, species.
 
 We can view the `tax_table` with:
 ~~~
@@ -467,7 +467,7 @@ sample_names(bac_biom_metagenome)
 ~~~
 {: .language-r}
 ~~~
-"ERR2935805" "JP4D"  
+"ERR4998593" "JP4D"  
 ~~~
 {: .output} 
   
@@ -478,7 +478,7 @@ sample_sums(bac_biom_metagenome)
 ~~~
 {: .language-r}
 ~~~
-  ERR2935805    JP4D
+  ERR4998593    JP4D
   38057090      149590
 ~~~
 {: .output}
@@ -489,7 +489,7 @@ summary(bac_biom_metagenome@otu_table)
 ~~~
 {: .language-r}
 ~~~
-ERR2935805            JP4D        
+ERR4998593            JP4D        
 Min.   :       0   Min.   :   0.00  
 1st Qu.:       0   1st Qu.:   0.00  
 Median :       1   Median :   3.00  
@@ -499,7 +499,7 @@ Max.   :28925791   Max.   :6551.00
 ~~~
 {: .output}
 
-The median in sample ERR2935805 is 1, meaning many of OTU occur only once and the maximum is very high so at least one OUT is very abundant.
+The median in sample ERR4998593 is 1, meaning many of OTU occur only once and the maximum is very high so at least one OUT is very abundant.
   
 The `plot_richness()` command will give us a visual representation of the diversity inside the samples (i.e. α diversity): 
 ~~~
@@ -582,14 +582,14 @@ Use the following to open the manual page for plot_richness
 
 ## Beta diversity
 
-The β diversity between ERR2935805 and JP4D can be calculated with the `distance()` function. For example, we can 
+The β diversity between ERR4998593 and JP4D can be calculated with the `distance()` function. For example, we can 
 find the Bray–Curtis dissimilarity with:
 ~~~
 distance(bac_biom_metagenome, method="bray")
 ~~~
 {: .language-r}
 ~~~
-     ERR2935805
+     ERR4998593
 JP4D  0.9996153
 ~~~
 {: .output}
