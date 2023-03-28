@@ -20,7 +20,7 @@ keypoints:
 
 ## Reminder 
 In the last lesson, we created our phyloseq object, which contains the information
-of our samples: `ERR4998593` and `JP4D`. Let´s take a look again at the
+of our samples: `ERR4998593` and `ERR4998600`. Let´s take a look again at the
  number of reads in our data.  
 
 For the whole metagenome:
@@ -36,7 +36,7 @@ phyloseq-class experiment-level object
 otu_table()   OTU Table:         [ 5905 taxa and 2 samples ]  
 tax_table()   Taxonomy Table:    [ 5905 taxa by 7 taxonomic ranks ]  
 
-ERR4998593       JP4D   
+ERR4998593       ERR4998600   
   38058101     149590   
 ~~~
 {: .output}
@@ -58,7 +58,7 @@ ERR4998593       JP4D
 >> otu_table()   OTU Table:         [ 5808 taxa and 2 samples ]
 >> tax_table()   Taxonomy Table:    [ 5808 taxa by 7 taxonomic ranks ]
 >> 
->>   ERR4998593       JP4D
+>>   ERR4998593       ERR4998600
 >>     38057090     149590
 >> ~~~
 >> {: .output}
@@ -112,7 +112,7 @@ Clicking on `number_of_taxa` on the Environment window will open a spreadsheet-l
 This shows us that we have some phyla:
   - present in both samples such as Acidobacteria and Actinobacteria
   - present in just ERR4998593 such as Candidatus Bipolaricaulota
-  - and present in just JP4D such as Calditrichaeota
+  - and present in just ERR4998600 such as Calditrichaeota
 
 One way to visualise the number of shared phyla is with a Venn diagram. The package `ggvenn` will draw one for us. It needs a data structure called a list which will contain an item for each sample of the phyla in that sample. We can see the phyla in the ERR4998593 sample with:
 
@@ -137,11 +137,11 @@ unique(number_of_taxa$Phylum[number_of_taxa$Sample == "ERR4998593"])
 
 > ## Exercise 2
 >
-> Repeat this for the JP4D sample
+> Repeat this for the ERR4998600 sample
 >> ## Solution
->> Use JP4D instead of ERR4998593
+>> Use ERR4998600 instead of ERR4998593
 >> ~~~
->> unique(number_of_taxa$Phylum[number_of_taxa$Sample == "JP4D"])
+>> unique(number_of_taxa$Phylum[number_of_taxa$Sample == "ERR4998600"])
 >> ~~~
 >> {: .language-r}
 >>
@@ -167,7 +167,7 @@ unique(number_of_taxa$Phylum[number_of_taxa$Sample == "ERR4998593"])
 To place the two sets of phlya in a list, we use
 ~~~
 venn_data <- list(ERR4998593 = unique(number_of_taxa$Phylum[number_of_taxa$Sample == "ERR4998593"]),
-                  JP4D = unique(number_of_taxa$Phylum[number_of_taxa$Sample == "JP4D"]))
+                  ERR4998600 = unique(number_of_taxa$Phylum[number_of_taxa$Sample == "ERR4998600"]))
 ~~~
 {: .language-r}  
 
@@ -181,11 +181,11 @@ ggvenn(venn_data)
 <a href="{{ page.root }}/fig/03_03_phlya_venn.png">
   <img src="{{ page.root }}/fig/03_03_phlya_venn.png" alt="venn diagram for the phyla in the two sample." />
 </a>
-The Venn diagram shows that most of the phyla (29 which is 80.6%) are in both samples, one is in ERR4998593 only and 6 are in JP4D only. 
+The Venn diagram shows that most of the phyla (29 which is 80.6%) are in both samples, one is in ERR4998593 only and 6 are in ERR4998600 only. 
 Perhaps you would like to know which phyla is in ERR4998593 only? The following command will print that for us:
 
 ~~~
-venn_data$ERR4998593[!venn_data$ERR4998593 %in% venn_data$JP4D]
+venn_data$ERR4998593[!venn_data$ERR4998593 %in% venn_data$ERR4998600]
 ~~~
 {: .language-r}  
 
@@ -197,11 +197,11 @@ venn_data$ERR4998593[!venn_data$ERR4998593 %in% venn_data$JP4D]
 
 > ## Exercise 3
 >
-> Which phyla are in JP4D only?
+> Which phyla are in ERR4998600 only?
 >> ## Solution
->> Use JP4D instead of ERR4998593 and ERR4998593 instead of JP4D!
+>> Use ERR4998600 instead of ERR4998593 and ERR4998593 instead of ERR4998600!
 >> ~~~
->> venn_data$JP4D[!venn_data$JP4D %in% venn_data$ERR4998593]
+>> venn_data$ERR4998600[!venn_data$ERR4998600 %in% venn_data$ERR4998593]
 >> ~~~
 >> {: .language-r}
 >>
@@ -244,7 +244,7 @@ abundance_of_taxa %>%
   <img src="{{ page.root }}/fig/03_03_abs_phyl_plot.png" alt="Plot of the absolute abundance of each Phylum in the two samples." />
 </a>
 
-We can see that the most abundant phyla in ERR4998593 are Proteobacteria and Firmicutes. However, we can't tell much from JP4D because the total number of reds is so much less.
+We can see that the most abundant phyla in ERR4998593 are Proteobacteria and Firmicutes. However, we can't tell much from ERR4998600 because the total number of reds is so much less.
 
 ## Transformation of data
 

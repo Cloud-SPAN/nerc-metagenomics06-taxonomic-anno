@@ -298,7 +298,7 @@ biom_metagenome <- import_biom("metagenome.biom")
 ~~~
 {: .language-r}
 
-This command produces no output in the console but created a special class of R object which is defined by the `phloseq` package and called it `biom_metagenome`. Click on the object name, biom_metagenome, in the Environment pane (top right).  This will open a view of the object in the same pane as your script.
+This command produces no output in the console but created a special class of R object which is defined by the `phyloseq` package and called it `biom_metagenome`. Click on the object name, biom_metagenome, in the Environment pane (top right).  This will open a view of the object in the same pane as your script.
 
 A phyloseq object is a special object in R. It has five parts, called 'slots' which you can see listed in the object view. These are `otu_table`, `tax_table`, `sam_data`, `phy_tree` and `refseq`. In our case, `sam_data`, `phy_tree` and `refseq` are empty. The useful data are in otu_table` and `tax_table`.
 
@@ -315,12 +315,12 @@ biom_metagenome
 
 ~~~
 phyloseq-class experiment-level object
-otu_table()   OTU Table:         [ 5905 taxa and 2 samples ]
-tax_table()   Taxonomy Table:    [ 5905 taxa by 7 taxonomic ranks ]
+otu_table()   OTU Table:         [ 7637 taxa and 2 samples ]
+tax_table()   Taxonomy Table:    [ 7637 taxa by 7 taxonomic ranks ]
 ~~~
 {: .output}
 
-The line starting `otu_table` tells us we have two samples - these are ERR4998593 and JP4D - with a total of 5905 taxa. The `tax_table` again tells us how many taxa wwe have. The seven ranks indicates that we have some identifications down to species level. The taxonomic ranks are from the classification system of taxa from the most general (kingdom) to the most specific (species): kingdom/domain, phylum, class, order, family, genus, species.
+The line starting `otu_table` tells us we have two samples - these are ERR4998593 and ERR4998600 - with a total of 7637 taxa. The `tax_table` again tells us how many taxa wwe have. The seven ranks indicates that we have some identifications down to species level. The taxonomic ranks are from the classification system of taxa from the most general (kingdom) to the most specific (species): kingdom/domain, phylum, class, order, family, genus, species.
 
 We can view the `tax_table` with:
 ~~~
@@ -347,7 +347,7 @@ biom_metagenome@tax_table <- substring(biom_metagenome@tax_table, 4)
 ~~~
 {: .language-r}                                   
 
-And change the names of the columns
+Let's change the names of the columns too:
 ~~~                                   
 colnames(biom_metagenome@tax_table) <- c("Kingdom",
            "Phylum",
@@ -385,12 +385,12 @@ biom_metagenome@tax_table %>%
 
 ~~~
 # A tibble: 4 × 2
-Kingdom       n
-<chr>     <int>
-1 Archaea      67
-2 Bacteria   5808
+  Kingdom       n
+  <chr>     <int>
+1 Archaea     339
+2 Bacteria   7231
 3 Eukaryota     1
-4 Viruses      29
+4 Viruses      66
 ~~~
 {: .output}
 Most things are bacteria!  
@@ -411,8 +411,9 @@ biom_metagenome@tax_table %>%
 ~~~
 {: .language-r}
 
-This shows us a table with a phylum, and the number times it appeared, in each row. The number of phyla is given by the number of rows in this table.  By defualt, the table is sorted alphabetically by phylum. We can sort by frequency by clicking on the 'n' column. There are 2743 Proteobacteria and 1050 Actinobacteria for example.
-<img src="{{ page.root }}/fig/03-02-phyla-freq-table.png" alt="Two views of the phyla frequency table: sorted alphabetically by phylum on the left and by the number of OTUs (n) in each phylum on the right" /> 
+This shows us a table with a phylum, and the number times it appeared, in each row. The number of phyla is given by the number of rows in this table.  By defualt, the table is sorted alphabetically by phylum. We can sort by frequency by clicking on the 'n' column. There are 3471 Proteobacteria and 1571 Actinobacteria for example.
+
+<img src="{{ page.root }}/fig/03_02_phyla_freq_table.png" alt="Two views of the phyla frequency table: sorted alphabetically by phylum on the left and by the number of OTUs (n) in each phylum on the right" /> 
   
 
 > ## Exercise 2: Explore the Orders
@@ -432,16 +433,16 @@ This shows us a table with a phylum, and the number times it appeared, in each r
 >> ~~~
 >> {: .language-r}
 >>    
->> a) 204. This is the number of rows in the table  
->> b) Bacillales. Sorting the column n will bring this to the top. Bacillales appears 456 times  
->> c) 32. If an OTU has not been identified to order level the order column will be blank. The table shows there were 32 such cases.  
+>> a) 229. This is the number of rows in the table  
+>> b) Hyphomicrobiales. Sorting the column n will bring this to the top. Hyphomicrobiales appears 480 times  
+>> c) 66. If an OTU has not been identified to order level the order column will be blank. The table shows there were 66 such cases (you can find this more easily by sorting the column Order).  
 >> 
 > {: .solution}
 {: .challenge}
 
 ## Plot alpha diversity
 
-We want to know how is the bacterial diversity of our samples, so we will remove all of the non-bacterial organiss. To do this we will generate a subset of all bacterial groups and save them.
+We want to explore the bacterial diversity of our samples, so we will remove all of the non-bacterial organisms. To do this we will generate a subset of all bacterial groups and save them.
 ~~~
 bac_biom_metagenome <- subset_taxa(biom_metagenome, Kingdom == "Bacteria")
 ~~~
@@ -455,8 +456,8 @@ bac_biom_metagenome
 {: .language-r}
 ~~~
 phyloseq-class experiment-level object
-otu_table()   OTU Table:         [ 5808 taxa and 2 samples ]
-tax_table()   Taxonomy Table:    [ 5808 taxa by 7 taxonomic ranks ]
+otu_table()   OTU Table:         [ 7231 taxa and 2 samples ]
+tax_table()   Taxonomy Table:    [ 7231 taxa by 7 taxonomic ranks ]
 ~~~
 {: .output}
 
@@ -468,10 +469,9 @@ sample_names(bac_biom_metagenome)
 ~~~
 {: .language-r}
 ~~~
-"ERR4998593" "JP4D"  
+"ERR4998593" "ERR4998600"  
 ~~~
 {: .output} 
-  
   
 Count the number of reads with `sample_sums()`:  
 ~~~
@@ -479,8 +479,8 @@ sample_sums(bac_biom_metagenome)
 ~~~
 {: .language-r}
 ~~~
-  ERR4998593    JP4D
-  38057090      149590
+ERR4998593 ERR4998600 
+    442490     305135
 ~~~
 {: .output}
 
@@ -490,17 +490,17 @@ summary(bac_biom_metagenome@otu_table)
 ~~~
 {: .language-r}
 ~~~
-ERR4998593            JP4D        
-Min.   :       0   Min.   :   0.00  
-1st Qu.:       0   1st Qu.:   0.00  
-Median :       1   Median :   3.00  
-Mean   :    6553   Mean   :  25.76  
-3rd Qu.:       2   3rd Qu.:  13.00  
-Max.   :28925791   Max.   :6551.00  
+ ERR4998593         ERR4998600     
+Min.   :    0.00   Min.   :    0.0  
+1st Qu.:    1.00   1st Qu.:    2.0  
+Median :    6.00   Median :   11.0  
+Mean   :   61.19   Mean   :   42.2  
+3rd Qu.:   31.50   3rd Qu.:   38.0  
+Max.   :60679.00   Max.   :38768.0   
 ~~~
 {: .output}
 
-The median in sample ERR4998593 is 1, meaning many of OTU occur only once and the maximum is very high so at least one OUT is very abundant.
+The median in sample ERR4998593 is 6, meaning many of OTU occur six times. The maximum is very high so at least one OTU is very abundant.
   
 The `plot_richness()` command will give us a visual representation of the diversity inside the samples (i.e. α diversity): 
 ~~~
@@ -565,7 +565,7 @@ Use the following to open the manual page for plot_richness
 >> <img src="{{ page.root }}/fig/03_02_plot_rich3.png" alt="Alpha diversity indexes for both samples horizontal with title" />
 >> </a>
 >>
->> The "sortby" option orders the samples from least to greatest diversity depending on the parameter. In this case, it is ordered by "Shannon" and tells us that the JP4D sample has the lowest diversity and the JP41 sample the highest.
+>> The "sortby" option orders the samples from least to greatest diversity depending on the parameter. In this case, it is ordered by "Shannon" and tells us that the ERR4998593 sample has the lowest diversity and the ERR4998600 sample the highest.
 >> ~~~
 >> plot_richness(physeq = bac_biom_metagenome,
 >>              title = "Alpha diversity indexes for both metagenomic samples",
@@ -583,15 +583,38 @@ Use the following to open the manual page for plot_richness
 
 ## Beta diversity
 
-The β diversity between ERR4998593 and JP4D can be calculated with the `distance()` function. For example, we can 
+The β diversity between ERR4998593 and ERR4998600 can be calculated with the `distance()` function. For example, we can 
 find the Bray–Curtis dissimilarity with:
 ~~~
 distance(bac_biom_metagenome, method="bray")
 ~~~
 {: .language-r}
 ~~~
-     ERR4998593
-JP4D  0.9996153
+           ERR4998593
+ERR4998600  0.5438328
+~~~
+{: .output}
+
+There are other methods of determining distance and we can view our options with:
+~~~
+distanceMethodList$vegdist
+~~~
+{: .language-r}
+~~~
+[1] "manhattan"  "euclidean"  "canberra"   "bray"       "kulczynski" "jaccard"    "gower"     
+[8] "altGower"   "morisita"   "horn"       "mountford"  "raup"       "binomial"   "chao"      
+[15] "cao"
+~~~
+{: .output}
+
+Any of these methods can be used in the same way used above, e.g.
+~~~
+distance(bac_biom_metagenome, method="jaccard")
+~~~
+{: .language-r}
+~~~
+           ERR4998593
+ERR4998600  0.7045229
 ~~~
 {: .output}
 

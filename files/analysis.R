@@ -51,7 +51,7 @@ biom_metagenome
 ### tax_table()   Taxonomy Table:    [ 5905 taxa by 7 taxonomic ranks ]
 
 # The line starting otu_table tells us we have two samples -
-# these are ERR4998593 and JP4D - with a total of 5905 taxa. 
+# these are ERR4998593 and ERR4998600 - with a total of 5905 taxa. 
 # The tax_table again tells us how many taxa wwe have. The seven ranks
 # indicates that we have some identifications down to species level. 
 # The taxonomic ranks are from the classification system of taxa from
@@ -206,7 +206,7 @@ plot_richness(physeq = bac_biom_metagenome,
 # Use the following to open the manual page for plot_richness
 ?plot_richness
 
-# The β diversity between ERR4998593 and JP4D can be calculated with 
+# The β diversity between ERR4998593 and ERR4998600 can be calculated with 
 # the `distance()` function.
 
 # For example Bray–Curtis dissimilarity
@@ -227,7 +227,7 @@ distanceMethodList$vegdist
 
 ## Reminder 
 # In the last lesson, we created our phyloseq object, which contains 
-# the information of our samples: `ERR4998593` and `JP4D`. 
+# the information of our samples: `ERR4998593` and `ERR4998600`. 
 # Let´s take a look again at the number of reads in our data.  
 # For the whole metagenome:
 biom_metagenome
@@ -273,7 +273,7 @@ number_of_taxa <- bac_meta_df %>%
 # This shows us that we have some phyla:
 # - present in both samples such as Acidobacteria and Actinobacteria
 # - present in just ERR4998593 such as Candidatus Bipolaricaulota
-# - and present in just JP4D such as Calditrichaeota
+# - and present in just ERR4998600 such as Calditrichaeota
 
 # One way to visualise the number of shared phyla is with a Venn diagram. 
 # The package `ggvenn` will draw one for us. It needs a data structure 
@@ -283,22 +283,22 @@ number_of_taxa <- bac_meta_df %>%
 unique(number_of_taxa$Phylum[number_of_taxa$Sample == "ERR4998593"])
 
 
-# Exercise 2: For the JP4D sample
+# Exercise 2: For the ERR4998600 sample
 
 # To place the two sets of phlya in a list, we use
 venn_data <- list(ERR4998593 = unique(number_of_taxa$Phylum[number_of_taxa$Sample == "ERR4998593"]),
-                  JP4D = unique(number_of_taxa$Phylum[number_of_taxa$Sample == "JP4D"]))
+                  ERR4998600 = unique(number_of_taxa$Phylum[number_of_taxa$Sample == "ERR4998600"]))
 
 # And to draw the venn diagram
 ggvenn(venn_data)
 
 # The Venn diagram shows that most of the phyla (29 which is 80.6%) are in both
-# samples, one is in ERR4998593 only and 6 are in JP4D only. 
+# samples, one is in ERR4998593 only and 6 are in ERR4998600 only. 
 # Perhaps you would like to know which phyla is in ERR4998593 only? 
 # The following command will print that for us:
-venn_data$ERR4998593[!venn_data$ERR4998593 %in% venn_data$JP4D]
+venn_data$ERR4998593[!venn_data$ERR4998593 %in% venn_data$ERR4998600]
 
-# Exercise 3: Which phyla are in JP4D only?
+# Exercise 3: Which phyla are in ERR4998600 only?
 
 
 
@@ -325,7 +325,7 @@ abundance_of_taxa %>%
 
 # We can see that the most abundant phyla in ERR4998593 are 
 # Proteobacteria and Firmicutes. However, we can't tell much 
-# from JP4D because the total number of reads is so much less.
+# from ERR4998600 because the total number of reads is so much less.
 
 
 # Transformation of data
