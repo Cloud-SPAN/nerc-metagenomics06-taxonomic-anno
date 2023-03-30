@@ -209,8 +209,6 @@ abundance_of_taxa <- bac_meta_df %>%
 ~~~
 {: .language-r}  
 
-We can see that the most abundant phyla in both ERR4998593 and ERR4998600 are Proteobacteria and Actinobacteria. 
-
 It would be nice to see the abundance by phyla as a figure. We can use the `ggplot()` function to visualise the breakdown by Phylum in each of our two bacterial metagenomes:
 
 ~~~
@@ -224,7 +222,7 @@ abundance_of_taxa %>%
   <img src="{{ page.root }}/fig/03_03_abs_phyl_plot.png" alt="Plot of the absolute abundance of each Phylum in the two samples." />
 </a>
 
-We can see that the most abundant phyla in ERR4998593 are Proteobacteria and Actinobacteria.
+We can see that the most abundant phyla in both samples are Proteobacteria and Actinobacteria.
 
 ## Transformation of data
 
@@ -252,3 +250,108 @@ abundance_of_taxa %>%
   <img src="{{ page.root }}/fig/03_03_rel_abun.png" alt="Plot of the relative abundance of each Phylum in the two samples." />
 </a>
 
+This bar chart still isn't ideal. It has too many colours to accurately identify each phyla.
+
+Let's try plotting the phyla as points on a scatter graph, with the two samples as axes.
+
+First we select all the columns in `abundance_of_taxa` except `Abundance`, leaving `Sample`, `Phylum` and `relative`. Then we pivot the data frame so that each `Sample` has its own column, containing the values that used to be in the `relative` column. One row represents one phylum.
+
+~~~
+abundance_of_taxa_wide <- abundance_of_taxa %>%
+  select(-Abundance) %>%
+  pivot_wider(names_from = Sample, values_from = relative)
+~~~
+{: .language-r}
+
+Then plot a scatter graph with:
+
+~~~
+abundance_of_taxa_wide %>% 
+  ggplot(aes(x = ERR4998593, y = ERR4998600)) +
+  geom_point() +
+  ggtitle("Relative abundances of phyla")
+~~~
+{: .language-r}
+
+<a href="{{ page.root }}/fig/03_03_scatter_1.png">
+  <img src="{{ page.root }}/fig/03_03_scatter_1.png" alt="scatter diagram for the phyla in the two samples." />
+</a>
+
+It looks like our data is all clustered at the low end of the scale, with only a couple of points further along. Let's try using a log scale to see the spread a bit better. We'd better add labels to our axes too, to remind us that a log scale was used
+
+~~~
+abundance_of_taxa_wide %>% 
+  ggplot(aes(x = ERR4998593, y = ERR4998600)) +
+  geom_point() +
+  scale_x_log10() +
+  xlab("Log10(ERR4998593)") +
+  scale_y_log10() +
+  ylab("Log10(ERR4998600)") +
+  ggtitle("Relative abundances of phyla")
+~~~
+{: .language-r}
+
+<a href="{{ page.root }}/fig/03_03_scatter_logged.png">
+  <img src="{{ page.root }}/fig/03_03_scatter_logged.png" alt="scatter diagram for the phyla in the two samples with log scale." />
+</a>
+
+That's better! We should also add a reference line too so we can see where the points would be if they were found in equal proportions in both samples. Then we can see which phyla have a higher relative abundance in each sample. We can do this with geom_abline() which draws a line with formula y=x
+
+~~~
+abundance_of_taxa_wide %>% 
+  ggplot(aes(x = ERR4998593, y = ERR4998600)) +
+  geom_point() +
+  scale_x_log10() +
+  xlab("Log10(ERR4998593)") +
+  scale_y_log10() +
+  ylab("Log10(ERR4998600)") +
+  geom_abline() +
+  ggtitle("Relative abundances of phyla")
+~~~
+{: .language-r}
+
+<a href="{{ page.root }}/fig/03_03_scatter_logged_with_line.png">
+  <img src="{{ page.root }}/fig/03_03_scatter_logged_with_line.png" alt="scatter diagram for the phyla in the two samples with log scale and y=x reference line." />
+</a>
+
+Most of the points fall closer to the `ERR4998600` axis, telling us most of the phyla recorded had higher relative abundance in this sample than in `ERR4998593`. `ERR4998593` is probably dominated by one or two extremely abundant phyla - we actually already know this from looking at the relative abundances as a bar chart.
+
+Let's finish by marking the phyla that are more abundant in `ERR4998593` in a different colour and labelling them. We start by calculating the difference between the relative abundancies for each sample - this will tell us if each phylum is more abundant in `ERR4998600` (a positive number) or in `ERR4998593` (a negative number). Then we make a list of all the phyla which have a negative difference.
+
+~~~
+abundance_of_taxa_wide <- abundance_of_taxa_wide %>%
+  mutate(diff = ERR4998600 - ERR4998593) %>%
+  arrange(diff)
+ERR4998593_phyla <- filter(abundance_of_taxa_wide, diff < 0)$Phylum
+~~~
+{: .language-r}
+
+Now we have a list of phyla we can plot new points on the graph that are only present in the list we just made, this time in a different colour. We can also add a label with geom_text() to tell us what phyla these points represent.
+
+~~~
+abundance_of_taxa_wide %>% 
+  ggplot(aes(x = ERR4998593, y = ERR4998600)) +
+  geom_point() +
+  geom_point(
+    data = filter(abundance_of_taxa_wide, Phylum %in% ERR4998593_phyla),
+    aes(), 
+    col = "red") +
+  geom_text(
+    data = filter(abundance_of_taxa_wide, Phylum %in% ERR4998593_phyla),
+    aes(label = Phylum), 
+    nudge_y = -0.125,
+    col = "red") +
+  scale_x_log10() +
+  xlab("Log10(ERR4998593)") +
+  scale_y_log10() +
+  ylab("Log10(ERR4998600)") +
+  geom_abline() +
+  ggtitle("Relative abundances of phyla")
+~~~
+
+<a href="{{ page.root }}/fig/03_03_scatter_annotated.png">
+  <img src="{{ page.root }}/fig/03_03_scatter_annotated.png" alt="scatter diagram for the phyla in the two samples with points closer to ERR4998593 axis highlighted." />
+</a>
+{: .language-r}
+
+The two phyla which are more abundant in `ERR4998593` than in `ERR4998600` are Proteobacteria and Chlamydiae. We've seen Proteobacteria before, in our bar chart, where it was the most abundant phylum in both samples. We could probably have guessed from that graph that Proteobacteria had a higher relative abundance in one sample than the other, because the bars were very large. But we probably wouldn't have been able to tell which sample Chlamydiae was more abundant in - its relative proportion in both is too small to see in the bar chart. 
