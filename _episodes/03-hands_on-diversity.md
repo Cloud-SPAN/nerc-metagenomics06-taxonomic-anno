@@ -178,10 +178,8 @@ ggvenn(venn_data)
 
 The Venn diagram shows that all of the phyla are found in both samples. There are no phyla exclusive to either ERR4998593 or ERR4998600.
 
-
-
-<a href="{{ page.root }}/fig/03_03_phlya_venn.png">
-  <img src="{{ page.root }}/fig/03_03_phlya_venn.png" alt="venn diagram for the phyla in the two sample." />
+<a href="{{ page.root }}/fig/03_03_phyla_venn.png">
+  <img src="{{ page.root }}/fig/03_03_phyla_venn.png" alt="venn diagram for the phyla in the two sample." />
 </a>
 
 Imagine that there were some phylas different between the two.
