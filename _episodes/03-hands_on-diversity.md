@@ -32,12 +32,12 @@ sample_sums(biom_metagenome)
 {: .language-r}
 
 ~~~
-phyloseq-class experiment-level object  
-otu_table()   OTU Table:         [ 5905 taxa and 2 samples ]  
-tax_table()   Taxonomy Table:    [ 5905 taxa by 7 taxonomic ranks ]  
+phyloseq-class experiment-level object
+otu_table()   OTU Table:         [ 7637 taxa and 2 samples ]
+tax_table()   Taxonomy Table:    [ 7637 taxa by 7 taxonomic ranks ] 
 
-ERR4998593       ERR4998600   
-  38058101     149590   
+ERR4998593 ERR4998600 
+    444454     311439  
 ~~~
 {: .output}
 
@@ -55,18 +55,18 @@ ERR4998593       ERR4998600
 >>
 >> ~~~
 >> phyloseq-class experiment-level object
->> otu_table()   OTU Table:         [ 5808 taxa and 2 samples ]
->> tax_table()   Taxonomy Table:    [ 5808 taxa by 7 taxonomic ranks ]
+>> otu_table()   OTU Table:         [ 7231 taxa and 2 samples ]
+>> tax_table()   Taxonomy Table:    [ 7231 taxa by 7 taxonomic ranks ]
 >> 
->>   ERR4998593       ERR4998600
->>     38057090     149590
+>>   ERR4998593 ERR4998600 
+>>     442490     305135 
 >> ~~~
 >> {: .output}
 >>
 > {: .solution}
 {: .challenge}
 
-We saw how to find out how many phlya we have and how many OTU there are in each phlya by combining commands
+We saw how to find out how many phyla we have and how many OTU there are in each phyla by combining commands
 We 
 - turned the tax_table into a data frame (a useful data structure in R)
 - grouped by the Phylum column
@@ -109,29 +109,27 @@ number_of_taxa <- bac_meta_df %>%
 {: .language-r}  
 
 Clicking on `number_of_taxa` on the Environment window will open a spreadsheet-like view of it
-This shows us that we have some phyla:
-  - present in both samples such as Acidobacteria and Actinobacteria
-  - present in just ERR4998593 such as Candidatus Bipolaricaulota
-  - and present in just ERR4998600 such as Calditrichaeota
 
-One way to visualise the number of shared phyla is with a Venn diagram. The package `ggvenn` will draw one for us. It needs a data structure called a list which will contain an item for each sample of the phyla in that sample. We can see the phyla in the ERR4998593 sample with:
-
+One way to visualise the phyla is with a Venn diagram. The package `ggvenn` will draw one for us. It needs a data structure called a list which will contain an item for each sample of the phyla in that sample. We can see the phyla in the ERR4998593 sample with:
 ~~~
 unique(number_of_taxa$Phylum[number_of_taxa$Sample == "ERR4998593"])
 ~~~
 {: .language-r}  
 
 ~~~
-"Acidobacteria"               "Actinobacteria"              "Aquificae"                  
-"Armatimonadetes"             "Bacteroidetes"               "Caldiserica"                
-"Candidatus Bipolaricaulota"  "Candidatus Cloacimonetes"    "Candidatus Saccharibacteria"
-"Chlamydiae"                  "Chlorobi"                    "Chloroflexi"                
-"Chrysiogenetes"              "Cyanobacteria"               "Deferribacteres"            
-"Deinococcus-Thermus"         "Elusimicrobia"               "Firmicutes"                 
-"Fusobacteria"                "Gemmatimonadetes"            "Kiritimatiellaeota"         
-"Nitrospirae"                 "Planctomycetes"              "Proteobacteria"             
-"Spirochaetes"                "Synergistetes"               "Tenericutes"                
-"Thermodesulfobacteria"       "Thermotogae"                 "Verrucomicrobia"
+[1] "Acidobacteria"                 "Actinobacteria"                "Aquificae"                    
+[4] "Armatimonadetes"               "Atribacterota"                 "Bacteroidetes"                
+[7] "Balneolaeota"                  "Caldiserica"                   "Calditrichaeota"              
+[10] "Candidatus Absconditabacteria" "Candidatus Bipolaricaulota"    "Candidatus Cloacimonetes"     
+[13] "Candidatus Omnitrophica"       "Candidatus Saccharibacteria"   "Chlamydiae"                   
+[16] "Chlorobi"                      "Chloroflexi"                   "Chrysiogenetes"               
+[19] "Coprothermobacterota"          "Cyanobacteria"                 "Deferribacteres"              
+[22] "Deinococcus-Thermus"           "Dictyoglomi"                   "Elusimicrobia"                
+[25] "Fibrobacteres"                 "Firmicutes"                    "Fusobacteria"                 
+[28] "Gemmatimonadetes"              "Ignavibacteriae"               "Kiritimatiellaeota"           
+[31] "Nitrospirae"                   "Planctomycetes"                "Proteobacteria"               
+[34] "Spirochaetes"                  "Synergistetes"                 "Tenericutes"                  
+[37] "Thermodesulfobacteria"         "Thermotogae"                   "Verrucomicrobia"
 ~~~
 {: .output}
 
@@ -146,18 +144,19 @@ unique(number_of_taxa$Phylum[number_of_taxa$Sample == "ERR4998593"])
 >> {: .language-r}
 >>
 >> ~~~
->> "Acidobacteria"               "Actinobacteria"              "Aquificae"                  
->> "Armatimonadetes"             "Bacteroidetes"               "Caldiserica"                
->> "Calditrichaeota"             "Candidatus Cloacimonetes"    "Candidatus Saccharibacteria"
->> "Chlamydiae"                  "Chlorobi"                    "Chloroflexi"                
->> "Chrysiogenetes"              "Coprothermobacterota"        "Cyanobacteria"              
->> "Deferribacteres"             "Deinococcus-Thermus"         "Dictyoglomi"                
->> "Elusimicrobia"               "Fibrobacteres"               "Firmicutes"                 
->> "Fusobacteria"                "Gemmatimonadetes"            "Ignavibacteriae"            
->> "Kiritimatiellaeota"          "Lentisphaerae"               "Nitrospirae"                
->> "Planctomycetes"              "Proteobacteria"              "Spirochaetes"               
->> "Synergistetes"               "Tenericutes"                 "Thermodesulfobacteria"      
->> "Thermotogae"                 "Verrucomicrobia"      
+>> "[1] "Acidobacteria"                 "Actinobacteria"                "Aquificae"                    
+>>  [4] "Armatimonadetes"               "Atribacterota"                 "Bacteroidetes"                
+>>  [7] "Balneolaeota"                  "Caldiserica"                   "Calditrichaeota"              
+>> [10] "Candidatus Absconditabacteria" "Candidatus Bipolaricaulota"    "Candidatus Cloacimonetes"     
+>> [13] "Candidatus Omnitrophica"       "Candidatus Saccharibacteria"   "Chlamydiae"                   
+>> [16] "Chlorobi"                      "Chloroflexi"                   "Chrysiogenetes"               
+>> [19] "Coprothermobacterota"          "Cyanobacteria"                 "Deferribacteres"              
+>> [22] "Deinococcus-Thermus"           "Dictyoglomi"                   "Elusimicrobia"                
+>> [25] "Fibrobacteres"                 "Firmicutes"                    "Fusobacteria"                 
+>> [28] "Gemmatimonadetes"              "Ignavibacteriae"               "Kiritimatiellaeota"           
+>> [31] "Nitrospirae"                   "Planctomycetes"                "Proteobacteria"               
+>> [34] "Spirochaetes"                  "Synergistetes"                 "Tenericutes"                  
+>> [37] "Thermodesulfobacteria"         "Thermotogae"                   "Verrucomicrobia"              
 >> ~~~
 >> {: .output}
 >>
@@ -177,12 +176,16 @@ ggvenn(venn_data)
 ~~~
 {: .language-r}  
 
+The Venn diagram shows that all of the phyla are found in both samples. There are no phyla exclusive to either ERR4998593 or ERR4998600.
+
+
 
 <a href="{{ page.root }}/fig/03_03_phlya_venn.png">
   <img src="{{ page.root }}/fig/03_03_phlya_venn.png" alt="venn diagram for the phyla in the two sample." />
 </a>
-The Venn diagram shows that most of the phyla (29 which is 80.6%) are in both samples, one is in ERR4998593 only and 6 are in ERR4998600 only. 
-Perhaps you would like to know which phyla is in ERR4998593 only? The following command will print that for us:
+
+Imagine that there were some phylas different between the two.
+Perhaps you would like to know which phyla are in ERR4998593 only? The following command would print that for us:
 
 ~~~
 venn_data$ERR4998593[!venn_data$ERR4998593 %in% venn_data$ERR4998600]
@@ -190,32 +193,15 @@ venn_data$ERR4998593[!venn_data$ERR4998593 %in% venn_data$ERR4998600]
 {: .language-r}  
 
 ~~~
-"Candidatus Bipolaricaulota"
+NULL
 ~~~
 {: .output}
 
+Of course, this time we get a `NULL` reponse since the statement doesn't apply to any phyla.
 
-> ## Exercise 3
->
-> Which phyla are in ERR4998600 only?
->> ## Solution
->> Use ERR4998600 instead of ERR4998593 and ERR4998593 instead of ERR4998600!
->> ~~~
->> venn_data$ERR4998600[!venn_data$ERR4998600 %in% venn_data$ERR4998593]
->> ~~~
->> {: .language-r}
->>
->> ~~~
->> "Calditrichaeota"      "Coprothermobacterota" "Dictyoglomi"         
->> "Fibrobacteres"        "Ignavibacteriae"      "Lentisphaerae"  
->> ~~~
->> {: .output}
->>
-> {: .solution}
-{: .challenge}
+## Visualizing our data 
 
-
-We summarised our metagenomes for the number of phyla in each sample in `number_of_taxa`. We can use a similar approach to examine the abundance of each of these taxa:
+We summarised our metagenomes by the number of phyla in each sample in `number_of_taxa`. We can use a similar approach to examine the abundance of each of these taxa:
 
 ~~~
 abundance_of_taxa <- bac_meta_df %>% 
@@ -225,13 +211,9 @@ abundance_of_taxa <- bac_meta_df %>%
 ~~~
 {: .language-r}  
 
-We can see the vast majority of our taxa are Proteobacteria and Firmicutes in ERR4998593
+We can see that the most abundant phyla in both ERR4998593 and ERR4998600 are Proteobacteria and Actinobacteria. 
 
-
-
-## Visualizing our data 
-
-It would be nice to see the abundance by tax as a figure. We can use the `ggplot()` function to visualise the breakdown by Phylum in each of our two bacterial metagenomes:
+It would be nice to see the abundance by phyla as a figure. We can use the `ggplot()` function to visualise the breakdown by Phylum in each of our two bacterial metagenomes:
 
 ~~~
 abundance_of_taxa %>% 
@@ -244,7 +226,7 @@ abundance_of_taxa %>%
   <img src="{{ page.root }}/fig/03_03_abs_phyl_plot.png" alt="Plot of the absolute abundance of each Phylum in the two samples." />
 </a>
 
-We can see that the most abundant phyla in ERR4998593 are Proteobacteria and Firmicutes. However, we can't tell much from ERR4998600 because the total number of reds is so much less.
+We can see that the most abundant phyla in ERR4998593 are Proteobacteria and Actinobacteria.
 
 ## Transformation of data
 
@@ -269,6 +251,6 @@ abundance_of_taxa %>%
 {: .language-r}
 
 <a href="{{ page.root }}/fig/03_03_rel_phyl_plot.png">
-  <img src="{{ page.root }}/fig/03_03_rel_phyl_plot.png" alt="Plot of the relative abundance of each Phylum in the two samples." />
+  <img src="{{ page.root }}/fig/03_03_rel_abun.png" alt="Plot of the relative abundance of each Phylum in the two samples." />
 </a>
 
