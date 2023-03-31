@@ -273,8 +273,8 @@ If you don't know R and RStudio we suggest you to use this option. We have insta
 
 1. Make an RStudio Cloud account    
     Go to [https://rstudio.cloud/](https://rstudio.cloud/) and follow Get Started for Free. We recommend signing up with your Google account if you use one.    
-2. Follow the link to the [cloud-span-metagenomics](https://rstudio.cloud/content/4671746) project.    
-    Open the project we have set up: [cloud-span-metagenomics](https://rstudio.cloud/content/4671746). You'll get a message saying "Deploying project". This will take a few seconds.    
+2. Follow the link to the [cloud-span-metagenomics](https://posit.cloud/content/5663744) project.    
+    Open the project we have set up: [cloud-span-metagenomics](https://posit.cloud/content/5663744). You'll get a message saying "Deploying project". This will take a few seconds.    
 3. Make your own copy of the project    
     At the top of the Screen there is a message asking you if you want to Save a permanent copy. You do!     
 4. Open `analysis.R` from the Files pane on the bottom right of the display.    
@@ -304,7 +304,7 @@ A phyloseq object is a special object in R. It has five parts, called 'slots' wh
 
 
 <a href="{{ page.root }}/fig/r-phyloseq-obj.png">
-  <img src="{{ page.root }}/fig/r-phyloseq-obj.png" alt="Screenshot of RStudio showing the bio_metagenomeobject in the environment window which has been clicked on to open a view of the object. The five slots are listed in that view." />
+  <img src="{{ page.root }}/fig/r-phyloseq-obj.png" alt="Screenshot of RStudio showing the bio_metagenome object in the environment window which has been clicked on to open a view of the object. The five slots are listed in that view." />
 </a>
 
 Return to your script (click on the tab). Typing `biom_metagenome` will give some summary information about the `biom_metagenome` object:  
