@@ -120,7 +120,7 @@ As we saw in the previous episode, `.kraken` and `.report` are the output files 
 We will also need the `ERR4998600` Kraken report. We have put this in our GitHub repo and it can be copied into your `taxonomy` directory on the instance using `wget`. This is a useful command for retrieving files from web servers and simply requires `wget` followed by the web address the file is stored at.
 
 ~~~
-wget https://cloud-span.github.io/metagenomics03-taxonomic-anno/files/ERR4998600.report
+wget https://cloud-span.github.io/nerc-metagenomics06-taxonomic-anno/files/ERR4998600.report
 ~~~
 {: .bash}
 
