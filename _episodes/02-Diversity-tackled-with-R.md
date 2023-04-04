@@ -16,7 +16,7 @@ keypoints:
 - "α diversity measures diversity in a metagenome"
 - "β diversity measures the difference in diversity between metagenomes."
 - "A Biological Observation Matrix, BIOM table is a matrix of counts and is generated from the Kraken output using `kraken-biom` "  
-- "The `phyloseq` package be used to analyse metagenome diversity using the BIOM table."  
+- "The `phyloseq` package can be used to analyse metagenome diversity using the BIOM table."  
 math: yes
 ---
 
@@ -298,7 +298,7 @@ biom_metagenome <- import_biom("metagenome.biom")
 ~~~
 {: .language-r}
 
-This command produces no output in the console but created a special class of R object which is defined by the `phyloseq` package and called it `biom_metagenome`. Click on the object name, biom_metagenome, in the Environment pane (top right).  This will open a view of the object in the same pane as your script.
+This command produces no output in the console but created a special class of R object which is defined by the `phyloseq` package and called it `biom_metagenome`. Click on the object name, biom_metagenome, in the Environment pane (top right), see the screenshot below.  This will open a view of the object in the same pane as your script.
 
 A phyloseq object is a special object in R. It has five parts, called 'slots' which you can see listed in the object view. These are `otu_table`, `tax_table`, `sam_data`, `phy_tree` and `refseq`. In our case, `sam_data`, `phy_tree` and `refseq` are empty. The useful data are in otu_table` and `tax_table`.
 
@@ -320,7 +320,7 @@ tax_table()   Taxonomy Table:    [ 7637 taxa by 7 taxonomic ranks ]
 ~~~
 {: .output}
 
-The line starting `otu_table` tells us we have two samples - these are ERR4998593 and ERR4998600 - with a total of 7637 taxa. The `tax_table` again tells us how many taxa wwe have. The seven ranks indicates that we have some identifications down to species level. The taxonomic ranks are from the classification system of taxa from the most general (kingdom) to the most specific (species): kingdom/domain, phylum, class, order, family, genus, species.
+The line starting `otu_table` tells us we have two samples - these are ERR4998593 and ERR4998600 - with a total of 7637 taxa. The `tax_table` again tells us how many taxa we have. The seven ranks indicates that we have some identifications down to species level. The taxonomic ranks are from the classification system of taxa from the most general (kingdom) to the most specific (species): kingdom/domain, phylum, class, order, family, genus, species.
 
 We can view the `tax_table` with:
 ~~~
@@ -328,7 +328,7 @@ View(biom_metagenome@tax_table)
 ~~~
 {: .language-r}
 
-This table has the OTU identity in the row names and the samples in the columns. The values in the columns are the abundance of that OYU in that sample.
+This table has the OTU identity in the row names and the samples in the columns. The values in the columns are the abundance of that OTU in that sample.
 
 <img src="{{ page.root }}/fig/03_02_phyloseq_taxtab.png" alt="A table where the taxonomic identification information of all OTUs is displayed. Each row represent one OTU and the columns its identification at different levels in the taxonomic taxonomic classification ranks, beginning with Kingdom until we reach Species in the seventh column " />
 <em> Figure 3. Table of the OTU data from our `biom_metagenome` object. <em/>
@@ -339,7 +339,7 @@ To remove unnecessary characters we are going to use command `substring()`.
 
 This command is useful to extract or replace characters in a vector. To use the command, we have to indicate the vector (x) followed by the first element to replace or extract (first) and the last element to be replaced (last). For instance: `substring (x, first, last)`. If a last position is not used it will be set to the end of the string.
 
-The prefix for each item in `biom_metagenome` is made up of a letter an two underscores, for example: `o__Bacillales`. In this case "Bacillales" starts at position 4 with an B.
+The prefix for each item in `biom_metagenome` is made up of a letter and two underscores, for example: `o__Bacillales`. In this case "Bacillales" starts at position 4 with a B.
 So to remove the unnecessary characters we will use the following code:
 
 ~~~
