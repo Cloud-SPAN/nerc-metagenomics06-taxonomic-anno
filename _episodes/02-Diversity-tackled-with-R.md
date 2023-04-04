@@ -223,7 +223,7 @@ We customise the command with a couple of flags:
 ~~~
 {: .bash}
 
-`kraken-biom` can use more than one report to generate a BIOM table. The BIOM table is in a file called `metagenome.biom`.
+`kraken-biom` uses both reports to generate the BIOM table. The BIOM table is in a file called `metagenome.biom`.
 ~~~
  ls -l
 ~~~
@@ -240,7 +240,7 @@ We customise the command with a couple of flags:
 
 We will be using an `R` package called [`phyloseq`](https://joey711.github.io/phyloseq/) to analyse our biom file. Other software for analyses of diversity include [Qiime2](https://qiime2.org/), [MEGAN](https://www.wsi.uni-tuebingen.de/lehrstuehle/algorithms-in-bioinformatics/software/megan6/) and the `R` package [`Vegan`](https://vegandevs.github.io/vegan/)
 
-If you a very familiar with R and RStudio and already have them on your machine, you may want to install the packages needed and download the `metagenome.biom` file to do the analysis on your own computer. However, you do not need prior experience with R and RStudio for this part of the course: we have set up the analysis in RStudio Cloud, an online version of RStudio which has everything you need, including the code. We have given instructions for both options.
+If you are very familiar with R and RStudio and already have them on your machine, you may want to install the packages needed and download the `metagenome.biom` file to do the analysis on your own computer. However, you do not need prior experience with R and RStudio for this part of the course: we have set up the analysis in RStudio Cloud, an online version of RStudio which has everything you need, including the code. We have given instructions for both options.
 
 ### Option A: I know R and RStudio.
 If you know R and RStudio and already have them on your machine you may want to use this option.
@@ -266,7 +266,7 @@ If you know R and RStudio and already have them on your machine you may want to 
      Remember to replace NNN with the instance number specific to you. 
 5. Open a new script.    
 
-Now go to **Start the analysis**
+Now go to **Start the analysis**.
 
 ### Option B: I don't know R and RStudio.
 If you don't know R and RStudio we suggest you to use this option. We have installed the packages needed and put the data, `metagenome.biom` and a script `analysis.R` in the RStudio Cloud Project.

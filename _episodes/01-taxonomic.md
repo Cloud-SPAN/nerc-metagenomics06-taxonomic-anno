@@ -19,13 +19,15 @@ keypoints:
 
 Taxonomic assignment is the process of assigning a sequence to a specific taxon. In this case we will be assigning our raw short reads but you can also assign metagenome-assembled genomes (MAGs).
 
-These assignments are done by comparing our sequence to a database. These searches can be done in many different ways, and against a variety of databases. There are many programs for doing taxonomic mapping, almost all of them follows one of the next strategies:  
+We are using short reads rather than MAGs because we want to look at the relative differences in abundance between the taxa. This would be much less accurate using MAGs since these are compilations of fragments.
 
-1. BLAST: Using BLAST or DIAMOND, these mappers search for the most likely hit for each sequence within a database of genomes (i.e. mapping). This strategy is slow.    
+These assignments are done by comparing our sequence to a database. These searches can be done in many different ways, and against a variety of databases. There are many programs for doing taxonomic mapping; almost all of them follows one of these strategies:  
 
-2. K-mers: A genome database is broken into pieces of length k, so as to be able to search for unique pieces by taxonomic group, from lowest common ancestor (LCA), passing through phylum to species. Then, the algorithm breaks the query sequence (reads, contigs) into pieces of length k, looks for where these are placed within the tree and make the classification with the most probable position.  
+1. **BLAST**: Using BLAST or DIAMOND, these mappers search for the most likely hit for each sequence within a database of genomes (i.e. mapping). This strategy is slow.    
 
-3. Markers: They look for markers of a database made _a priori_ in the sequences to be classified and assign the taxonomy depending on the hits obtained.    
+2. **K-mers**: A genome database is broken into pieces of length k, so as to be able to search for unique pieces by taxonomic group, from lowest common ancestor (LCA), passing through phylum to species. Then, the algorithm breaks the query sequence (reads, contigs) into pieces of length k, looks for where these are placed within the tree and make the classification with the most probable position.  
+
+3. **Markers**: This method look for markers of a database made _a priori_ in the sequences to be classified and assign the taxonomy depending on the hits obtained.    
 
 <a href="{{ page.root }}/fig/03-01_LCA.png">
   <img src="{{ page.root }}/fig/03-01_LCA.png" alt="Diagram of taxonomic tree " />
@@ -102,10 +104,7 @@ We will be using the command line program Kraken2 to do our taxonomic assignment
 > {: .output}
 {: .solution}
 
-We will be using the flags `--output` and `--report` to specify the location of the output files Kraken will generate. And also `--threads` to speed up Kraken on our instance. We will also use `--minimum-base-quality` with a value of 30 as we are using unfiltered short reads.
-
-In addition to our input files we also need a database (`-db`) with which to compare them. There are [several different databases](http://ccb.jhu.edu/software/kraken2/downloads.shtml)
-available for `kraken2`. Some of these are larger and much more comprehensive, and some are more specific. There are also instructions on how to [generate a database of your own](https://github.com/DerrickWood/kraken2/wiki/Manual#special-databases).
+In addition to our input files we will need a database (`-db`) with which to compare them. There are [several different databases](http://ccb.jhu.edu/software/kraken2/downloads.shtml) available for `kraken2`. Some of these are larger and much more comprehensive, and some are more specific. There are also instructions on how to [generate a database of your own](https://github.com/DerrickWood/kraken2/wiki/Manual#special-databases).
 
 > ## It's very important to know your database!
 > The database you use will determine the result you get for your data.
@@ -118,6 +117,13 @@ You can view and download many of the common Kraken2 databases [on this site](ht
 ## Taxonomic assignment of an assembly
 
 First, we need to make a directory for the kraken output and then we can run our kraken command.
+
+We use the following flags:
+- `--output` to specify the location of the `.kraken` output file
+- `--report` to specify the location of the `.report` output file
+- `--threads` to specify the number of threads to use 
+- `--minimum-base-quality` to exclude bases with a PHRED quality score below a certain threshold (most important if you haven't filtered your short reads)
+- `--db` to tell Kraken2 where to find the database to compare the reads to
 
 ~~~
  cd ~/cs_course/analysis/
@@ -138,7 +144,7 @@ Loading database information... done.
 ~~~
 {: .output}
 
-This command generates two outputs, a .kraken and a .report file. Let's look at the top of these files with the following commands:
+This command generates two outputs, a .kraken and a .report file. Let's look at the top of these files with the following command:
 ~~~
 head taxonomy/ERR4998593.kraken  
 ~~~
@@ -272,7 +278,6 @@ You can also view the Sankey diagram of our example here: [sankey-ERR4998593.rep
 > > | *Chloroflexi*         | 122                |
 > >
 > > The same subsections states that "in general, barren, heathland, and meadow soils were dominated by the same set of MAGs": *Acidobacteriota*, *Actinobacteria* and *Proteobacteria*. This holds true for our sample, which is taken from a heathland site. Several of the specific genera mentioned (e.g. unclassified genera in class *Acidobacteriae*, *Mycobacterium*, *Bradyrhizobium*, unclassified *Xantherobacteraceae* and *Steroidobacteraceae*) are also present. 
-> >
 > >
 > {: .solution}
 {: .challenge}
