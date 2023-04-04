@@ -27,7 +27,7 @@ These assignments are done by comparing our sequence to a database. These search
 
 2. **K-mers**: A genome database is broken into pieces of length k, so as to be able to search for unique pieces by taxonomic group, from lowest common ancestor (LCA), passing through phylum to species. Then, the algorithm breaks the query sequence (reads, contigs) into pieces of length k, looks for where these are placed within the tree and make the classification with the most probable position.  
 
-3. **Markers**: This method look for markers of a database made _a priori_ in the sequences to be classified and assign the taxonomy depending on the hits obtained.    
+3. **Markers**: This method looks for markers of a database made _a priori_ &nbsp;in the sequences to be classified and assigns the taxonomy depending on the hits obtained.    
 
 <a href="{{ page.root }}/fig/03-01_LCA.png">
   <img src="{{ page.root }}/fig/03-01_LCA.png" alt="Diagram of taxonomic tree " />

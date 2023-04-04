@@ -54,7 +54,7 @@ The simplest measure of α diversity is the number of species, or species **rich
 |-------------------|--------------|
 | Bray–Curtis dissimilarity  | The compositional _dissimilarity_ between two metagenomes, based on counts in each metagenome. Ranges from 0 (the two metagenomes have the same species composition) to 1 (the two metagenomes do not share any species). Bray–Curtis dissimilarity emphasises abundance.|
 | Jaccard distance   | Also ranges from 0 (the two metagenomes have the same species) to 1 (the two metagenomes do not share any species) but is based on the presence or absence of species only. This means it emphasises richness.  |
-| UniFrac           | Differs from the Bray-Curtis dissimilarity and Jaccard distance by including the relatedness between taxa in a metagenome. Measures the phylogentic distance between metagenomes as the proportion of unshared phylogentic tree branches. Weighted-Unifrac takes into account the relative abundance of taxa shared between samples; unweighted-Unifrac only considers presence or absence.|
+| UniFrac           | Differs from the Bray-Curtis dissimilarity and Jaccard distance by including the relatedness between taxa in a metagenome. Measures the phylogenetic distance between metagenomes as the proportion of unshared phylogenetic tree branches. Weighted-Unifrac takes into account the relative abundance of taxa shared between samples; unweighted-Unifrac only considers presence or absence.|
 
 Figure 2 shows α and the β diversity for three lakes. The most simple way to calculate the β diversity is to calculate the number of species that are unique in two lakes. For example, the number of species in Lake A (the α diversity) is 3 and 1 of these is also found in Lake C; the number of species in Lake C is 2 and 1 of these is also in Lake A. The β diversity between A and C is calculated as (3 - 1) + (2 - 1) = 3
 
@@ -88,9 +88,9 @@ Figure 2 shows α and the β diversity for three lakes. The most simple way to c
 
 We will calculate the diversity in our heathland sample `ERR4998593` and compare it with data from another site from the same study: `ERR4998600`. This is a fenland site (so lower and wetter than our heathland site).
 
-There are 2 steps to need to calculate the diversity of our samples.
+There are 2 steps needed to calculate the diversity of our samples.
 
-1. Create a Biological Observation Matrix, BIOM table, from the Kraken output. A BIOM table is an matrix of counts with samples in the columns and taxa in the rows. The values in the matrix are the counts of that taxa in that sample.
+1. Create a Biological Observation Matrix, BIOM table, from the Kraken output. A BIOM table is a matrix of counts with samples in the columns and taxa in the rows. The values in the matrix are the counts of that taxa in that sample.
 2. Analyse the BIOM table to generate diversity indices and relative abundance plots.
 
 
