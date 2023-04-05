@@ -66,8 +66,7 @@ ERR4998593 ERR4998600
 > {: .solution}
 {: .challenge}
 
-We saw how to find out how many phyla we have and how many OTU there are in each phyla by combining commands
-We 
+We saw how to find out how many phyla we have and how many OTU there are in each phyla, by combining commands we: 
 - turned the tax_table into a data frame (a useful data structure in R)
 - grouped by the Phylum column
 - summarised by counting the number of rows for each phylum
@@ -227,7 +226,7 @@ We can see that the most abundant phyla in both samples are Proteobacteria and A
 ## Transformation of data
 
 Since our metagenomes have different sizes, it is imperative to convert the number
-of assigned read into percentages (i.e. relative abundances) to compare them.
+of assigned reads into percentages (i.e. relative abundances) to compare them.
 
 We can achieve this with:
 ~~~
@@ -316,7 +315,7 @@ abundance_of_taxa_wide %>%
 
 Most of the points fall closer to the `ERR4998600` axis, telling us most of the phyla recorded had higher relative abundance in this sample than in `ERR4998593`. `ERR4998593` is probably dominated by one or two extremely abundant phyla - we actually already know this from looking at the relative abundances as a bar chart.
 
-Let's finish by marking the phyla that are more abundant in `ERR4998593` in a different colour and labelling them. We start by calculating the difference between the relative abundancies for each sample - this will tell us if each phylum is more abundant in `ERR4998600` (a positive number) or in `ERR4998593` (a negative number). Then we make a list of all the phyla which have a negative difference.
+Let's finish by marking the phyla that are more abundant in `ERR4998593` in a different colour and labelling them. We start by calculating the difference between the relative abundances for each sample - this will tell us if each phylum is more abundant in `ERR4998600` (a positive number) or in `ERR4998593` (a negative number). Then we make a list of all the phyla which have a negative difference.
 
 ~~~
 abundance_of_taxa_wide <- abundance_of_taxa_wide %>%
