@@ -275,9 +275,7 @@ If you don't know R and RStudio we suggest you to use this option. We have insta
     Go to [https://rstudio.cloud/](https://rstudio.cloud/) and follow Get Started for Free. We recommend signing up with your Google account if you use one.    
 2. Follow the link to the [cloud-span-metagenomics](https://posit.cloud/content/5663744) project.    
     Open the project we have set up: [cloud-span-metagenomics](https://posit.cloud/content/5663744). You'll get a message saying "Deploying project". This will take a few seconds.    
-3. Make your own copy of the project    
-    At the top of the Screen there is a message asking you if you want to Save a permanent copy. You do!     
-4. Open `analysis.R` from the Files pane on the bottom right of the display.    
+3. Open `analysis.R` from the Files pane on the bottom right of the display.    
 
   
 ### Start the Analysis
