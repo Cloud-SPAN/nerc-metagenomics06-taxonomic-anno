@@ -18,8 +18,8 @@ authors:
 - family-names: "Rand"
   given-names: "Emma"
   orcid: "https://orcid.org/0000-0002-1358-8275"
-title: "Cloud-SPAN Metagenomics Course Session 3: Taxonomic Annotation"
+title: "Cloud-SPAN NERC Metagenomics Course Lesson 6: Taxonomic Annotation"
 version: 1.0.0
-doi: 10.5281/zenodo.7506983
-date-released: 2022-10-31
-url: "https://cloud-span.github.io/metagenomics03-taxonomic-anno/"
+doi: 
+date-released: 2023-04-06
+url: "https://cloud-span.github.io/nerc-metagenomics06-taxonomic-anno/"
