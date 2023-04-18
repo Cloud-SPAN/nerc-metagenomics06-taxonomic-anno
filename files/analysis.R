@@ -183,6 +183,12 @@ sample_names(bac_biom_metagenome)
 # Count the number of reads with `sample_sums()`:  
 sample_sums(bac_biom_metagenome)
 
+
+### "ERR4998593" "ERR4998600"
+### sample_sums(bac_biom_metagenome)
+### ERR4998593 ERR4998600 
+###     442490     305135 
+
 # The `summary()` function can give us an indication of species evenness  
 summary(bac_biom_metagenome@otu_table)
 
@@ -221,11 +227,11 @@ plot_richness(physeq = bac_biom_metagenome,
 # For example Bray–Curtis dissimilarity
 distance(bac_biom_metagenome, method="bray") 
 
-# And Jaccard distance
-distance(bac_biom_metagenome, method="jaccard")
-
 # We can view our options for calculating distance with
 distanceMethodList$vegdist
+
+# e.g. looking at Jaccard distance
+distance(bac_biom_metagenome, method="jaccard")
 
 # The output of this function is a distance matrix. When we have just two 
 # samples there is only one distance to calculate. If we had many 
@@ -279,7 +285,7 @@ bac_meta_df <- psmelt(bac_biom_metagenome)
 number_of_taxa <- bac_meta_df %>% 
   filter(Abundance > 0) %>% 
   group_by(Sample, Phylum) %>% 
-  summarise(n = length(Sample))
+  summarise(n = length(Abundance))
 # Clicking on `number_of_taxa` on the Environment window will open a 
 # spreadsheet-like view of it
 
@@ -288,13 +294,13 @@ number_of_taxa <- bac_meta_df %>%
 # called a list which will contain an item for each sample of the phyla
 # in that sample. 
 # We can see the phyla in the ERR4998600 sample with:
-unique(number_of_taxa$Phylum[number_of_taxa$Sample == "ERR4998600"])
+unique(number_of_taxa$Phylum[number_of_taxa$Sample == "ERR4998593"])
 
 
 # Exercise 2: For the ERR4998600 sample
 
 # To place the two sets of phlya in a list, we use
-venn_data <- list(ERR4998583 = unique(number_of_taxa$Phylum[number_of_taxa$Sample == "ERR4998593"]),
+venn_data <- list(ERR4998593 = unique(number_of_taxa$Phylum[number_of_taxa$Sample == "ERR4998593"]),
                   ERR4998600 = unique(number_of_taxa$Phylum[number_of_taxa$Sample == "ERR4998600"]))
 
 # And to draw the venn diagram
@@ -385,7 +391,7 @@ abundance_of_taxa_wide %>%
   scale_y_log10() +
   ylab("Log10(ERR4998600)") +
   ggtitle("Relative abundances of phyla")
-  
+
 # That's better! We should also add a reference line too so we can see where the points
 # would be if they were found in equal proportions in both samples. We can do this with 
 # geom_abline() which draws a line with formula y=x
