@@ -59,12 +59,16 @@ biom_metagenome
 # phylum, class, order, family, genus, species.
 
 # We can view the otu_table with:
-View(biom_metagenome@tax_table)
+View(biom_metagenome@otu_table)
 # This will open a view of the table in the same pane as your script.
 
-# This table has the OTU identity in the row names and the samples in the 
+# This table has the OTU identity in the row names and the samples in the
 # columns. The values in the columns are the abundance of that OTU in that
 # sample.
+
+# We can view the tax_table with:
+View(biom_metagenome@tax_table)
+# This gives the rank for each taxa
 
 # k__ kingdom/domain (note a letter, two underscores)
 # p__ phylum
